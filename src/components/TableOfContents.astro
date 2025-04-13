@@ -136,7 +136,6 @@
         tocList.appendChild(listItem);
         lastH2Item = listItem;
       } else if (level === 3 && lastH2Item) {
-        // Para h3, añadir al grupo h2 previo con indentación
         link.style.paddingLeft = "1.25rem"; // Más indentación para h3
 
         // Verificar si existe sublista
@@ -160,7 +159,6 @@
         mobileTocList.appendChild(listItem);
         lastMobileH2Item = listItem;
       } else if (level === 3 && lastMobileH2Item) {
-        // Para h3, añadir al grupo h2 previo con indentación
         link.style.paddingLeft = "1.25rem"; // Más indentación para h3
 
         // Verificar si existe sublista
