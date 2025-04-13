@@ -1,7 +1,5 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
-
-// Agregar esta variable para manejar la URL base
 const baseURL = "/doc-api-facturacion-sv/";
 ---
 
@@ -108,7 +106,6 @@ const baseURL = "/doc-api-facturacion-sv/";
     const themeToggle = document.getElementById("theme-toggle");
     if (themeToggle) {
       themeToggle.addEventListener("click", () => {
-        // Usando una versión tipada de window
         const win = window as any;
 
         const currentTheme =
@@ -160,7 +157,7 @@ const baseURL = "/doc-api-facturacion-sv/";
     }
   });
 
-  // También manejar el evento con Astro
+  // Manejar el evento con Astro
   document.addEventListener("astro:page-load", () => {
     const mobileMenuButton = document.getElementById("mobile-menu-button");
     const mobileMenu = document.getElementById("mobile-menu");
@@ -171,7 +168,6 @@ const baseURL = "/doc-api-facturacion-sv/";
     const themeToggle = document.getElementById("theme-toggle");
     if (themeToggle) {
       themeToggle.addEventListener("click", () => {
-        // Usando una versión tipada de window
         const win = window as any;
 
         const currentTheme =

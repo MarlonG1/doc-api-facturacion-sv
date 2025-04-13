@@ -8,9 +8,7 @@ interface Props {
 
 const { code, lang = "json", title = "", showLineNumbers = true } = Astro.props;
 
-// No formatear el JSON para evitar problemas con el formato
 let formattedCode = code;
-// Eliminamos la lógica de formateo que causa problemas
 ---
 
 <div
@@ -40,7 +38,6 @@ let formattedCode = code;
 </div>
 
 <script is:inline>
-  // Cargamos Prism.js desde CDN
   document.addEventListener("DOMContentLoaded", () => {
     if (!window.Prism) {
       const prismScript = document.createElement("script");

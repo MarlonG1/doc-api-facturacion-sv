@@ -6,7 +6,6 @@ import { ViewTransitions } from "astro:transitions";
 import TableOfContents from "../components/TableOfContents.astro";
 
 const { title, description, currentPage } = Astro.props;
-// URL base fija para el despliegue en GitHub Pages
 const baseURL = "/doc-api-facturacion-sv";
 ---
 
@@ -407,7 +406,6 @@ const baseURL = "/doc-api-facturacion-sv";
 
           // Construir la tabla de contenidos
           headings.forEach(function (heading) {
-            // Asegurar que tenga un ID
             if (!heading.id) {
               const text = heading.textContent || "";
               heading.id = text

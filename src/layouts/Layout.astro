@@ -1,5 +1,4 @@
 ---
-// Importación relativa a la carpeta src
 import "../styles/global.css";
 
 interface Props {
@@ -40,13 +39,12 @@ const baseURL = "/doc-api-facturacion-sv";
           return storedTheme;
         }
 
-        // Luego verificar preferencia del sistema
+        // Verificar preferencia del sistema
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
           return "dark";
         }
 
-        // Default a light
-        return "light";
+        return "dark";
       }
 
       // Función para establecer el tema
@@ -64,7 +62,6 @@ const baseURL = "/doc-api-facturacion-sv";
           localStorage.setItem("theme", theme);
         }
 
-        // Disparar evento para que otros scripts puedan reaccionar
         document.dispatchEvent(
           new CustomEvent("themeChanged", { detail: { theme } })
         );
