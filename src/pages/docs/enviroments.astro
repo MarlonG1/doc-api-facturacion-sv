@@ -1,0 +1,315 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Card from "../../components/Card.astro";
+
+const title = "Comparación de Entornos";
+const description =
+  "Diferencias entre los entornos de prueba y producción del sistema de facturación electrónica";
+
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/entornos"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+
+    <p class="lead text-xl">
+      La API de Facturación Electrónica proporciona dos entornos distintos:
+      Pruebas (Sandbox) y Producción. Esta guía detalla las diferencias clave
+      entre ambos y cuándo utilizar cada uno.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Importante"
+        type="warning"
+        description="Los documentos emitidos en el entorno de producción tienen validez fiscal real. Asegúrate de que tu implementación está completamente probada antes de pasar a producción."
+      />
+    </div>
+
+    <h2>Tabla comparativa de entornos</h2>
+
+    <div class="overflow-x-auto my-8">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Característica</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Pruebas (Sandbox)</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Producción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100"
+              >Código de ambiente</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400"
+              ><code>00</code></td
+            >
+            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400"
+              ><code>01</code></td
+            >
+          </tr>
+          <tr>
+            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100"
+              >Certificado digital</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400"
+              >Se puede usar certificado de prueba</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400"
+              >Requiere certificado oficial emitido por una autoridad
+              certificadora</td
+            >
+          </tr>
+          <tr>
+            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100"
+              >Validez fiscal</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+              <span
+                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+              >
+                Sin validez fiscal
+              </span>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+              <span
+                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+              >
+                Validez fiscal completa
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>¿Cuándo usar cada entorno?</h2>
+
+    <h3>Entorno de Pruebas (Sandbox)</h3>
+    <p>Utiliza el entorno de pruebas para:</p>
+    <ul>
+      <li>Desarrollo y pruebas iniciales de la integración</li>
+      <li>Pruebas de escenarios y casos de uso específicos</li>
+      <li>Validación de formatos y reglas de negocio de su sistema</li>
+      <li>Pruebas de rendimiento y estrés (con límites)</li>
+      <li>Capacitación a usuarios</li>
+      <li>Simulación de contingencias</li>
+    </ul>
+
+    <div
+      class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-md my-4 border border-blue-100 dark:border-blue-800"
+    >
+      <p class="text-blue-700 dark:text-blue-300 text-sm">
+        <strong>💡 Consejo:</strong> En el entorno de pruebas, puedes simular diferentes
+        escenarios de error cambiando los valores de los documentos. Por ejemplo,
+        puedes forzar un error de "InvalidTotalAmount" enviando un total que no coincida
+        con la suma de los ítems.
+      </p>
+    </div>
+
+    <h3>Entorno de Producción</h3>
+    <p>Utiliza el entorno de producción para:</p>
+    <ul>
+      <li>Emisión de documentos fiscales oficiales</li>
+      <li>Operaciones comerciales reales</li>
+      <li>
+        Después de haber validado completamente la integración en el entorno de
+        pruebas
+      </li>
+      <li>
+        Cuando se cuenta con la certificación del Ministerio de Hacienda para el
+        ambiente de producción
+      </li>
+    </ul>
+
+    <div
+      class="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-md my-4 border border-yellow-100 dark:border-yellow-800"
+    >
+      <p class="text-yellow-700 dark:text-yellow-300 text-sm">
+        <strong>⚠️ Advertencia:</strong> El entorno de producción está sujeto a auditorías
+        por parte del Ministerio de Hacienda. Asegúrate de seguir todas las normativas
+        fiscales y de mantener respaldos adecuados de tus operaciones.
+      </p>
+    </div>
+
+    <h2>Migración de Pruebas a Producción</h2>
+    <p>
+      Al migrar de pruebas a producción, ten en cuenta estos aspectos clave:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+      <div
+        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700"
+      >
+        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">
+          Antes de migrar
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+          <li class="flex items-start">
+            <svg
+              class="mt-0.5 h-5 w-5 text-green-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Verifica todos los escenarios en el entorno de pruebas</span>
+          </li>
+          <li class="flex items-start">
+            <svg
+              class="mt-0.5 h-5 w-5 text-green-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Obtén el certificado digital oficial autorizado</span>
+          </li>
+          <li class="flex items-start">
+            <svg
+              class="mt-0.5 h-5 w-5 text-green-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Realiza la certificación con el Ministerio de Hacienda</span>
+          </li>
+          <li class="flex items-start">
+            <svg
+              class="mt-0.5 h-5 w-5 text-green-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Prepara un plan de contingencia y recuperación</span>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700"
+      >
+        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">
+          Después de migrar
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+          <li class="flex items-start">
+            <svg
+              class="mt-0.5 h-5 w-5 text-green-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Monitoriza las primeras emisiones de documentos</span>
+          </li>
+          <li class="flex items-start">
+            <svg
+              class="mt-0.5 h-5 w-5 text-green-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span
+              >Verifica los documentos recibidos en el portal de Hacienda</span
+            >
+          </li>
+          <li class="flex items-start">
+            <svg
+              class="mt-0.5 h-5 w-5 text-green-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Establece un sistema de respaldo y auditoría</span>
+          </li>
+          <li class="flex items-start">
+            <svg
+              class="mt-0.5 h-5 w-5 text-green-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Prueba regularmente el sistema de contingencia</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Cambiando entre entornos</h2>
+    <p>
+      Para cambiar entre entornos, debes actualizar dos aspectos en tu
+      implementación:
+    </p>
+    <ol>
+      <li>
+        <strong>Código de ambiente</strong>: Modifica el campo <code
+          >MH_AMBIENT_CODE</code
+        > en las variables de entorno y la API internamente se configurará para cada
+        ambiente.
+      </li>
+    </ol>
+  </div>
+</DocsLayout>

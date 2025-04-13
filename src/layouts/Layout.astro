@@ -1,0 +1,146 @@
+---
+// Importación relativa a la carpeta src
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Documentación de la API de Facturación Electrónica",
+} = Astro.props;
+
+// Agregar esta variable para manejar la URL base con path base correcto
+const baseURL = "/doc-api-facturacion-sv";
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href={`${baseURL}/favicon.svg`} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="/doc-api-facturacion-sv/styles/global.css" />
+    <title>{title}</title>
+    <!-- Inicialización del tema -->
+    <script is:inline>
+      // Función para obtener la preferencia de tema
+      function getThemePreference() {
+        // Primero verificar localStorage
+        const storedTheme =
+          typeof localStorage !== "undefined" && localStorage.getItem("theme");
+        if (storedTheme) {
+          return storedTheme;
+        }
+
+        // Luego verificar preferencia del sistema
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+
+        // Default a light
+        return "light";
+      }
+
+      // Función para establecer el tema
+      function setTheme(theme) {
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          document.documentElement.classList.remove("light");
+        } else {
+          document.documentElement.classList.add("light");
+          document.documentElement.classList.remove("dark");
+        }
+
+        // Guardar en localStorage para persistencia
+        if (typeof localStorage !== "undefined") {
+          localStorage.setItem("theme", theme);
+        }
+
+        // Disparar evento para que otros scripts puedan reaccionar
+        document.dispatchEvent(
+          new CustomEvent("themeChanged", { detail: { theme } })
+        );
+      }
+
+      // Inicializar el tema basado en la preferencia del usuario
+      const theme = getThemePreference();
+      setTheme(theme);
+
+      // Exponer funciones globalmente para que otros scripts puedan usarlas
+      window.getThemePreference = getThemePreference;
+      window.setTheme = setTheme;
+    </script>
+  </head>
+  <body
+    class="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100"
+  >
+    <slot />
+
+    <script is:inline>
+      // Script para manejar el tema
+      function getThemePreference() {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      }
+
+      function setTheme(theme) {
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          document.documentElement.classList.remove("light");
+        } else {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.add("light");
+        }
+        localStorage.setItem("theme", theme);
+      }
+
+      // Establecer el tema al cargar la página
+      setTheme(getThemePreference());
+
+      // Gestionar eventos del botón de cambio de tema
+      document.addEventListener("astro:page-load", () => {
+        const themeToggle = document.getElementById("theme-toggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", () => {
+            const currentTheme = getThemePreference();
+            const newTheme = currentTheme === "dark" ? "light" : "dark";
+            setTheme(newTheme);
+          });
+        }
+      });
+
+      // También manejar el evento en DOMContentLoaded para la carga inicial
+      document.addEventListener("DOMContentLoaded", () => {
+        const themeToggle = document.getElementById("theme-toggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", () => {
+            const currentTheme = getThemePreference();
+            const newTheme = currentTheme === "dark" ? "light" : "dark";
+            setTheme(newTheme);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

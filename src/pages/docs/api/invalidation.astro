@@ -1,0 +1,251 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
+import Card from "../../../components/Card.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import FieldsTable from "../../../components/FieldsTable.astro";
+
+const title = "Invalidación de Documentos";
+const description =
+  "Documentación para invalidar Documentos Tributarios Electrónicos";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/api/dte/invalidation"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Esta sección describe cómo invalidar documentos tributarios electrónicos
+      previamente emitidos.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Importante"
+        type="warning"
+        description="Los documentos solo pueden invalidarse dentro de plazos específicos: facturas hasta 3 meses después, otros documentos solo en las primeras 24 horas."
+      />
+    </div>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Catálogos de referencia"
+        type="info"
+        description="Para conocer los códigos de tipo de invalidación (CAT-024) y otros valores requeridos, consulta la sección de Catálogos."
+        href={`${baseURL}docs/catalog`}
+      />
+    </div>
+
+    <h2>Invalidar Documento</h2>
+
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/invalidation"
+      description="Invalida un documento tributario electrónico previamente emitido"
+      requestExample={`{
+  "generation_code": "UUID-del-documento-original",
+  "replacement_generation_code": "UUID-del-documento-nuevo",
+  "reason": {
+    "type": 1,
+    "responsible_name": "Juan Pérez",
+    "responsible_doc_type": "36",
+    "responsible_num_doc": "04141201721034",
+    "requestor_name": "María López",
+    "requestor_doc_type": "36",
+    "requestor_num_doc": "06142301891012"
+  }
+}`}
+      responseExample={`{
+  "success": true,
+  "data": "DTE invalidated successfully"
+}`}
+    >
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Este endpoint permite invalidar un documento tributario electrónico
+        previamente emitido.
+      </p>
+    </ApiEndpoint>
+
+    <FieldsTable
+      title="Campos de invalidación"
+      description="Campos necesarios para invalidar un documento"
+      fields={[
+        {
+          name: "generation_code",
+          type: "string",
+          description: "UUID del documento a invalidar",
+          required: true,
+        },
+        {
+          name: "replacement_generation_code",
+          type: "string",
+          description:
+            "UUID del documento de reemplazo (requerido para tipos 1 y 3)",
+          required: false,
+        },
+        {
+          name: "reason.type",
+          type: "integer",
+          description: "Tipo de invalidación (1, 2 o 3)",
+          required: true,
+        },
+        {
+          name: "reason.responsible_name",
+          type: "string",
+          description: "Nombre del responsable",
+          required: true,
+        },
+        {
+          name: "reason.responsible_doc_type",
+          type: "string",
+          description: "Tipo de documento del responsable",
+          required: true,
+        },
+        {
+          name: "reason.responsible_num_doc",
+          type: "string",
+          description: "Número de documento del responsable",
+          required: true,
+        },
+        {
+          name: "reason.requestor_name",
+          type: "string",
+          description: "Nombre del solicitante",
+          required: true,
+        },
+        {
+          name: "reason.requestor_doc_type",
+          type: "string",
+          description: "Tipo de documento del solicitante",
+          required: true,
+        },
+        {
+          name: "reason.requestor_num_doc",
+          type: "string",
+          description: "Número de documento del solicitante",
+          required: true,
+        },
+        {
+          name: "reason.reason_field",
+          type: "string",
+          description: "Motivo (obligatorio para tipo 3)",
+          required: false,
+        },
+      ]}
+    />
+
+    <h2>Tipos de Invalidación</h2>
+
+    <h3>Tipo 1 - Sustitución por Error</h3>
+    <p>
+      Este tipo se utiliza cuando hay errores en la información del documento y
+      se ha emitido uno nuevo para sustituirlo.
+    </p>
+    <CodeBlock
+      code={`{
+  "generation_code": "UUID-del-documento-original",
+  "replacement_generation_code": "UUID-del-documento-nuevo",
+  "reason": {
+    "type": 1,
+    "responsible_name": "Juan Pérez",
+    "responsible_doc_type": "36",
+    "responsible_num_doc": "04141201721034",
+    "requestor_name": "María López",
+    "requestor_doc_type": "36",
+    "requestor_num_doc": "06142301891012"
+  }
+}`}
+      lang="json"
+      title="Ejemplo de invalidación Tipo 1"
+    />
+
+    <h3>Tipo 2 - Anulación Simple</h3>
+    <p>
+      Este tipo se utiliza cuando se desea anular el documento sin emitir uno
+      nuevo.
+    </p>
+    <CodeBlock
+      code={`{
+  "generation_code": "UUID-del-documento-original",
+  "reason": {
+    "type": 2,
+    "responsible_name": "Juan Pérez",
+    "responsible_doc_type": "36",
+    "responsible_num_doc": "04141201721034",
+    "requestor_name": "María López",
+    "requestor_doc_type": "36",
+    "requestor_num_doc": "06142301891012"
+  }
+}`}
+      lang="json"
+      title="Ejemplo de invalidación Tipo 2"
+    />
+
+    <h3>Tipo 3 - Anulación por Motivo Específico</h3>
+    <p>
+      Este tipo se utiliza cuando hay un motivo específico para la invalidación
+      que debe documentarse.
+    </p>
+    <CodeBlock
+      code={`{
+  "generation_code": "UUID-del-documento-original",
+  "replacement_generation_code": "UUID-del-documento-nuevo",
+  "reason": {
+    "type": 3,
+    "responsible_name": "Juan Pérez",
+    "responsible_doc_type": "36",
+    "responsible_num_doc": "04141201721034",
+    "requestor_name": "María López",
+    "requestor_doc_type": "36",
+    "requestor_num_doc": "06142301891012",
+    "reason_field": "Descripción detallada del motivo de invalidación"
+  }
+}`}
+      lang="json"
+      title="Ejemplo de invalidación Tipo 3"
+    />
+
+    <h2>Validaciones Específicas</h2>
+    <ul>
+      <li>
+        El documento a invalidar debe existir y estar en estado "RECEIVED" (no
+        puede estar invalidado, rechazado o pendiente)
+      </li>
+      <li>
+        Para tipo 1 (sustitución por error) y tipo 3 (motivo específico), el
+        documento de reemplazo debe existir y estar en estado "RECEIVED"
+      </li>
+      <li>
+        Para tipo 2 (anulación simple), no debe proporcionarse documento de
+        reemplazo
+      </li>
+      <li>Para tipo 3, el campo <code>reason_field</code> es obligatorio</li>
+      <li>
+        Restricciones temporales:
+        <ul>
+          <li>
+            Facturas (01): Se pueden invalidar hasta 3 meses después de emitidas
+          </li>
+          <li>
+            Otros documentos: Solo dentro de las 24 horas posteriores a la
+            emisión
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Recomendación"
+        type="info"
+        description="Asegúrate de tener un documento de reemplazo válido antes de intentar una invalidación de tipo 1 o 3."
+      />
+    </div>
+  </div>
+</DocsLayout>

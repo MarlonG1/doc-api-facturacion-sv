@@ -1,0 +1,164 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Card from "../../components/Card.astro";
+
+const title = "Documentación de la API de Facturación Electrónica";
+const description =
+  "Documentación oficial para la API de Facturación Electrónica de El Salvador";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout title={title} description={description} currentPage="/docs">
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Bienvenido a la documentación oficial de la API de Facturación Electrónica
+      para El Salvador. Esta guía proporciona toda la información necesaria para
+      integrar tu sistema con nuestra API y cumplir con los requisitos del
+      Ministerio de Hacienda.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose my-8">
+      <Card
+        title="Introducción"
+        description="Conoce los conceptos básicos de la API de Facturación Electrónica y sus características."
+        href={`${baseURL}docs/introduction`}
+        type="primary"
+      />
+      <Card
+        title="Primeros Pasos"
+        description="Guía de inicio rápido para implementar la API en tu sistema en pocos pasos."
+        href={`${baseURL}docs/first-steps`}
+        type="primary"
+      />
+      <Card
+        title="Guía de Autenticación"
+        description="Aprende a registrarte y obtener tu token JWT para usar la API."
+        href={`${baseURL}docs/guides/authentication`}
+        type="info"
+      />
+      <Card
+        title="Emisión de Documentos"
+        description="Crea y emite documentos tributarios electrónicos conforme a las normativas."
+        href={`${baseURL}docs/guides/emission`}
+        type="info"
+      />
+      <Card
+        title="Invalidación de Documentos"
+        description="Guía para invalidar correctamente documentos ya emitidos."
+        href={`${baseURL}docs/guides/invalidation`}
+        type="info"
+      />
+      <Card
+        title="Catálogos Oficiales"
+        description="Referencia de los catálogos del Ministerio de Hacienda para la emisión de DTE."
+        href={`${baseURL}docs/catalog`}
+        type="info"
+      />
+    </div>
+
+    <h2>Referencia de API</h2>
+    <p>
+      Explora nuestra documentación detallada de cada endpoint y funcionalidad
+      de la API:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose my-8">
+      <Card
+        title="Endpoints"
+        description="Visión general de todos los endpoints disponibles en la API."
+        href={`${baseURL}docs/api/endpoints`}
+      />
+      <Card
+        title="Factura Electrónica"
+        description="Documentación para la emisión de facturas electrónicas."
+        href={`${baseURL}docs/api/invoices`}
+      />
+      <Card
+        title="Comprobante de Crédito Fiscal"
+        description="Crea y gestiona comprobantes de crédito fiscal (CCF)."
+        href={`${baseURL}docs/api/credit-notes`}
+      />
+      <Card
+        title="Consulta de DTE"
+        description="Recupera y consulta documentos tributarios electrónicos."
+        href={`${baseURL}docs/api/consult-dte`}
+      />
+      <Card
+        title="Invalidación"
+        description="Anula o invalida documentos previamente emitidos."
+        href={`${baseURL}docs/api/invalidation`}
+      />
+      <Card
+        title="Monitoreo"
+        description="Verifica el estado y métricas del sistema."
+        href={`${baseURL}docs/api/monitoring`}
+      />
+    </div>
+
+    <h2>Recursos Adicionales</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose my-8">
+      <Card
+        title="Sistema de Contingencia"
+        description="Operación continua cuando hay problemas de conexión con Hacienda."
+        href={`${baseURL}docs/contingency`}
+      />
+      <Card
+        title="Comparación de Entornos"
+        description="Diferencias entre los entornos de prueba y producción."
+        href={`${baseURL}docs/enviroments`}
+      />
+      <Card
+        title="Errores Comunes"
+        description="Referencia completa de códigos de error y soluciones."
+        href={`${baseURL}docs/common-errors`}
+      />
+      <Card
+        title="Preguntas Frecuentes"
+        description="Respuestas a dudas comunes sobre la integración y uso de la API."
+        href={`${baseURL}docs/faq`}
+      />
+      <Card
+        title="Recursos"
+        description="Enlaces a documentación oficial del Ministerio de Hacienda."
+        href={`${baseURL}docs/resources`}
+      />
+    </div>
+
+    <h2>Características Principales</h2>
+    <ul>
+      <li>
+        <strong>Emisión de documentos fiscales:</strong> Factura electrónica, comprobante
+        de crédito fiscal, notas de crédito y otros documentos válidos fiscalmente.
+      </li>
+      <li>
+        <strong>Validación automática:</strong> Verificación de que todos los documentos
+        cumplan con los requisitos legales antes de su emisión.
+      </li>
+      <li>
+        <strong>Sistema de contingencia:</strong> Continuidad operativa incluso cuando
+        hay problemas de conexión con los servicios de Hacienda.
+      </li>
+      <li>
+        <strong>Consulta en tiempo real:</strong> Acceso al estado y detalles de
+        tus documentos fiscales en cualquier momento.
+      </li>
+      <li>
+        <strong>Monitoreo del sistema:</strong> Endpoints específicos para verificar
+        el estado y métricas del sistema.
+      </li>
+    </ul>
+
+    <div class="not-prose my-8">
+      <Card
+        title="¿Listo para comenzar?"
+        description="Sigue nuestra guía de primeros pasos para implementar la API de Facturación Electrónica en tu sistema."
+        href={`${baseURL}docs/first-steps`}
+        type="primary"
+      />
+    </div>
+  </div>
+</DocsLayout>

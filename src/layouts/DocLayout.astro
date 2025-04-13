@@ -1,0 +1,57 @@
+---
+import BaseLayout from "./Layout.astro";
+import Sidebar from "../components/Sidebar.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+import "../styles/prism.css";
+import "../styles/doc.css";
+
+const { frontmatter, headings } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title}>
+  <div class="flex flex-col md:flex-row">
+    <!-- Sidebar -->
+    <Sidebar />
+
+    <!-- Main content -->
+    <main class="flex-1 min-w-0 px-4 md:px-8 py-8 pb-20">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+          {frontmatter.title}
+        </h1>
+        {
+          frontmatter.description && (
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-8">
+              {frontmatter.description}
+            </p>
+          )
+        }
+
+        <div class="flex flex-col lg:flex-row gap-8">
+          <article
+            class="prose dark:prose-invert prose-slate prose-headings:scroll-mt-20 lg:prose-lg mx-auto lg:mx-0 w-full max-w-none"
+          >
+            <slot />
+          </article>
+
+          <!-- Table of Contents (visible en pantallas grandes) -->
+          <div class="hidden lg:block w-64 sticky top-24 self-start">
+            <TableOfContents />
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .prose {
+    max-width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .prose {
+      max-width: calc(100% - 0px);
+    }
+  }
+</style>

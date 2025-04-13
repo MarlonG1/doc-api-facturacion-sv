@@ -1,0 +1,197 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
+import Card from "../../../components/Card.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+
+const title = "Guia de Autenticación Rapida";
+const description =
+  "Guía rápida para configurar la autenticación con la API de Facturación Electrónica";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/guias/autenticacion-rapida"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Configura la autenticación con la API de Facturación Electrónica en pocos
+      pasos.
+    </p>
+
+    <div class="not-prose mt-6 mb-10">
+      <Card
+        title="Antes de comenzar"
+        type="info"
+        description="Necesitarás tener a mano tus credenciales del Ministerio de Hacienda y la información fiscal de tu empresa."
+      />
+    </div>
+
+    <h2>Paso 1: Registrar tu empresa</h2>
+    <p>
+      Primero debes registrar tu empresa y establecimientos usando el endpoint
+      de registro:
+    </p>
+
+    <CodeBlock
+      code={`POST /api/v1/auth/register
+
+{
+  "nit": "12345678911227",
+  "nrc": "1233260",
+  "auth_type": "STANDARD",
+  "phone": "21212828",
+  "email": "facturacion@empresa.com.sv",
+  "password_pri": "Tu-password-de-certificado#",
+  "business_name": "EMPRESA DE PRUEBAS SA DE CV",
+  "commercial_name": "EMPRESA DE PRUEBAS",
+  "economic_activity": "47190",
+  "economic_activity_desc": "Venta al por mayor de otros productos",
+  "year_in_dte": true,
+  "token_lifetime": 30,
+  "branch_offices" : [
+    {
+      "establishment_type": "02",  // Casa matriz (obligatorio)
+      "establishment_code": "C001",
+      "address": {
+        "department": "06",
+        "municipality": "20",
+        "complement": "BOULEVARD SANTA ELENA SUR, SANTA TECLA"
+      }
+    },
+    {
+      "establishment_type": "01",  // Sucursal adicional
+      "establishment_code": "C002"
+    }
+  ]
+}`}
+      lang="json"
+      title="Solicitud de registro"
+    />
+
+    <div
+      class="bg-white dark:bg-gray-800 p-4 rounded-md border border-gray-200 dark:border-gray-700 my-4"
+    >
+      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+        Campos obligatorios
+      </h3>
+      <ul class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400">
+        <li><strong>nit</strong>: NIT de la empresa (14 dígitos)</li>
+        <li><strong>nrc</strong>: Número de registro fiscal (1-8 dígitos)</li>
+        <li><strong>business_name</strong>: Razón social (1-150 caracteres)</li>
+        <li>
+          <strong>economic_activity</strong>: Código de actividad económica
+          según CAT-019
+        </li>
+        <li>
+          <strong>branch_offices</strong>: Al menos una sucursal tipo "02" (Casa
+          matriz)
+        </li>
+      </ul>
+    </div>
+
+    <h3>Respuesta de registro</h3>
+    <p>Recibirás tus credenciales de API para cada sucursal que registraste:</p>
+
+    <CodeBlock
+      code={`{
+  "success": true,
+  "data": [
+    {
+      "branch_number": 1,
+      "establishment_type": "02",
+      "establishment_code": "C001",
+      "api_key": "b5fdbe3ed9d919ae0298...",  // ¡GUARDAR SEGURO!
+      "api_secret": "4sIQwMA5CDc7wRIXU..."   // ¡GUARDAR SEGURO!
+    },
+    {
+      "branch_number": 2,
+      "establishment_type": "01",
+      "establishment_code": "C002",
+      "api_key": "4bceed47e1740e961...",
+      "api_secret": "vOFgMVfnJLcjWqg5..."
+    }
+  ]
+}`}
+      lang="json"
+      title="Respuesta de registro"
+    />
+
+    <div class="not-prose my-6">
+      <Card
+        title="¡IMPORTANTE!"
+        type="warning"
+        description="Guarda tu API key y API secret en un lugar seguro. No podrás recuperarlos después y tendrías que generar nuevas credenciales."
+      />
+    </div>
+
+    <h2>Paso 2: Obtener token JWT</h2>
+    <p>Utiliza las credenciales recibidas para obtener un token JWT:</p>
+
+    <CodeBlock
+      code={`POST /api/v1/auth/login
+
+{
+  "api_key": "b5fdbe3ed9d919ae0298...",
+  "api_secret": "4sIQwMA5CDc7wRIXU...",
+  "credentials": {
+    "username": "TU-HACIENDA-USERNAME",
+    "password": "TU-HACIENDA-PASSWORD-API"
+  }
+}`}
+      lang="json"
+      title="Solicitud de inicio de sesión"
+    />
+
+    <p>
+      Recibirás un token JWT que será válido por el tiempo especificado en <code
+        >token_lifetime</code
+      > (por defecto 30 días):
+    </p>
+
+    <CodeBlock
+      code={`{
+  "success": true,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC..."
+  }
+}`}
+      lang="json"
+      title="Respuesta de inicio de sesión"
+    />
+
+    <h2>Paso 3: Usar el token para autenticarte</h2>
+    <p>
+      Incluye el token JWT en el encabezado de todas tus solicitudes
+      posteriores:
+    </p>
+
+    <CodeBlock
+      code={`GET /api/v1/dte/123456
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...`}
+      lang="http"
+      title="Ejemplo de solicitud autenticada"
+    />
+
+    <h2>Renovación del token</h2>
+    <p>
+      Para renovar el token antes de que expire, simplemente vuelve a realizar
+      el paso 2. Se recomienda renovar el token unos días antes de su expiración
+      para evitar interrupciones en el servicio.
+    </p>
+
+    <div class="not-prose mt-8">
+      <Card
+        title="Siguiente paso"
+        type="primary"
+        description="¡Ya estás listo para comenzar a emitir documentos electrónicos!"
+        href={`${baseURL}docs/guides/emission`}
+      />
+    </div>
+  </div>
+</DocsLayout>

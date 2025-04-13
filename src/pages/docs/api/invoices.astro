@@ -1,0 +1,499 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
+import Card from "../../../components/Card.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import FieldsTable from "../../../components/FieldsTable.astro";
+
+const title = "Factura Electrónica";
+const description =
+  "Documentación para la emisión, consulta e invalidación de Facturas Electrónicas";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/api/dte/invoices"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Esta sección describe los endpoints necesarios para crear facturas
+      electrónicas en el sistema de facturación electrónica de El Salvador.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Autenticación requerida"
+        type="warning"
+        description="Todos los endpoints requieren autenticación mediante token JWT. Consulta la sección de Autenticación para más detalles."
+        href={`${baseURL}docs/autenticacion`}
+      />
+    </div>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Catálogos de referencia"
+        type="info"
+        description="Para la correcta emisión de facturas, debes utilizar los códigos de los catálogos oficiales. Consulta la sección de Catálogos para todos los valores permitidos."
+        href={`${baseURL}docs/catalog`}
+      />
+    </div>
+
+    <h2>Crear Factura Electrónica</h2>
+
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/invoices"
+      description="Crea y emite una factura electrónica"
+      requestExample={`{
+  "items": [
+    {
+      "type": 1,
+      "description": "CODO PVC 3/4",
+      "quantity": 12,
+      "unit_measure": 59,
+      "unit_price": 0.65,
+      "discount": 0,
+      "code": "COD1",
+      "non_subject_sale": 0,
+      "exempt_sale": 0,
+      "taxed_sale": 7.8,
+      "suggested_price": 0,
+      "non_taxed": 0,
+      "iva_item": 0.9
+    },
+    {
+      "type": 1,
+      "description": "CODO PVC 1",
+      "quantity": 123,
+      "unit_measure": 59,
+      "unit_price": 0.75,
+      "discount": 0,
+      "code": "COD2",
+      "non_subject_sale": 0,
+      "exempt_sale": 0,
+      "taxed_sale": 92.25,
+      "suggested_price": 0,
+      "non_taxed": 0,
+      "iva_item": 10.61
+    }
+  ],
+  "receiver": {
+    "document_type": "13",
+    "document_number": "00000000-0",
+    "name": "CLIENTE DE PRUEBA",
+    "address": {
+      "department": "08",
+      "municipality": "23",
+      "complement": "LA PAZ, SAN LUIS LA HERRADURA"
+    },
+    "phone": "21212121",
+    "email": "cliente@gmail.com"
+  },
+  "summary": {
+    "total_non_subject": 0,
+    "total_exempt": 0,
+    "total_taxed": 100.05,
+    "sub_total": 100.05,
+    "non_subject_discount": 0,
+    "exempt_discount": 0,
+    "taxed_discount": 0,
+    "discount_percentage": 0,
+    "total_discount": 0,
+    "sub_total_sales": 100.05,
+    "total_operation": 100.05,
+    "total_non_taxed": 0,
+    "total_to_pay": 99.05,
+    "operation_condition": 1,
+    "iva_retention": 1.00,
+    "total_iva": 11.51,
+    "payment_types": [
+      {
+        "code": "01",
+        "amount": 99.05
+      }
+    ]
+  },
+
+  // Nota, estos campos si NO seran ocupados, no es necesario enviarlos, los muestra acá unicamente como referencia
+  "third_party_sale": null,
+  "related_docs": null,
+  "other_docs": null,
+  "appendixes": null
+}`}
+      responseExample={`{
+  "success": true,
+  "reception_stamp": "202533D8A3CB39484D...",
+  "qr_link": "https://admin.factura.gob.sv/consultaPublica?ambiente=00&codGen=UUID-GENERADO&fechaEmi=FECHA-EMISION",
+  "data": {
+    "identificacion": {
+      "version": 1,
+      "ambiente": "00",
+      "tipoDte": "01",
+      "numeroControl": "DTE-01-C0020000-000000000000001",
+      "codigoGeneracion": "BC3F4F6F-C16D-4...",
+      "tipoModelo": 1,
+      "tipoOperacion": 1,
+      "tipoContingencia": null,
+      "motivoContin": null,
+      "fecEmi": "2025-04-12",
+      "horEmi": "19:35:06",
+      "tipoMoneda": "USD"
+    },
+    "resumen": {
+      "totalNoSuj": 0,
+      "totalExenta": 0,
+      "totalGravada": 100.05,
+      "subTotalVentas": 100.05,
+      "descuNoSuj": 0,
+      "descuExenta": 0,
+      "descuGravada": 0,
+      "porcentajeDescuento": 0,
+      "totalDescu": 0,
+      "tributos": [],
+      "subTotal": 100.05,
+      "reteRenta": 0,
+      "ivaRete1": 1,
+      "montoTotalOperacion": 100.05,
+      "totalNoGravado": 0,
+      "totalPagar": 99.05,
+      "totalLetras": "NOVENTA Y NUEVE 05/100",
+      "totalIva": 11.51,
+      "saldoFavor": 0,
+      "condicionOperacion": 1,
+      "pagos": [
+        {
+          "codigo": "01",
+          "montoPago": 99.05,
+          "referencia": null,
+          "plazo": null,
+          "periodo": null
+        }
+      ],
+      "numPagoElectronico": null
+    },
+    "emisor": {
+      "nit": "00000000000000",
+      "nrc": "0000000",
+      "nombre": "EMPRESA DE PRUEBAS SA DE CV 2",
+      "codActividad": "00000",
+      "descActividad": "Venta al por mayor de otros productos",
+      "tipoEstablecimiento": "01",
+      "direccion": {
+        "departamento": "06",
+        "municipio": "20",
+        "complemento": "BOULEVARD SANTA ELENA SUR, SANTA TECLA"
+      },
+      "telefono": "21212121",
+      "correo": "facturacion@empresa.com.sv",
+      "nombreComercial": "EJEMPLO",
+      "codEstableMH": null,
+      "codEstable": "C002",
+      "codPuntoVentaMH": null,
+      "codPuntoVenta": null
+    },
+    "receptor": {
+      "nombre": "CLIENTE DE PRUEBA",
+      "tipoDocumento": "13",
+      "numDocumento": "00000000-0",
+      "nrc": null,
+      "codActividad": null,
+      "descActividad": null,
+      "direccion": {
+        "departamento": "08",
+        "municipio": "23",
+        "complemento": "LA PAZ, SAN LUIS LA HERRADURA"
+      },
+      "telefono": "21212121",
+      "correo": "cliente@gmail.com"
+    },
+    "cuerpoDocumento": [
+      {
+        "numItem": 1,
+        "tipoItem": 1,
+        "numeroDocumento": null,
+        "codigo": null,
+        "codTributo": null,
+        "descripcion": "CODO PVC 3/4",
+        "cantidad": 12,
+        "uniMedida": 59,
+        "precioUni": 0.65,
+        "montoDescu": 0,
+        "ventaNoSuj": 0,
+        "ventaExenta": 0,
+        "ventaGravada": 7.8,
+        "tributos": null,
+        "psv": 0,
+        "noGravado": 0,
+        "ivaItem": 0.9
+      },
+      {
+        "numItem": 2,
+        "tipoItem": 1,
+        "numeroDocumento": null,
+        "codigo": null,
+        "codTributo": null,
+        "descripcion": "CODO PVC 1",
+        "cantidad": 123,
+        "uniMedida": 59,
+        "precioUni": 0.75,
+        "montoDescu": 0,
+        "ventaNoSuj": 0,
+        "ventaExenta": 0,
+        "ventaGravada": 92.25,
+        "tributos": null,
+        "psv": 0,
+        "noGravado": 0,
+        "ivaItem": 10.61
+      }
+    ],
+    "apendice": [
+      {
+        "campo": "Datos del documento",
+        "etiqueta": "Sello de recepción",
+        "valor": "202533D8A3CB39484D..."
+      }
+    ],
+    "documentoRelacionado": null,
+    "otrosDocumentos": null,
+    "ventaTercero": null,
+    "extension": null
+  }
+}`}
+    >
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Este endpoint permite crear y emitir una factura electrónica que cumple
+        con los requisitos del Ministerio de Hacienda.
+      </p>
+    </ApiEndpoint>
+
+    <FieldsTable
+      title="Campos principales"
+      description="Los campos necesarios para crear una factura electrónica"
+      fields={[
+        {
+          name: "items",
+          type: "array",
+          description: "Lista de productos o servicios que componen la factura",
+          required: true,
+        },
+        {
+          name: "items[].type",
+          type: "integer",
+          description:
+            "Tipo de ítem (1: Producto, 2: Servicio, 3: Ambos, 4: Impuesto)",
+          required: true,
+        },
+        {
+          name: "items[].description",
+          type: "string",
+          description: "Descripción del ítem (1-1000 caracteres)",
+          required: true,
+        },
+        {
+          name: "items[].quantity",
+          type: "number",
+          description: "Cantidad del ítem (debe ser mayor que 0)",
+          required: true,
+        },
+        {
+          name: "items[].unit_measure",
+          type: "integer",
+          description: "Unidad de medida (1-99)",
+          required: true,
+        },
+        {
+          name: "items[].unit_price",
+          type: "number",
+          description: "Precio unitario (debe ser mayor o igual a 0)",
+          required: true,
+        },
+        {
+          name: "items[].taxed_sale",
+          type: "number",
+          description: "Venta gravada (debe ser mayor o igual a 0)",
+          required: true,
+        },
+        {
+          name: "receiver",
+          type: "object",
+          description: "Información del receptor o cliente",
+          required: false,
+        },
+        {
+          name: "receiver.document_type",
+          type: "string",
+          description: "Tipo de documento (13: DUI, 36: NIT)",
+          required: false,
+        },
+        {
+          name: "receiver.document_number",
+          type: "string",
+          description: "Número de documento del receptor",
+          required: false,
+        },
+        {
+          name: "receiver.name",
+          type: "string",
+          description: "Nombre del receptor",
+          required: false,
+        },
+        {
+          name: "summary",
+          type: "object",
+          description: "Resumen de totales de la factura",
+          required: true,
+        },
+        {
+          name: "summary.total_taxed",
+          type: "number",
+          description: "Total de ventas gravadas",
+          required: true,
+        },
+        {
+          name: "summary.sub_total",
+          type: "number",
+          description: "Subtotal de la factura",
+          required: true,
+        },
+        {
+          name: "summary.total_to_pay",
+          type: "number",
+          description: "Total a pagar",
+          required: true,
+        },
+        {
+          name: "summary.payment_types",
+          type: "array",
+          description: "Tipos de pago utilizados",
+          required: true,
+        },
+        {
+          name: "summary.operation_condition",
+          type: "integer",
+          description: "Condición de operación (1: Contado, 2: Crédito)",
+          required: true,
+        },
+      ]}
+    />
+
+    <h3>Validaciones específicas para Factura Electrónica</h3>
+    <ul>
+      <li>
+        Los ítems solo pueden tener un tipo de venta (gravada, exenta, no sujeta
+        o no gravada)
+      </li>
+      <li>
+        Si hay <code>taxed_sale > 0</code> (venta gravada):
+        <ul>
+          <li><code>unit_price</code> debe ser mayor que 0</li>
+          <li>
+            El cálculo de <code>iva_item</code> debe ser 13% de la venta gravada
+          </li>
+        </ul>
+      </li>
+      <li>
+        Si hay <code>non_taxed > 0</code> (monto no gravado):
+        <ul>
+          <li>No debe tener otros tipos de venta</li>
+          <li>No debe incluir impuestos</li>
+          <li><code>unit_price</code> debe ser 0</li>
+        </ul>
+      </li>
+      <li>
+        La suma de los montos de <code>payment_types</code> debe ser igual a <code
+          >total_to_pay</code
+        >
+      </li>
+      <li>
+        Si <code>operation_condition = 1</code> (contado), no puede haber <code
+          >term</code
+        > ni <code>period</code>
+      </li>
+      <li>
+        Si <code>operation_condition = 2</code> (crédito):
+        <ul>
+          <li><code>term</code> y <code>period</code> son obligatorios</li>
+          <li>No se permite pago tipo "01" (efectivo)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>Extensión de Factura</h2>
+    <p>
+      Cuando el monto de la factura es mayor o igual a $1,095.00, es obligatorio
+      incluir el campo <code>extension</code>:
+    </p>
+
+    <CodeBlock
+      code={`{
+  "extension": {
+    "delivery_name": "Nombre de quien entrega",
+    "delivery_document": "00000000-0",
+    "receiver_name": "Nombre de quien recibe",
+    "receiver_document": "00000000-0",
+    "observation": "Observaciones adicionales",
+    "vehicule_plate": "P123-456"
+  }
+}`}
+      lang="json"
+      title="Ejemplo de extensión requerida"
+    />
+
+    <FieldsTable
+      title="Campos del objeto extension"
+      description="La extensión es obligatoria cuando el monto total es mayor o igual a $1,095.00"
+      fields={[
+        {
+          name: "delivery_name",
+          type: "string",
+          description: "Nombre de quien entrega",
+          required: true,
+        },
+        {
+          name: "delivery_document",
+          type: "string",
+          description: "Documento de quien entrega",
+          required: true,
+        },
+        {
+          name: "receiver_name",
+          type: "string",
+          description: "Nombre de quien recibe",
+          required: true,
+        },
+        {
+          name: "receiver_document",
+          type: "string",
+          description: "Documento de quien recibe",
+          required: true,
+        },
+        {
+          name: "observation",
+          type: "string",
+          description: "Observaciones adicionales",
+          required: false,
+        },
+        {
+          name: "vehicule_plate",
+          type: "string",
+          description: "Placa del vehículo",
+          required: false,
+        },
+      ]}
+    />
+
+    <div class="not-prose my-8">
+      <Card
+        title="Nota"
+        type="info"
+        description="Para consultar facturas ya emitidas, utiliza los endpoints de Consulta de DTE en la sección correspondiente."
+        href={`${baseURL}docs/api/consult-dte`}
+      />
+    </div>
+  </div>
+</DocsLayout>

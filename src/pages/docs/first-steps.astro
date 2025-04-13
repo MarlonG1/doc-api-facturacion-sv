@@ -1,0 +1,332 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Card from "../../components/Card.astro";
+import MermaidDiagram from "../../components/MermaidDiagram.astro";
+
+const title = "Primeros Pasos con la API de Facturación Electrónica";
+const description =
+  "Guía inicial para comprender e implementar la API de Facturación Electrónica en tu negocio";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+
+const architectureDiagram = `
+flowchart LR
+    A[Tu Sistema/ERP] --> B[Capa de Integración]
+    B --> C[API Facturación]
+    C --> D[Ministerio de Hacienda]
+    B --> E[(Base de Datos Local)]
+    E --> F[Sistema de Respaldo]
+`;
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/primeros-pasos"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Esta guía te ayudará a comprender el proceso completo de implementación de
+      la API de Facturación Electrónica y los pasos necesarios para hacerlo
+      exitosamente.
+    </p>
+
+    <h2>Visión general del proceso</h2>
+    <p>
+      El sistema de facturación electrónica en El Salvador requiere que los
+      contribuyentes emitan y reciban documentos fiscales en formato
+      electrónico. Nuestra API facilita este proceso actuando como intermediario
+      entre tu sistema y los servicios del Ministerio de Hacienda.
+    </p>
+
+    <h2>Requisitos previos</h2>
+    <p>Antes de comenzar con la implementación, asegúrate de contar con:</p>
+
+    <div
+      class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 my-6"
+    >
+      <ul class="list-disc pl-6 text-gray-700 dark:text-gray-300 space-y-2">
+        <li>
+          <strong>Credenciales del Ministerio de Hacienda</strong>
+          <br />
+          Usuario y contraseña para acceder a los servicios de la DGI.
+        </li>
+        <li>
+          <strong>Certificado digital</strong>
+          <br />
+          Necesario para firmar digitalmente tus documentos fiscales.
+        </li>
+        <li>
+          <strong>Información fiscal completa</strong>
+          <br />
+          NIT, NRC, actividad económica, dirección fiscal, etc.
+        </li>
+        <li>
+          <strong>Inventario de sucursales y puntos de venta</strong>
+          <br />
+          Lista detallada de todos los establecimientos que emitirán documentos.
+        </li>
+        <li>
+          <strong>Catálogo de productos y servicios</strong>
+          <br />
+          Clasificados según el tipo de ítem (bienes, servicios, ambos).
+        </li>
+      </ul>
+    </div>
+
+    <h2>Arquitectura recomendada</h2>
+    <p>
+      Recomendamos la siguiente arquitectura para la integración con la API:
+    </p>
+
+    <!-- Usando el componente MermaidDiagram con las clases aplicadas -->
+    <div
+      class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 my-6"
+    >
+      <MermaidDiagram chart={architectureDiagram} />
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+      <div
+        class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Integración Básica
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          Para negocios pequeños o con volumen bajo de facturación.
+        </p>
+        <ul
+          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+        >
+          <li>Emisión directa a través de la API</li>
+          <li>Almacenamiento local de respuestas</li>
+          <li>Proceso manual de contingencia</li>
+          <li>Consultas según demanda</li>
+        </ul>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Integración Completa
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          Para empresas con alto volumen de facturación o múltiples sucursales.
+        </p>
+        <ul
+          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+        >
+          <li>Integración profunda con ERP</li>
+          <li>Sistema de cola para emisiones</li>
+          <li>Base de datos de respaldo</li>
+          <li>Gestión automatizada de contingencias</li>
+          <li>Sistema de reportes y monitoreo</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Secuencia de implementación</h2>
+    <p>Sigue estos pasos en orden para una implementación exitosa:</p>
+
+    <ol class="list-decimal pl-6 space-y-4 mt-4">
+      <li>
+        <strong>Registro de la empresa</strong>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">
+          Registra tu empresa y sucursales utilizando nuestra <a
+            href={`${baseURL}docs/guides/authentication`}
+            class="text-indigo-600 dark:text-indigo-400"
+            >guía rápida de autenticación</a
+          >.
+        </p>
+      </li>
+
+      <li>
+        <strong>Implementación del modo de pruebas</strong>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">
+          Configura tu sistema en modo de pruebas (ambiente = "00") para
+          verificar la integración sin generar documentos fiscales reales.
+        </p>
+      </li>
+
+      <li>
+        <strong>Mapeo de catálogos</strong>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">
+          Implementa los <a
+            href={`${baseURL}docs/catalog`}
+            class="text-indigo-600 dark:text-indigo-400">catálogos oficiales</a
+          > en tu sistema para asegurar la correcta codificación de productos, servicios,
+          impuestos, etc.
+        </p>
+      </li>
+
+      <li>
+        <strong>Desarrollo del gestor de contingencias</strong>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">
+          Implementa la lógica para manejar situaciones de contingencia según
+          nuestra <a
+            href={`${baseURL}docs/contingency`}
+            class="text-indigo-600 dark:text-indigo-400">guía de contingencia</a
+          >.
+        </p>
+      </li>
+
+      <li>
+        <strong>Desarrollo de flujos de negocio</strong>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">
+          Implementa los flujos específicos de tu negocio: facturación, notas de
+          crédito, comprobantes fiscales, etc.
+        </p>
+      </li>
+
+      <li>
+        <strong>Pruebas integrales</strong>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">
+          Realiza pruebas completas de cada tipo de documento y escenario,
+          incluyendo situaciones de contingencia.
+        </p>
+      </li>
+
+      <li>
+        <strong>Migración a producción</strong>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">
+          Una vez verificadas todas las pruebas, cambia al ambiente de
+          producción (ambiente = "01").
+        </p>
+      </li>
+    </ol>
+
+    <h2>Checklist de implementación</h2>
+    <p>
+      Utiliza esta lista para verificar que tu implementación cubre todos los
+      aspectos necesarios:
+    </p>
+
+    <div
+      class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 my-6"
+    >
+      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+        Verificación de implementación
+      </h3>
+
+      <div class="space-y-4">
+        <div>
+          <h4 class="font-medium text-gray-800 dark:text-gray-200">
+            Configuración básica
+          </h4>
+          <ul class="list-disc pl-6 text-gray-600 dark:text-gray-400 mt-2">
+            <li>Registro exitoso de empresa y sucursales</li>
+            <li>Almacenamiento seguro de credenciales</li>
+            <li>Implementación de renovación automática de tokens</li>
+            <li>Configuración de acceso a ambientes de prueba y producción</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-medium text-gray-800 dark:text-gray-200">
+            Emisión de documentos
+          </h4>
+          <ul class="list-disc pl-6 text-gray-600 dark:text-gray-400 mt-2">
+            <li>Factura electrónica (FE)</li>
+            <li>Comprobante de crédito fiscal (CCF)</li>
+            <li>Comprobante de retención (CR) si aplica</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-medium text-gray-800 dark:text-gray-200">
+            Gestión de documentos
+          </h4>
+          <ul class="list-disc pl-6 text-gray-600 dark:text-gray-400 mt-2">
+            <li>Consulta de documentos emitidos</li>
+            <li>Invalidación de documentos</li>
+            <li>Generación de PDF fiscales</li>
+            <li>Almacenamiento local de documentos emitidos</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-medium text-gray-800 dark:text-gray-200">
+            Monitoreo y seguridad
+          </h4>
+          <ul class="list-disc pl-6 text-gray-600 dark:text-gray-400 mt-2">
+            <li>Monitoreo de estado del sistema</li>
+            <li>Alertas de errores recurrentes</li>
+            <li>Respaldo periódico de documentos</li>
+            <li>Protección de credenciales y tokens</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h2>Migración desde sistema físico</h2>
+    <p>
+      Si estás migrando desde un sistema de facturación física, considera estos
+      aspectos adicionales:
+    </p>
+
+    <div
+      class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 my-6"
+    >
+      <ul class="list-disc pl-6 text-gray-700 dark:text-gray-300 space-y-2">
+        <li>
+          <strong>Numeración de documentos:</strong> La numeración electrónica es
+          independiente de la física. Los documentos electrónicos tienen su propia
+          secuencia controlada por el sistema.
+        </li>
+
+        <li>
+          <strong>Capacitación del personal:</strong> Entrena a tu equipo en los
+          nuevos procesos de facturación electrónica.
+        </li>
+        <li>
+          <strong>Actualización de clientes:</strong> Informa a tus clientes sobre
+          el cambio y cómo afectará la recepción de facturas.
+        </li>
+      </ul>
+    </div>
+
+    <h2>Próximos pasos</h2>
+    <p>
+      Ahora que comprendes el panorama completo, puedes comenzar con los
+      siguientes recursos:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose my-8">
+      <Card
+        title="Autenticación Rápida"
+        description="Configura el acceso a la API en minutos"
+        href={`${baseURL}docs/guides/authentication`}
+        type="primary"
+      />
+
+      <Card
+        title="Emisión de Facturas"
+        description="Aprende a crear tu primera factura electrónica"
+        href={`${baseURL}docs/api/invoices`}
+        type="primary"
+      />
+
+      <Card
+        title="Sistema de Contingencia"
+        description="Prepárate para cualquier eventualidad"
+        href={`${baseURL}docs/contingency`}
+        type="info"
+      />
+
+      <Card
+        title="Catálogos Oficiales"
+        description="Referencia de códigos para tu implementación"
+        href={`${baseURL}docs/catalog`}
+        type="info"
+      />
+    </div>
+  </div>
+</DocsLayout>

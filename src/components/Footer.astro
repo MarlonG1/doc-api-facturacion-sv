@@ -1,0 +1,126 @@
+---
+// Asegúrate de que la URL base sea correcta
+const baseURL = import.meta.env.BASE_URL + "/" || "/doc-api-facturacion-sv/";
+const year = new Date().getFullYear();
+---
+
+<footer
+  class="border-t border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900"
+>
+  <div class="container mx-auto px-4 py-8 md:py-12 max-w-6xl">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 text-center md:text-left">
+      <div class="flex flex-col">
+        <h3 class="mb-4 text-lg font-medium">API Facturación</h3>
+        <p class="mb-4 text-sm text-slate-600 dark:text-slate-400">
+          Solución completa para facturación electrónica en El Salvador. Cumple
+          con las normativas y regulaciones fiscales vigentes del Ministerio de
+          Hacienda.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="mb-4 text-lg font-medium">Documentación</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a
+              href={`${baseURL}docs/introduction`}
+              class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              >Introducción</a
+            >
+          </li>
+          <li>
+            <a
+              href={`${baseURL}docs/first-steps`}
+              class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              >Primeros Pasos</a
+            >
+          </li>
+          <li>
+            <a
+              href={`${baseURL}docs/api/endpoints`}
+              class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              >API Reference</a
+            >
+          </li>
+          <li>
+            <a
+              href={`${baseURL}docs/catalog`}
+              class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              >Catálogos</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="mb-4 text-lg font-medium">Recursos</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a
+              href={`${baseURL}docs/faq`}
+              class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              >Preguntas Frecuentes</a
+            >
+          </li>
+          <li>
+            <a
+              href={`${baseURL}docs/common-errors`}
+              class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              >Errores Comunes</a
+            >
+          </li>
+          <li>
+            <a
+              href={`${baseURL}docs/resources`}
+              class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              >Recursos Adicionales</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/marlong1/doc-api-facturacion-sv"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+              >GitHub</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-8 flex flex-col items-center justify-between border-t border-slate-200 pt-8 dark:border-slate-700 md:flex-row"
+    >
+      <p class="mb-4 text-sm text-slate-600 dark:text-slate-400 md:mb-0">
+        &copy; {year} API Facturación Electrónica El Salvador. MarlonG1, Todos los
+        derechos reservados.
+      </p>
+      <div class="flex space-x-4">
+        <a
+          href="https://github.com/marlong1/doc-api-facturacion-sv"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-50"
+          aria-label="GitHub"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

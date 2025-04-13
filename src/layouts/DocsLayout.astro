@@ -1,0 +1,312 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Navbar from "../components/Navbar.astro";
+import Sidebar from "../components/Sidebar.astro";
+import { ViewTransitions } from "astro:transitions";
+import TableOfContents from "../components/TableOfContents.astro";
+
+const { title, description, currentPage } = Astro.props;
+// URL base fija para el despliegue en GitHub Pages
+const baseURL = "/doc-api-facturacion-sv";
+---
+
+<html lang="es" class="scroll-smooth">
+  <head>
+    <BaseHead title={title} description={description} />
+    <ViewTransitions />
+    <!-- CSS global -->
+    <link rel="stylesheet" href="/doc-api-facturacion-sv/styles/global.css" />
+
+    <!-- Prism.js - Resaltado de sintaxis -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"
+    ></script>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"
+    ></script>
+
+    <style is:inline>
+      /* Estilos personalizados para la barra de desplazamiento */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+
+      .light ::-webkit-scrollbar-track {
+        background: rgba(226, 232, 240, 0.3);
+        border-radius: 8px;
+      }
+
+      .dark ::-webkit-scrollbar-track {
+        background: rgba(30, 41, 59, 0.2);
+        border-radius: 8px;
+      }
+
+      .light ::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.7);
+        border-radius: 8px;
+        transition: background 0.2s ease;
+      }
+
+      .dark ::-webkit-scrollbar-thumb {
+        background: rgba(71, 85, 105, 0.7);
+        border-radius: 8px;
+        transition: background 0.2s ease;
+      }
+
+      .light ::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 116, 139, 0.8);
+      }
+
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 116, 139, 0.8);
+      }
+
+      ::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+
+      aside::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      .light aside::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.5);
+      }
+
+      .dark aside::-webkit-scrollbar-thumb {
+        background: rgba(71, 85, 105, 0.5);
+      }
+
+      .light aside::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 116, 139, 0.8);
+      }
+
+      .dark aside::-webkit-scrollbar-thumb:hover {
+        background: rgba(100, 116, 139, 0.8);
+      }
+
+      /* Personalización de colores para bloques de código JSON */
+
+      /* Estilos para modo oscuro */
+      .dark pre[class*="language-"],
+      .dark code[class*="language-"] {
+        background: #192441; /* Azul oscuro coherente con el tema */
+        color: #e2e8f0; /* Texto principal en tono claro */
+        border-radius: 8px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+
+      /* Propiedades JSON (keys) - Tono rosa/rojo */
+      .dark .token.property {
+        color: #f472b6; /* Rosa */
+      }
+
+      /* Strings - Verde claro */
+      .dark .token.string {
+        color: #a3e635; /* Verde lima */
+      }
+
+      /* Números, booleanos, null - Azul claro */
+      .dark .token.number,
+      .dark .token.boolean,
+      .dark .token.null {
+        color: #60a5fa; /* Azul claro */
+      }
+
+      /* Puntuación y símbolos - Gris claro */
+      .dark .token.punctuation,
+      .dark .token.operator {
+        color: #94a3b8; /* Slate 400 */
+      }
+
+      /* Estilos para modo claro */
+      .light pre[class*="language-"],
+      .light code[class*="language-"] {
+        background: #f8fafc; /* Fondo muy claro */
+        color: #1e293b; /* Texto principal oscuro */
+        border: 1px solid #e2e8f0; /* Borde sutil */
+        border-radius: 8px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+
+      /* Propiedades JSON (keys) - Tono rojo oscuro */
+      .light .token.property {
+        color: #be185d; /* Rosa oscuro */
+      }
+
+      /* Strings - Verde oscuro */
+      .light .token.string {
+        color: #15803d; /* Verde oscuro */
+      }
+
+      /* Números, booleanos, null - Azul oscuro */
+      .light .token.number,
+      .light .token.boolean,
+      .light .token.null {
+        color: #1d4ed8; /* Azul oscuro */
+      }
+
+      /* Puntuación y símbolos - Gris medio */
+      .light .token.punctuation,
+      .light .token.operator {
+        color: #475569; /* Slate 600 */
+      }
+
+      /* Ajustes adicionales para líneas numeradas */
+      .line-numbers .line-numbers-rows {
+        border-right-width: 1px;
+      }
+
+      .dark .line-numbers .line-numbers-rows {
+        border-right-color: #334155; /* Slate 700 */
+      }
+
+      .light .line-numbers .line-numbers-rows {
+        border-right-color: #cbd5e1; /* Slate 300 */
+      }
+
+      .dark .line-numbers-rows > span:before {
+        color: #64748b; /* Slate 500 */
+      }
+
+      .light .line-numbers-rows > span:before {
+        color: #64748b; /* Slate 500 */
+      }
+
+      /* Fondo del código y bordes generales */
+      pre[class*="language-"] {
+        padding: 1.25rem;
+        margin: 1.5rem 0;
+        overflow: auto;
+      }
+
+      /* Ajuste para el tamaño y fondo de los códigos embebidos en texto */
+      :not(pre) > code[class*="language-"] {
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+      }
+
+      /* Ajustes específicos para JSON en la interfaz */
+      .language-json .token.property {
+        font-weight: 500;
+      }
+
+      /* Espaciado y sangrado correcto */
+      pre[class*="language-"] {
+        tab-size: 2;
+      }
+    </style>
+  </head>
+  <body
+    id="app-body"
+    class="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
+  >
+    <Navbar />
+
+    <div class="flex flex-col lg:flex-row w-full">
+      <!-- Sidebar izquierdo -->
+      <aside
+        class="w-full lg:w-72 xl:w-80 shrink-0 border-r border-gray-200 dark:border-gray-800 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto hidden lg:block"
+      >
+        <Sidebar currentPage={currentPage} />
+      </aside>
+
+      <!-- Main content -->
+      <main class="flex-1 min-w-0">
+        <div class="flex flex-col xl:flex-row">
+          <!-- Contenido principal -->
+          <div
+            class="flex-1 px-6 lg:px-10 py-8 min-w-0 max-w-4xl mx-auto xl:mx-0"
+          >
+            <slot />
+          </div>
+
+          <!-- Tabla de contenidos (derecha) -->
+          <div class="w-full xl:w-72 shrink-0 hidden xl:block">
+            <div
+              class="sticky top-16 pt-8 pl-2 h-[calc(100vh-4rem)] overflow-y-auto"
+            >
+              <TableOfContents />
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer class="border-t border-slate-200 dark:border-slate-700 py-6 mt-8">
+      <div
+        class="container mx-auto px-4 text-center text-sm text-slate-600 dark:text-slate-400"
+      >
+        <p>
+          © {new Date().getFullYear()} API de Facturación Electrónica. Todos los
+          derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script is:inline>
+      // Documentación para el botón de "copiar al portapapeles"
+      document.addEventListener("DOMContentLoaded", () => {
+        const copyButtons = document.querySelectorAll(".copy-button");
+        copyButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const text = btn.dataset.copy;
+            if (text) {
+              navigator.clipboard.writeText(text);
+              btn.classList.add("copied");
+              setTimeout(() => {
+                btn.classList.remove("copied");
+              }, 2000);
+            }
+          });
+        });
+      });
+
+      // Código para gestionar temas claros y oscuros usando funciones globales
+      function applyThemeToCodeBlocks(elements) {
+        const theme = getThemePreference();
+        elements.forEach((block) => {
+          if (theme === "dark") {
+            block.classList.add("dark");
+            block.classList.remove("light");
+          } else {
+            block.classList.add("light");
+            block.classList.remove("dark");
+          }
+        });
+      }
+
+      // Escuchar cambios de tema
+      document.addEventListener("themeChanged", (e) => {
+        const codeBlocks = document.querySelectorAll("pre[class*='language-']");
+        const responseBlocks = document.querySelectorAll(".response");
+        applyThemeToCodeBlocks(codeBlocks);
+        applyThemeToCodeBlocks(responseBlocks);
+      });
+
+      // Aplicar tema a bloques de código al cargar la página
+      document.addEventListener("astro:page-load", () => {
+        const codeBlocks = document.querySelectorAll("pre[class*='language-']");
+        const responseBlocks = document.querySelectorAll(".response");
+        applyThemeToCodeBlocks(codeBlocks);
+        applyThemeToCodeBlocks(responseBlocks);
+      });
+    </script>
+  </body>
+</html>

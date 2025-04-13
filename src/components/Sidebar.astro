@@ -1,0 +1,161 @@
+---
+interface Props {
+  currentPage?: string;
+}
+
+const { currentPage } = Astro.props;
+// URL base fija para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+
+const sidebarItems = [
+  {
+    title: "Introducción",
+    links: [
+      {
+        text: "Introducción",
+        href: `${baseURL}docs/introduction`,
+      },
+      {
+        text: "Primeros pasos",
+        href: `${baseURL}docs/first-steps`,
+      },
+    ],
+  },
+  {
+    title: "Guías",
+    links: [
+      { text: "Autenticación", href: `${baseURL}docs/guides/authentication` },
+      { text: "Facturación", href: `${baseURL}docs/guides/emission` },
+      { text: "Invalidación", href: `${baseURL}docs/guides/invalidation` },
+    ],
+  },
+  {
+    title: "Referencia API",
+    links: [
+      { text: "Endpoints", href: `${baseURL}docs/api/endpoints` },
+      { text: "Autenticación", href: `${baseURL}docs/api/authentication` },
+      { text: "Factura Electrónica", href: `${baseURL}docs/api/invoices` },
+      {
+        text: "Comprobante de Crédito Fiscal",
+        href: `${baseURL}docs/api/credit-notes`,
+      },
+      { text: "Invalidación", href: `${baseURL}docs/api/invalidation` },
+      { text: "Consulta de DTE", href: `${baseURL}docs/api/consult-dte` },
+      { text: "Monitoreo", href: `${baseURL}docs/api/monitoring` },
+    ],
+  },
+  {
+    title: "Errores",
+    links: [{ text: "Errores comunes", href: `${baseURL}docs/common-errors` }],
+  },
+  {
+    title: "Información adicional",
+    links: [
+      { text: "Contingencia", href: `${baseURL}docs/contingency` },
+      { text: "Ambientes", href: `${baseURL}docs/enviroments` },
+      { text: "Catálogos", href: `${baseURL}docs/catalog` },
+      { text: "FAQ", href: `${baseURL}docs/faq` },
+    ],
+  },
+];
+
+// Función para determinar si un enlace está activo
+const isActive = (href: string) => {
+  if (!currentPage) return false;
+
+  // Normalizar URLs para comparación - eliminar trailing slashes
+  const normalizedHref = href.endsWith("/") ? href.slice(0, -1) : href;
+  const normalizedCurrentPage = currentPage.endsWith("/")
+    ? currentPage.slice(0, -1)
+    : currentPage;
+
+  // Verificar si es la página actual o una subpágina
+  return (
+    normalizedCurrentPage === normalizedHref ||
+    normalizedCurrentPage.startsWith(normalizedHref + "/") ||
+    // Para manejar casos como "/docs/api/endpoints" y "/docs/api/endpoints/index.html"
+    (normalizedHref.includes("/endpoints") &&
+      normalizedCurrentPage.includes("/endpoints"))
+  );
+};
+
+// Función para determinar si una sección está activa
+const isSectionActive = (items: Array<{ href: string }>) => {
+  return items.some((item) => isActive(item.href));
+};
+---
+
+<nav class="h-full pt-8 overflow-y-auto bg-gray-50 dark:bg-gray-900 pb-24">
+  {
+    sidebarItems.map((item) => (
+      <div class="mb-6 px-4">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 uppercase tracking-wider px-2">
+          {item.title}
+        </h3>
+        <ul class="space-y-1">
+          {item.links.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={[
+                    "block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 pl-8 pr-3 border-l-2 transition-colors duration-200 rounded-r-md",
+                    active
+                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium"
+                      : "border-transparent hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10",
+                  ]}
+                  aria-current={active ? "page" : undefined}
+                >
+                  {link.text}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ))
+  }
+</nav>
+
+<script>
+  // Marcar el enlace activo en la barra lateral
+  document.addEventListener("astro:page-load", () => {
+    const currentPath = window.location.pathname;
+    const sidebarLinks = document.querySelectorAll("aside a");
+
+    sidebarLinks.forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href) return;
+
+      // Normalizar URLs para comparación
+      const normalizedHref = href.endsWith("/") ? href.slice(0, -1) : href;
+      const normalizedCurrentPath = currentPath.endsWith("/")
+        ? currentPath.slice(0, -1)
+        : currentPath;
+
+      // Verificar si es la página actual o su hijo
+      const isCurrentPage =
+        normalizedCurrentPath === normalizedHref ||
+        normalizedCurrentPath.startsWith(normalizedHref + "/") ||
+        (href.includes("/endpoints") && currentPath.includes("/endpoints"));
+
+      if (isCurrentPage) {
+        link.classList.add(
+          "border-blue-500",
+          "bg-blue-50",
+          "dark:bg-blue-900/20",
+          "text-blue-700",
+          "dark:text-blue-300",
+          "font-medium"
+        );
+        link.classList.remove(
+          "border-transparent",
+          "text-gray-700",
+          "dark:text-gray-300"
+        );
+        link.setAttribute("aria-current", "page");
+      }
+    });
+  });
+</script>

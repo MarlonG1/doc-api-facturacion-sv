@@ -1,0 +1,468 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Card from "../../components/Card.astro";
+
+const title = "Preguntas Frecuentes (FAQ)";
+const description =
+  "Respuestas a las preguntas más comunes sobre la API de Facturación Electrónica";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout title={title} description={description} currentPage="/docs/faq">
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Encuentra respuestas a las preguntas más frecuentes sobre la API de
+      Facturación Electrónica, su implementación y problemas comunes.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="¿No encuentras lo que buscas?"
+        type="info"
+        description="Si no encuentras respuesta a tu pregunta, no dudes en contactar a nuestro equipo de soporte técnico."
+        href={`${baseURL}docs/soporte`}
+      />
+    </div>
+
+    <h2>Autenticación y Configuración</h2>
+    <div class="space-y-6 mt-6 mb-12">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Cómo obtengo mis credenciales de API?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Para obtener tus credenciales de API, primero debes registrarte
+          utilizando el endpoint <code>/api/v1/auth/register</code>. Este
+          proceso te proporcionará un API key y un API secret para cada sucursal
+          que registres. Estas credenciales son únicas y no deben ser
+          compartidas.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Cuánto tiempo dura el token JWT?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          La duración del token JWT está determinada por el campo <code
+            >token_lifetime</code
+          > que especificaste durante el registro. El valor predeterminado es de
+          30 días, pero puedes configurarlo entre 1 y 90 días. Recomendamos renovar
+          el token unos días antes de su expiración para evitar interrupciones.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Puedo tener múltiples tokens activos simultáneamente?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Sí, el sistema permite tener múltiples tokens activos para diferentes
+          dispositivos o servicios. Cada token es independiente y tiene su
+          propio tiempo de expiración. Esto es útil si necesitas integrar la API
+          en múltiples sistemas o aplicaciones.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Debo crear una sucursal para cada punto de venta?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          No es obligatorio. Puedes tener múltiples puntos de venta (POS) dentro
+          de una misma sucursal utilizando el campo <code>pos_code</code>. Sin
+          embargo, si los puntos de venta están en diferentes ubicaciones
+          físicas, es recomendable crear sucursales separadas para mantener un
+          mejor control.
+        </p>
+      </div>
+    </div>
+
+    <h2>Emisión de Documentos</h2>
+    <div class="space-y-6 mt-6 mb-12">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Qué sucede si hay un error al emitir un documento?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Si hay errores de validación, el sistema responderá con un código 400
+          y detalles específicos sobre el error. Si hay problemas de conexión
+          con Hacienda, el sistema entrará automáticamente en modo contingencia.
+          En cualquier caso, el sistema proporciona información detallada para
+          identificar y solucionar el problema.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Puedo emitir documentos sin conexión a Internet?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Sí, el sistema cuenta con un modo de contingencia que permite emitir
+          documentos cuando no hay conexión disponible. Estos documentos se
+          guardan localmente y se transmiten a Hacienda una vez se restablezca
+          la conexión. Los documentos emitidos en contingencia son completamente
+          válidos fiscalmente.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Es necesario calcular manualmente el IVA para cada ítem?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Sí, debes calcular y proporcionar el valor de IVA para cada ítem a
+          través del campo <code>iva_item</code>. El cálculo debe ser
+          exactamente el 13% sobre la base imponible (precio unitario menos
+          descuento dividido entre 1.13). El sistema validará estos cálculos
+          para asegurar su precisión.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Cómo manejo las operaciones exentas o no sujetas?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Para operaciones exentas, utiliza el campo <code>exempt_sale</code> en
+          lugar de <code>taxed_sale</code>. Para operaciones no sujetas, utiliza <code
+            >non_subject_sale</code
+          >. Recuerda que un ítem solo puede tener un tipo de venta (gravada,
+          exenta o no sujeta). No debes incluir impuestos para ítems exentos o
+          no sujetos.
+        </p>
+      </div>
+    </div>
+
+    <h2>Errores Comunes</h2>
+    <div class="space-y-6 mt-6 mb-12">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Recibo el error "InvalidTotalAmount", ¿qué significa?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Este error indica que los montos calculados no coinciden con los
+          totales declarados. Debes verificar que:
+          <ol class="mt-2 ml-6 list-decimal">
+            <li>
+              La suma de <code>taxed_sale</code> de todos los items coincida con
+              <code>total_taxed</code>
+            </li>
+            <li>
+              El cálculo de impuestos sea exactamente 13% de la base imponible
+            </li>
+            <li>La suma de pagos sea igual al total a pagar</li>
+          </ol>
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Por qué recibo "InvalidDocumentNumber" al registrar un cliente?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Este error ocurre cuando el formato del número de documento no es
+          válido. Asegúrate de que:
+          <ul class="mt-2 ml-6 list-disc">
+            <li>DUI: Formato correcto con guión (00000000-0)</li>
+            <li>NIT: 14 dígitos, puede incluir guión</li>
+            <li>Otros documentos: Entre 3 y 20 caracteres</li>
+          </ul>
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Por qué recibo el error "InvalidPaymentTotal"?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Este error indica que la suma de los montos en el campo <code
+            >payment_types</code
+          > no coincide con el <code>total_to_pay</code>. Verifica que la suma
+          de todos los pagos declarados sea exactamente igual al total a pagar.
+          Los valores deben coincidir hasta el último centavo.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Recibo "AUTH_TOKEN_EXPIRED" aunque acabo de obtener el token
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Este problema generalmente se debe a diferencias en la zona horaria
+          entre tu servidor y el servidor de la API. Asegúrate de que la hora de
+          tu servidor esté correctamente sincronizada con un servidor NTP. Si el
+          problema persiste, verifica que estés utilizando el token más reciente
+          y que el valor de <code>token_lifetime</code> sea adecuado.
+        </p>
+      </div>
+    </div>
+
+    <h2>Invalidación de Documentos</h2>
+    <div class="space-y-6 mt-6 mb-12">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Puedo invalidar un documento después de 24 horas?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Depende del tipo de documento. Las facturas (código 01) pueden
+          invalidarse hasta 3 meses después de su emisión. Para otros
+          documentos, el límite es de 24 horas. Esta restricción está
+          establecida por normativa del Ministerio de Hacienda.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Cuál es la diferencia entre los tipos de invalidación?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          <ul class="mt-2 ml-6 list-disc">
+            <li>
+              <strong>Tipo 1</strong>: Sustitución por error - Requiere un
+              documento de reemplazo
+            </li>
+            <li>
+              <strong>Tipo 2</strong>: Anulación simple - No requiere documento
+              de reemplazo
+            </li>
+            <li>
+              <strong>Tipo 3</strong>: Anulación por motivo específico -
+              Requiere documento de reemplazo y justificación detallada
+            </li>
+          </ul>
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Qué sucede con las notas de crédito si la factura original es
+          invalidada?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Si una factura es invalidada, todas las notas de crédito asociadas a
+          ella deben ser invalidadas también. Esto es responsabilidad del
+          emisor. La API no invalida automáticamente los documentos
+          relacionados, por lo que debes gestionar manualmente la invalidación
+          de todos los documentos afectados.
+        </p>
+      </div>
+    </div>
+
+    <h2>Catálogos y Códigos</h2>
+    <div class="space-y-6 mt-6 mb-12">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Dónde encuentro los códigos de municipio válidos?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Los códigos de municipio se encuentran en el catálogo CAT-013. Debes
+          usar el código correspondiente al departamento indicado en CAT-012. La
+          combinación de departamento y municipio debe ser válida según estos
+          catálogos oficiales del Ministerio de Hacienda.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Qué códigos de impuestos debo usar para diferentes tipos de
+          productos?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          <ul class="mt-2 ml-6 list-disc">
+            <li>Productos estándar: código "20" (IVA 13%)</li>
+            <li>Exportaciones: código "C3" (IVA 0%)</li>
+            <li>Servicios turísticos: código "59" (5%)</li>
+            <li>Combustibles: códigos "D1" (FOVIAL) y "C8" (COTRANS)</li>
+          </ul>
+          Estos códigos se encuentran en el catálogo CAT-015 Tributos.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Qué unidades de medida son válidas?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Las unidades de medida válidas están definidas en el catálogo CAT-014.
+          Las más comunes son:
+          <ul class="mt-2 ml-6 list-disc">
+            <li>59: Unidad</li>
+            <li>58: Docena</li>
+            <li>23: Litro</li>
+            <li>22: Galón</li>
+            <li>36: Libra</li>
+            <li>34: Kilogramo</li>
+          </ul>
+          Para productos tipo servicio o impuesto, se recomienda usar 59 (Unidad).
+        </p>
+      </div>
+    </div>
+
+    <h2>Sistema de Contingencia</h2>
+    <div class="space-y-6 mt-6 mb-12">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Cómo sé si estoy en modo contingencia?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          El sistema entra automáticamente en modo contingencia cuando detecta
+          problemas de conexión. La respuesta incluirá <code
+            >tipoContingencia</code
+          > con un valor del 1 al 5 y <code>tipoTransmision</code> con valor 2. Además,
+          el campo <code>estado</code> tendrá el valor "PENDING" en lugar de "RECEIVED".
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Los documentos emitidos en contingencia son válidos fiscalmente?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Sí, los documentos emitidos en contingencia son completamente válidos.
+          La única diferencia es que no tendrán el sello de recepción inmediato,
+          pero se obtendrá posteriormente cuando se transmitan a Hacienda. La
+          normativa del Ministerio de Hacienda reconoce explícitamente la
+          validez de estos documentos.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Qué ocurre si el sistema de Hacienda no se restablece durante varios
+          días?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          El sistema mantendrá los documentos en estado "PENDING" y continuará
+          intentando transmitirlos periódicamente. No hay límite de tiempo para
+          la transmisión posterior, aunque se recomienda mantener respaldos
+          adicionales en casos extremos. Una vez restablecido el servicio, los
+          documentos se enviarán automáticamente.
+        </p>
+      </div>
+    </div>
+
+    <h2>Preguntas Técnicas Adicionales</h2>
+    <div class="space-y-6 mt-6 mb-12">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿La API tiene algún límite de tasa (rate limit)?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Sí, la API tiene límites de tasa para garantizar la estabilidad del
+          servicio. Por defecto, el límite es de 60 solicitudes por minuto por
+          cliente. Si superas este límite, recibirás un error 429 (Too Many
+          Requests). Si necesitas un límite mayor, contacta con nuestro equipo
+          de soporte.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿La API soporta webhooks para notificaciones?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Actualmente no, pero estamos trabajando en implementar un sistema de
+          webhooks que permitirá recibir notificaciones en tiempo real sobre
+          eventos importantes, como la transmisión exitosa de documentos en
+          contingencia o alertas de errores recurrentes.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocsLayout>

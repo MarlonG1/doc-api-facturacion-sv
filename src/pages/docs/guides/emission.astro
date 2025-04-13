@@ -1,0 +1,214 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import Card from "../../../components/Card.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+
+const title = "Guía de Inicio Rápido";
+const description =
+  "Implementa la API de Facturación Electrónica en 5 pasos simples";
+
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/guia-rapida"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+
+    <p class="lead text-xl">
+      Esta guía te ayudará a implementar la API de Facturación Electrónica en
+      tan solo 4 pasos simples.
+    </p>
+
+    <div class="not-prose my-8">
+      <div
+        class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-100 dark:border-blue-800 rounded-lg p-6"
+      >
+        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-4">
+          Requisitos previos
+        </h3>
+        <ul class="space-y-2 text-blue-700 dark:text-blue-300">
+          <li class="flex items-start">
+            <svg
+              class="h-6 w-6 text-blue-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>NIT y NRC de tu empresa</span>
+          </li>
+          <li class="flex items-start">
+            <svg
+              class="h-6 w-6 text-blue-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Certificado digital para firma electrónica</span>
+          </li>
+          <li class="flex items-start">
+            <svg
+              class="h-6 w-6 text-blue-500 mr-2 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span
+              >Credenciales de acceso al portal del Ministerio de Hacienda</span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Paso 1: Registra tu cuenta</h2>
+    <p>
+      El primer paso es registrar tu empresa en el sistema utilizando el
+      endpoint <code>/api/v1/auth/register</code>.
+    </p>
+
+    <CodeBlock
+      code={`curl -X POST https://tudominio:7319/api/v1/auth/register \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "nit": "12345678911227",
+    "nrc": "1233260",
+    "auth_type": "STANDARD",
+    "business_name": "EMPRESA DE PRUEBAS SA DE CV",
+    "commercial_name": "EMPRESA DE PRUEBAS",
+    "economic_activity": "47190",
+    "economic_activity_desc": "Venta al por mayor de otros productos",
+    "phone": "21212828",
+    "email": "facturacion@empresa.com.sv",
+    "password_pri": "Tu-password-de-certificado#",
+    "year_in_dte": true,
+    "token_lifetime": 30,
+    "branch_offices": [
+      {
+        "establishment_type": "02",
+        "establishment_code": "CENTRAL",
+        "address": {
+          "department": "06",
+          "municipality": "20",
+          "complement": "BOULEVARD SANTA ELENA SUR, SANTA TECLA"
+        }
+      }
+    ]
+  }'`}
+      lang="bash"
+      title="Registro de cuenta"
+    />
+
+    <div
+      class="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-md my-6 border border-indigo-100 dark:border-indigo-800"
+    >
+      <p class="text-indigo-700 dark:text-indigo-300 text-sm">
+        <strong>💡 Consejo:</strong> Guarda de forma segura las credenciales <code
+          >api_key</code
+        > y <code>api_secret</code> que recibirás en la respuesta. Las necesitarás
+        para todos los pasos siguientes.
+      </p>
+    </div>
+
+    <h2>Paso 2: Obtén un token JWT</h2>
+    <p>
+      Con tus credenciales, obtén un token JWT que te permitirá autenticar todas
+      tus solicitudes:
+    </p>
+
+    <CodeBlock
+      code={`curl -X POST https://tudominio:7319/api/v1/auth/login \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "api_key": "b5fdbe3ed9d919ae0298...",
+    "api_secret": "4sIQwMA5CDc7wRIXU...",
+    "credentials": {
+      "username": "TU-HACIENDA-USERNAME",
+      "password": "TU-HACIENDA-PASSWORD-API"
+    }
+  }'`}
+      lang="bash"
+      title="Obtención de token JWT"
+    />
+
+    <h2>Paso 3: Emite tu primera factura</h2>
+    <p>Ahora puedes emitir tu primera factura electrónica:</p>
+
+    <CodeBlock
+      code={`curl -X POST https://tudominio:7319/api/v1/invoices \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..." \\
+  -d '{
+   "items": [
+      {
+        "type": 1,
+        "description": "Producto de ejemplo",
+        "quantity": 2,
+        "unit_measure": 59,
+        "unit_price": 50.00,
+        "taxed_sale": 100.00,
+        "iva_item": 11.50
+      }
+    ],
+    "summary": {
+      "total_taxed": 100.00,
+      "sub_total": 100.00,
+      "sub_total_sales": 100.00,
+      "total_operation": 100.00,
+      "total_to_pay": 100.00,
+      "operation_condition": 1,
+      "total_iva": 11.50,
+      "payment_types": [
+        {
+          "code": "01",
+          "amount": 100.00
+        }
+      ]
+    }
+  }'`}
+      lang="bash"
+      title="Emisión de factura"
+    />
+
+    <h2>Paso 4: Verifica el estado del documento</h2>
+    <p>Confirma que tu documento fue recibido correctamente:</p>
+
+    <CodeBlock
+      code={`curl -X GET https://tudominio:7319/api/v1/dte/F64D69AD-05AB-4555-AE2A-76C610513DA0 \\
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..."`}
+      lang="bash"
+      title="Consulta de estado"
+    />
+
+    <h2>¿Qué sigue?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-4 not-prose my-8">
+      <Card
+        title="Emite otros tipos de documentos"
+        description="Aprende a emitir CCF, notas de crédito y otros documentos fiscales"
+        href={`${baseURL}docs/api/credit-notes`}
+        type="primary"
+      />
+    </div>
+  </div>
+</DocsLayout>

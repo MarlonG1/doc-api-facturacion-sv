@@ -1,0 +1,852 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Card from "../../components/Card.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+
+const title = "Códigos de Error - API de Facturación Electrónica";
+const description =
+  "Documentación completa de todos los códigos de error de la API de facturación electrónica";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/api/errores-comunes"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Esta documentación detalla los códigos de error que pueden presentarse al
+      utilizar la API de Facturación Electrónica. Para cada error se incluye el
+      código, la descripción original en inglés, la causa en español y la
+      solución recomendada.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Estructura de errores"
+        type="info"
+        description="Todos los errores de la API siguen una estructura común con un código, mensaje y detalles adicionales cuando corresponde."
+      />
+    </div>
+
+    <CodeBlock
+      code={`{
+  "success": false,
+  "error": {
+    "message": "Error mapping receiver",
+    "details": [
+      "[RequiredField] The field Receiver->NIT is required"
+      ]
+    "code": "BUSINESS_CCFMAPPER_ERROR"
+  }
+}`}
+      lang="json"
+      title="Estructura de ejemplo de respuesta de error"
+    />
+
+    <h2>Errores Comunes</h2>
+
+    <div class="grid grid-cols-1 gap-6">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          RequiredField
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The field %s is required
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> Un campo obligatorio no fue proporcionado en la
+          solicitud.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Revisa la documentación para identificar los
+          campos obligatorios y asegúrate de incluirlos en tu solicitud.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          WithoutParams
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> Parameters are expected but none were received
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> Se esperaban parámetros adicionales que no fueron
+          proporcionados.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica que estás enviando todos los parámetros
+          requeridos por el endpoint.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          ExceededParameters
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> Error %s The required parameters have been
+          exceeded, check the number of parameters sent, actual: %d
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> Se enviaron más parámetros de los necesarios.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Revisa la cantidad de parámetros enviados y
+          elimina los que no son necesarios.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          InvalidLength
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The field %s does not meet the required length,
+          it must be %s characters, received %s
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> La longitud del campo no cumple con los requisitos
+          especificados.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Ajusta la longitud del campo según los requisitos
+          especificados en la documentación.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          InvalidNumberRange
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The field %s does not meet the required length,
+          it must be %s digits, received %s
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El número no está dentro del rango permitido.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica los límites del rango permitido y ajusta
+          el valor.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          InvalidFormat
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The field %s does not meet the required format,
+          it must be %s, received %s
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El formato del campo no es válido según las reglas
+          establecidas.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que el formato del campo cumple
+          con las reglas especificadas en la documentación.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          InvalidPattern
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The field %s does not meet the required pattern,
+          it must be %s, received %s
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El valor no coincide con el patrón requerido.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Revisa y ajusta el valor para que coincida con
+          el patrón requerido.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          InvalidField
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The field %s does not meet the defined business
+          rules
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El campo no cumple con las reglas de negocio definidas.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Revisa las reglas de negocio aplicables al campo
+          y ajusta el valor en consecuencia.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          InvalidDocumentNumber
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> Invalid document number, must be: DUI with
+          hyphen, NIT (with or without hyphen), or a document of 3-20 characters.
+          Received: %s
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El número de documento no cumple con el formato
+          esperado.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> El número de documento debe ser: DUI con guion,
+          NIT (con o sin guion), o un documento de 3-20 caracteres.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          NegativeDiscount
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The discount %s is negative
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El descuento no puede ser un valor negativo.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que el descuento sea un valor positivo
+          o cero.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          ExcessiveDiscount
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The discount %s is greater than the subtotal
+          %s
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El descuento es mayor que el subtotal, lo cual
+          no es válido.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que el descuento no supere el subtotal.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          NegativeTaxedAmount
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The taxed sale %s is negative
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> La venta gravada no puede ser un valor negativo.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que las ventas gravadas tengan
+          valores positivos o cero.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          ExcessiveTaxedAmount
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The taxed sale %f is greater than the price
+          * quantity %f
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> La venta gravada excede el producto de precio por
+          cantidad.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica que la venta gravada no sea mayor que
+          el precio multiplicado por la cantidad.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          InvalidValue
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The value %d is not valid, it must be %s
+          for field %s
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El valor proporcionado no es válido para el campo
+          especificado.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Revisa los valores permitidos para el campo
+          y ajusta la entrada.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-amber-600 dark:text-amber-400 flex items-center mb-2"
+        >
+          InvalidEmail
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The email %s is not valid. It must be a valid,
+          existing email address and must be at least 3 characters long and no longer
+          than 100
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El correo electrónico no es válido o no cumple
+          con los requisitos de longitud.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Proporciona una dirección de correo válida con
+          una longitud entre 3 y 100 caracteres.
+        </p>
+      </div>
+    </div>
+
+    <h2>Errores de Identificación</h2>
+
+    <div class="grid grid-cols-1 gap-6">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-red-600 dark:text-red-400 flex items-center mb-2"
+        >
+          InvalidVersion
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The version %s is not valid, it must be a
+          number between 1 and 3
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> La versión debe ser un número entre 1 y 3.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que el campo de versión contenga
+          un valor válido (1, 2 o 3).
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-red-600 dark:text-red-400 flex items-center mb-2"
+        >
+          InvalidAmbientCode
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The ambient code %s is not valid, it must
+          be: 00 -> (Testing) and 01 -> (Production)
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El código de ambiente debe ser 00 (pruebas) o 01
+          (producción).
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Utiliza "00" para el ambiente de pruebas o "01"
+          para el ambiente de producción.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-red-600 dark:text-red-400 flex items-center mb-2"
+        >
+          InvalidDateTime
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The date %s is not valid, it must be a date
+          less than or equal to the current date
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> La fecha no es válida, debe ser una fecha igual
+          o anterior a la fecha actual.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica que la fecha proporcionada no sea futura.
+        </p>
+      </div>
+    </div>
+
+    <h2>Errores Temporales</h2>
+
+    <div class="grid grid-cols-1 gap-6">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-yellow-600 dark:text-yellow-400 flex items-center mb-2"
+        >
+          InvalidEmissionTime
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The emission time %s is not valid, it must
+          be a time less than or equal to the current time
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> La hora de emisión no es válida, debe ser una hora
+          igual o anterior a la hora actual.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica que la hora de emisión no sea futura.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-yellow-600 dark:text-yellow-400 flex items-center mb-2"
+        >
+          InvalidTransmissionType
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The transmission type %s is not valid, it
+          must be: 1 -> (Normal) and 2 -> (Contingency)
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El tipo de transmisión debe ser 1 (normal) o 2
+          (contingencia).
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Utiliza "1" para transmisión normal o "2" para
+          contingencia.
+        </p>
+      </div>
+    </div>
+
+    <h2>Errores Monetarios</h2>
+
+    <div class="grid grid-cols-1 gap-6">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-green-600 dark:text-green-400 flex items-center mb-2"
+        >
+          InvalidAmount
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The amount %s is not valid, it must be a
+          number between 0 and 99999999999.99
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El monto no es válido, debe estar entre 0 y 99,999,999,999.99.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que el monto esté dentro del rango
+          válido.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-green-600 dark:text-green-400 flex items-center mb-2"
+        >
+          InvalidQuantity
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The quantity %s is not valid, it must be
+          a number between 1 and 99999999999.99
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> La cantidad no es válida, debe estar entre 1 y
+          99,999,999,999.99.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que la cantidad esté dentro del
+          rango válido.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-green-600 dark:text-green-400 flex items-center mb-2"
+        >
+          InvalidDiscount
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The discount %s is not valid, it must be
+          a number between 0 and 100
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El descuento no es válido, debe estar entre 0 y
+          100.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que el descuento esté dentro del
+          rango válido.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-green-600 dark:text-green-400 flex items-center mb-2"
+        >
+          InvalidTax
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The tax %s is not valid, it must be a number
+          between 0 and 99999999999.99
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El impuesto no es válido, debe estar entre 0 y
+          99,999,999,999.99.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que el impuesto esté dentro del
+          rango válido.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-green-600 dark:text-green-400 flex items-center mb-2"
+        >
+          InvalidCurrency
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The currency %s is not valid, it must be
+          USD
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> La moneda debe ser USD.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Utiliza "USD" como valor para el campo de moneda.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-green-600 dark:text-green-400 flex items-center mb-2"
+        >
+          InvalidItemType
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The item type %s is not valid, it must be:
+          1 -> (Product), 2 -> (Service), 3 -> (Both) and 4 -> (Tax)
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El tipo de ítem debe ser 1 (producto), 2 (servicio),
+          3 (ambos) o 4 (impuesto).
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Utiliza uno de los valores válidos para el tipo
+          de ítem.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-green-600 dark:text-green-400 flex items-center mb-2"
+        >
+          InvalidTaxType
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The tax type %s is not valid, it must be
+          within the allowed tax catalog
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El tipo de impuesto no está dentro del catálogo
+          permitido.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica el catálogo de tipos de impuesto permitidos
+          y utiliza uno válido.
+        </p>
+      </div>
+    </div>
+
+    <h2>Errores de Ubicación</h2>
+
+    <div class="grid grid-cols-1 gap-6">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-purple-600 dark:text-purple-400 flex items-center mb-2"
+        >
+          InvalidMunicipality
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> Invalid municipality code %s for department
+          %s. Municipality code must be a two-digit number that follows the official
+          catalog pattern. For example, valid codes for this department include:
+          %s. Please refer to the official municipality catalog.
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El código de municipio no es válido para el departamento
+          especificado.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Consulta el catálogo oficial de municipios y
+          utiliza un código válido para el departamento correspondiente.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-purple-600 dark:text-purple-400 flex items-center mb-2"
+        >
+          InvalidEstablishmentType
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The establishment type %s is not valid, it
+          must be: 01 -> (Headquarters), 02 -> (Branch), 04 -> (Warehouse), 07 ->
+          (Property or Yard) and 20 -> (Other)
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El tipo de establecimiento no es válido.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Utiliza uno de los tipos de establecimiento
+          válidos: 01 (Sede), 02 (Sucursal), 04 (Bodega), 07 (Propiedad o Patio)
+          o 20 (Otro).
+        </p>
+      </div>
+    </div>
+
+    <h2>Errores del Documento Tributario Electrónico (DTE)</h2>
+
+    <div class="grid grid-cols-1 gap-6">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-orange-600 dark:text-orange-400 flex items-center mb-2"
+        >
+          InvalidTotalAmount
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The total amounts do not match. Calculated
+          total: %f, declared total: %f
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> Los montos totales no coinciden con el cálculo
+          esperado.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica que el total declarado coincida con
+          el total calculado.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-orange-600 dark:text-orange-400 flex items-center mb-2"
+        >
+          InvalidPaymentTotal
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The total payments (%f) do not match the
+          operation amount (%f)
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El total de pagos no coincide con el monto de la
+          operación.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que la suma de todos los pagos
+          coincida con el monto total de la operación.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-orange-600 dark:text-orange-400 flex items-center mb-2"
+        >
+          InvalidTotalIVA
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The total IVA %f does not match the sum of
+          IVA taxes %f
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El total de IVA no coincide con la suma de los
+          impuestos IVA.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica que el total de IVA declarado sea igual
+          a la suma de todos los impuestos IVA calculados.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-orange-600 dark:text-orange-400 flex items-center mb-2"
+        >
+          InvalidTotalTaxed
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The total taxed %f does not match the sum
+          of taxed taxes %f
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El total gravado no coincide con la suma esperada.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Asegúrate de que el total gravado declarado
+          coincida con la suma de todos los elementos gravados.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-orange-600 dark:text-orange-400 flex items-center mb-2"
+        >
+          InvalidTaxedAmount
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The taxed sale %f does not match the taxable
+          base %f
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> La venta gravada no coincide con la base imponible.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica que el monto de venta gravada sea igual
+          a la base imponible.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-orange-600 dark:text-orange-400 flex items-center mb-2"
+        >
+          InvalidTotalDiscount
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> The total discounts %f do not match the sum
+          of discounts %f
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El total de descuentos no coincide con la suma
+          de descuentos individuales.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Verifica que el total de descuentos declarado
+          sea igual a la suma de todos los descuentos aplicados.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-orange-600 dark:text-orange-400 flex items-center mb-2"
+        >
+          UnsupportedTaxCode
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Descripción:</strong> Unsupported tax code %s, must be in the allowed
+          tax catalog
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          <strong>Causa:</strong> El código de impuesto no está en el catálogo permitido.
+        </p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Solución:</strong> Utiliza únicamente códigos de impuesto que estén
+          en el catálogo permitido.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocsLayout>

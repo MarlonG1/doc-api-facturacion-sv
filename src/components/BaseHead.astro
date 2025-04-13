@@ -1,0 +1,59 @@
+---
+// Import utilities from astro:content
+const { title, description } = Astro.props;
+
+// Valores predeterminados para las metaetiquetas
+const defaultTitle = "API de Facturación Electrónica";
+const defaultDescription =
+  "Documentación oficial para la API de Facturación Electrónica de El Salvador";
+
+// baseURL termine con una barra /
+const baseURL = import.meta.env.BASE_URL
+  ? import.meta.env.BASE_URL.endsWith("/")
+    ? import.meta.env.BASE_URL
+    : `${import.meta.env.BASE_URL}/`
+  : "/";
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={Astro.url} />
+
+<!-- Primary Meta Tags -->
+<title>{title ? `${title} | ${defaultTitle}` : defaultTitle}</title>
+<meta
+  name="title"
+  content={title ? `${title} | ${defaultTitle}` : defaultTitle}
+/>
+<meta name="description" content={description || defaultDescription} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href={`${baseURL}favicon.svg`} />
+
+<!-- Font preloads -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- Theme setup -->
+<script is:inline>
+  // Preferencia de tema guardada
+  const savedTheme = localStorage.getItem("theme");
+
+  // Tema guardado o utilizamos la preferencia del sistema
+  if (
+    savedTheme === "dark" ||
+    (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+  ) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+</script>

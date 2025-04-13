@@ -1,0 +1,93 @@
+---
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<header
+  class="sticky top-0 z-40 w-full border-b border-b-slate-200 bg-white dark:border-b-slate-700 dark:bg-slate-900"
+>
+  <div class="container mx-auto flex h-16 items-center justify-between px-4">
+    <div class="flex items-center gap-8">
+      <a
+        href={baseURL}
+        class="text-xl font-bold text-slate-800 dark:text-white hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+      >
+        API Facturación
+      </a>
+      <nav class="hidden gap-8 md:flex">
+        <a
+          href={`${baseURL}docs/`}
+          class="text-base font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
+        >
+          Documentación
+        </a>
+        <a
+          href={`${baseURL}docs/api/endpoints`}
+          class="text-base font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
+        >
+          API
+        </a>
+        <a
+          href={`${baseURL}docs/resources`}
+          class="text-base font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors"
+        >
+          Recursos
+        </a>
+      </nav>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <button
+        id="theme-toggle"
+        class="rounded-full p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white transition-colors focus:outline-none"
+        type="button"
+        aria-label="Cambiar tema"
+      >
+        <!-- Icono Luna (visible en modo claro) -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="block dark:hidden"
+        >
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+        <!-- Icono Sol (visible en modo oscuro) -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="hidden dark:block"
+        >
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+      </button>
+
+      <a
+        href="https://app.facturacion.sv/login"
+        class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
+      >
+        Iniciar Sesión
+      </a>
+    </div>
+  </div>
+</header>

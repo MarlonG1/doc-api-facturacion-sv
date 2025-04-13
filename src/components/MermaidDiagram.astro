@@ -1,0 +1,42 @@
+---
+interface Props {
+  chart: string;
+  id?: string;
+}
+
+const { chart, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } =
+  Astro.props;
+---
+
+<div
+  class="mermaid-wrapper my-8 overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+>
+  <div class="mermaid" id={id}>
+    {chart}
+  </div>
+</div>
+
+<script>
+  import mermaid from "mermaid";
+
+  // Configuración de temas claro/oscuro
+  const isDark = document.documentElement.classList.contains("dark");
+
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: isDark ? "dark" : "default",
+    securityLevel: "loose",
+    fontFamily: "Inter, sans-serif",
+  });
+
+  // Escuchar cambios de tema
+  document.addEventListener("themeChanged", (e: Event) => {
+    const customEvent = e as CustomEvent;
+    const isDarkNow = customEvent.detail?.theme === "dark";
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDarkNow ? "dark" : "default",
+    });
+    mermaid.init(undefined, document.querySelectorAll(".mermaid"));
+  });
+</script>

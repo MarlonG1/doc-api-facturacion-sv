@@ -1,0 +1,100 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+// URL base para enlaces
+const baseURL = import.meta.env.BASE_URL || "";
+---
+
+<Layout title="404 - Página no encontrada | API de Facturación Electrónica">
+  <div class="flex flex-col min-h-screen">
+    <Header />
+    <main class="flex-1 flex items-center justify-center py-16 px-4">
+      <div class="w-full max-w-4xl mx-auto">
+        <div class="text-center mb-8">
+          <h1
+            class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mb-4"
+          >
+            404
+          </h1>
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            Página no encontrada
+          </h2>
+          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Lo sentimos, la página que buscas no existe o ha sido movida a otra
+            ubicación.
+          </p>
+        </div>
+
+        <div class="flex justify-center my-10">
+          <a
+            href={baseURL || "/"}
+            class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 transition-colors dark:bg-indigo-700 dark:hover:bg-indigo-600"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-2"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+            Volver al inicio
+          </a>
+        </div>
+
+        <div class="mt-8">
+          <h3
+            class="text-xl font-semibold text-center text-gray-800 dark:text-gray-200 mb-6"
+          >
+            Enlaces útiles
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a
+              href={`${baseURL}/docs/introduction`}
+              class="block p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              <span
+                class="block text-indigo-600 dark:text-indigo-400 font-medium"
+                >Introducción</span
+              >
+            </a>
+            <a
+              href={`${baseURL}/docs/api/endpoints`}
+              class="block p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              <span
+                class="block text-indigo-600 dark:text-indigo-400 font-medium"
+                >API Reference</span
+              >
+            </a>
+            <a
+              href={`${baseURL}/docs/first-steps`}
+              class="block p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              <span
+                class="block text-indigo-600 dark:text-indigo-400 font-medium"
+                >Primeros Pasos</span
+              >
+            </a>
+          </div>
+        </div>
+
+        <p class="mt-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+          Si crees que esto es un error, por favor contacta al administrador o
+          revisa la
+          <a
+            href={`${baseURL}/docs`}
+            class="text-indigo-600 dark:text-indigo-400 hover:underline"
+            >documentación</a
+          >.
+        </p>
+      </div>
+    </main>
+    <Footer />
+  </div>
+</Layout>

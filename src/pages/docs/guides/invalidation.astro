@@ -1,0 +1,246 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import Card from "../../../components/Card.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+
+const title = "Guia de Invalidación de Documentos Rapida";
+const description =
+  "Guía rápida para invalidar Documentos Tributarios Electrónicos (DTE)";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/guias/invalidacion-rapida"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Aprende a invalidar documentos tributarios electrónicos de forma rápida y
+      sencilla.
+    </p>
+
+    <div class="not-prose mt-6 mb-10">
+      <Card
+        title="Antes de comenzar"
+        type="info"
+        description="Necesitarás tener el código de generación (UUID) del documento que deseas invalidar y, en algunos casos, el código del documento de reemplazo."
+      />
+    </div>
+
+    <h2>Tipos de invalidación</h2>
+    <p>Existen tres tipos de invalidación definidos en el catálogo CAT-024:</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div
+        class="bg-white dark:bg-gray-800 p-4 rounded-md border border-gray-200 dark:border-gray-700"
+      >
+        <h3 class="text-lg font-medium text-blue-600 dark:text-blue-400 mb-2">
+          Tipo 1
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Error en la información</strong>
+          <br />Requiere documento de reemplazo.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 p-4 rounded-md border border-gray-200 dark:border-gray-700"
+      >
+        <h3 class="text-lg font-medium text-blue-600 dark:text-blue-400 mb-2">
+          Tipo 2
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Rescindir la operación</strong>
+          <br />No requiere documento de reemplazo.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 p-4 rounded-md border border-gray-200 dark:border-gray-700"
+      >
+        <h3 class="text-lg font-medium text-blue-600 dark:text-blue-400 mb-2">
+          Tipo 3
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          <strong>Otro motivo</strong>
+          <br />Requiere documento de reemplazo y justificación.
+        </p>
+      </div>
+    </div>
+
+    <div class="not-prose mb-8">
+      <Card
+        title="Restricciones de tiempo importantes"
+        type="warning"
+        description="Facturas (01): Se pueden invalidar hasta 3 meses después de emitidas. Otros documentos: Solo dentro de las 24 horas posteriores a la emisión."
+      />
+    </div>
+
+    <h2>Paso 1: Preparar la solicitud de invalidación</h2>
+    <p>
+      Selecciona el tipo de invalidación adecuado para tu caso y prepara la
+      solicitud:
+    </p>
+
+    <div class="space-y-6">
+      <div>
+        <h3 class="text-lg font-medium mb-2">Tipo 1: Sustitución por error</h3>
+        <CodeBlock
+          code={`{
+  "generation_code": "UUID-del-documento-original",
+  "replacement_generation_code": "UUID-del-documento-nuevo",
+  "reason": {
+    "type": 1,
+    "responsible_name": "Juan Pérez",
+    "responsible_doc_type": "36",
+    "responsible_num_doc": "04141201721034",
+    "requestor_name": "María López",
+    "requestor_doc_type": "36",
+    "requestor_num_doc": "06142301891012"
+  }
+}`}
+          lang="json"
+          title="Invalidación Tipo 1"
+        />
+      </div>
+
+      <div>
+        <h3 class="text-lg font-medium mb-2">Tipo 2: Anulación simple</h3>
+        <CodeBlock
+          code={`{
+  "generation_code": "UUID-del-documento-original",
+  "reason": {
+    "type": 2,
+    "responsible_name": "Juan Pérez",
+    "responsible_doc_type": "36",
+    "responsible_num_doc": "04141201721034",
+    "requestor_name": "María López",
+    "requestor_doc_type": "36",
+    "requestor_num_doc": "06142301891012"
+  }
+}`}
+          lang="json"
+          title="Invalidación Tipo 2"
+        />
+      </div>
+
+      <div>
+        <h3 class="text-lg font-medium mb-2">
+          Tipo 3: Anulación con motivo específico
+        </h3>
+        <CodeBlock
+          code={`{
+  "generation_code": "UUID-del-documento-original",
+  "replacement_generation_code": "UUID-del-documento-nuevo",
+  "reason": {
+    "type": 3,
+    "responsible_name": "Juan Pérez",
+    "responsible_doc_type": "36",
+    "responsible_num_doc": "04141201721034",
+    "requestor_name": "María López",
+    "requestor_doc_type": "36",
+    "requestor_num_doc": "06142301891012",
+    "reason_field": "Descripción detallada del motivo de invalidación"
+  }
+}`}
+          lang="json"
+          title="Invalidación Tipo 3"
+        />
+      </div>
+    </div>
+
+    <h2>Paso 2: Enviar la solicitud de invalidación</h2>
+    <p>Envía la solicitud al endpoint de invalidación:</p>
+
+    <CodeBlock
+      code={`POST /api/v1/invalidation
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...
+
+{
+  "generation_code": "UUID-del-documento-original",
+  "reason": {
+    "type": 2,
+    "responsible_name": "Juan Pérez",
+    "responsible_doc_type": "36",
+    "responsible_num_doc": "04141201721034",
+    "requestor_name": "María López",
+    "requestor_doc_type": "36",
+    "requestor_num_doc": "06142301891012"
+  }
+}`}
+      lang="http"
+      title="Solicitud de invalidación"
+    />
+
+    <h3>Respuesta esperada</h3>
+    <CodeBlock
+      code={`{
+  "success": true,
+  "data": "DTE invalidated successfully"
+}`}
+      lang="json"
+      title="Respuesta de invalidación exitosa"
+    />
+
+    <h2>Paso 3: Verificar el estado de invalidación</h2>
+    <p>
+      Puedes verificar que el documento ha sido invalidado correctamente
+      consultándolo:
+    </p>
+
+    <CodeBlock
+      code={`GET /api/v1/dte/UUID-del-documento-original
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...`}
+      lang="http"
+      title="Verificación del estado"
+    />
+
+    <p>El documento debería mostrar su estado como "INVALIDATED".</p>
+
+    <h2>Consideraciones importantes</h2>
+
+    <div
+      class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 my-6"
+    >
+      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+        Puntos a tener en cuenta
+      </h3>
+      <ul class="list-disc pl-6 text-gray-700 dark:text-gray-300 space-y-2">
+        <li>
+          <strong>Estado del documento:</strong> Solo se pueden invalidar documentos
+          en estado "RECEIVED".
+        </li>
+        <li>
+          <strong>Documentos de reemplazo:</strong> Para tipos 1 y 3, el documento
+          de reemplazo debe existir y estar en estado "RECEIVED".
+        </li>
+        <li>
+          <strong>Documentos relacionados:</strong> Si un documento tiene documentos
+          relacionados (como notas de crédito), estos no se invalidan automáticamente.
+        </li>
+        <li>
+          <strong>Validaciones del tipo 2:</strong> En la anulación simple, no debes
+          proporcionar un documento de reemplazo.
+        </li>
+        <li>
+          <strong>Validaciones del tipo 3:</strong> El campo <code
+            >reason_field</code
+          > es obligatorio y debe proporcionar una explicación detallada.
+        </li>
+      </ul>
+    </div>
+
+    <div class="not-prose mt-8">
+      <Card
+        title="Documentación completa"
+        type="primary"
+        description="Para más detalles sobre invalidación, consulta la documentación completa."
+        href={`${baseURL}docs/api/invalidation`}
+      />
+    </div>
+  </div>
+</DocsLayout>

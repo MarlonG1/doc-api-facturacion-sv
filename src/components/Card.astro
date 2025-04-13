@@ -1,0 +1,58 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  icon?: string;
+  href?: string;
+  type?: "primary" | "secondary" | "warning" | "info";
+}
+
+const {
+  title,
+  description = "",
+  icon = "",
+  href = "",
+  type = "primary",
+} = Astro.props;
+
+const typeStyles = {
+  primary:
+    "bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-900/30 dark:border-indigo-800 dark:text-indigo-300",
+  secondary:
+    "bg-gray-50 border-gray-200 text-gray-700 dark:bg-gray-900 dark:border-gray-800 dark:text-gray-300",
+  warning:
+    "bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-900/30 dark:border-amber-800 dark:text-amber-300",
+  info: "bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-300",
+};
+
+const isLink = href !== "";
+---
+
+{
+  isLink ? (
+    <a
+      href={href}
+      class={`block p-6 rounded-lg border ${typeStyles[type]} transition-all hover:shadow-md`}
+    >
+      <div class="flex items-start">
+        {icon && <span class="mr-3 text-2xl" set:html={icon} />}
+        <div>
+          <h3 class="text-lg font-semibold mb-2">{title}</h3>
+          {description && <p class="text-sm opacity-90">{description}</p>}
+        </div>
+      </div>
+    </a>
+  ) : (
+    <div class={`p-6 rounded-lg border ${typeStyles[type]}`}>
+      <div class="flex items-start">
+        {icon && <span class="mr-3 text-2xl" set:html={icon} />}
+        <div>
+          <h3 class="text-lg font-semibold mb-2">{title}</h3>
+          {description && <p class="text-sm opacity-90">{description}</p>}
+          <slot />
+        </div>
+      </div>
+    </div>
+  )
+}
+
