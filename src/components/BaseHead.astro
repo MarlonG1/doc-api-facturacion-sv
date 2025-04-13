@@ -41,19 +41,3 @@ const baseURL = import.meta.env.BASE_URL
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
   rel="stylesheet"
 />
-
-<!-- Theme setup -->
-<script is:inline>
-  // Preferencia de tema guardada
-  const savedTheme = localStorage.getItem("theme");
-
-  // Tema guardado o utilizamos la preferencia del sistema
-  if (
-    savedTheme === "dark" ||
-    (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-  ) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-</script>

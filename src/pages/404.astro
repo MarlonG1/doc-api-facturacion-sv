@@ -10,31 +10,35 @@ const baseURL = import.meta.env.BASE_URL || "";
 <Layout title="404 - Página no encontrada | API de Facturación Electrónica">
   <div class="flex flex-col min-h-screen">
     <Header />
-    <main class="flex-1 flex items-center justify-center py-16 px-4">
+    <main class="flex-1 flex items-center justify-center py-10 sm:py-16 px-4">
       <div class="w-full max-w-4xl mx-auto">
-        <div class="text-center mb-8">
+        <div class="text-center mb-6 sm:mb-8">
           <h1
-            class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mb-4"
+            class="text-3xl sm:text-4xl font-bold text-indigo-600 dark:text-indigo-400 mb-3 sm:mb-4"
           >
             404
           </h1>
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+          <h2
+            class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6"
+          >
             Página no encontrada
           </h2>
-          <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p
+            class="text-base sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
+          >
             Lo sentimos, la página que buscas no existe o ha sido movida a otra
             ubicación.
           </p>
         </div>
 
-        <div class="flex justify-center my-10">
+        <div class="flex justify-center my-6 sm:my-10">
           <a
             href={baseURL || "/"}
-            class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 transition-colors dark:bg-indigo-700 dark:hover:bg-indigo-600"
+            class="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white text-sm sm:text-base font-medium rounded-lg shadow-md hover:bg-indigo-700 transition-colors dark:bg-indigo-700 dark:hover:bg-indigo-600"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 mr-2"
+              class="h-4 w-4 sm:h-5 sm:w-5 mr-2"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -47,44 +51,46 @@ const baseURL = import.meta.env.BASE_URL || "";
           </a>
         </div>
 
-        <div class="mt-8">
+        <div class="mt-6 sm:mt-8">
           <h3
-            class="text-xl font-semibold text-center text-gray-800 dark:text-gray-200 mb-6"
+            class="text-lg sm:text-xl font-semibold text-center text-gray-800 dark:text-gray-200 mb-4 sm:mb-6"
           >
             Enlaces útiles
           </h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <a
               href={`${baseURL}/docs/introduction`}
-              class="block p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              class="block p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               <span
-                class="block text-indigo-600 dark:text-indigo-400 font-medium"
+                class="block text-indigo-600 dark:text-indigo-400 font-medium text-sm sm:text-base"
                 >Introducción</span
               >
             </a>
             <a
               href={`${baseURL}/docs/api/endpoints`}
-              class="block p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              class="block p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               <span
-                class="block text-indigo-600 dark:text-indigo-400 font-medium"
+                class="block text-indigo-600 dark:text-indigo-400 font-medium text-sm sm:text-base"
                 >API Reference</span
               >
             </a>
             <a
               href={`${baseURL}/docs/first-steps`}
-              class="block p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              class="block p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               <span
-                class="block text-indigo-600 dark:text-indigo-400 font-medium"
+                class="block text-indigo-600 dark:text-indigo-400 font-medium text-sm sm:text-base"
                 >Primeros Pasos</span
               >
             </a>
           </div>
         </div>
 
-        <p class="mt-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+        <p
+          class="mt-6 sm:mt-8 text-center text-gray-500 dark:text-gray-400 text-xs sm:text-sm"
+        >
           Si crees que esto es un error, por favor contacta al administrador o
           revisa la
           <a

@@ -2,6 +2,7 @@
 import DocsLayout from "../../../layouts/DocsLayout.astro";
 import Card from "../../../components/Card.astro";
 import CodeBlock from "../../../components/CodeBlock.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
 
 const title = "Guia de Invalidación de Documentos Rapida";
 const description =
@@ -89,8 +90,11 @@ const baseURL = "/doc-api-facturacion-sv/";
     <div class="space-y-6">
       <div>
         <h3 class="text-lg font-medium mb-2">Tipo 1: Sustitución por error</h3>
-        <CodeBlock
-          code={`{
+        <ApiEndpoint
+          method="POST"
+          endpoint="/api/v1/invalidation"
+          description="Invalidación por error con documento de reemplazo"
+          requestExample={`{
   "generation_code": "UUID-del-documento-original",
   "replacement_generation_code": "UUID-del-documento-nuevo",
   "reason": {
@@ -103,15 +107,16 @@ const baseURL = "/doc-api-facturacion-sv/";
     "requestor_num_doc": "06142301891012"
   }
 }`}
-          lang="json"
-          title="Invalidación Tipo 1"
         />
       </div>
 
       <div>
         <h3 class="text-lg font-medium mb-2">Tipo 2: Anulación simple</h3>
-        <CodeBlock
-          code={`{
+        <ApiEndpoint
+          method="POST"
+          endpoint="/api/v1/invalidation"
+          description="Invalidación sin documento de reemplazo"
+          requestExample={`{
   "generation_code": "UUID-del-documento-original",
   "reason": {
     "type": 2,
@@ -123,8 +128,6 @@ const baseURL = "/doc-api-facturacion-sv/";
     "requestor_num_doc": "06142301891012"
   }
 }`}
-          lang="json"
-          title="Invalidación Tipo 2"
         />
       </div>
 
@@ -132,8 +135,11 @@ const baseURL = "/doc-api-facturacion-sv/";
         <h3 class="text-lg font-medium mb-2">
           Tipo 3: Anulación con motivo específico
         </h3>
-        <CodeBlock
-          code={`{
+        <ApiEndpoint
+          method="POST"
+          endpoint="/api/v1/invalidation"
+          description="Invalidación por motivo específico con documento de reemplazo"
+          requestExample={`{
   "generation_code": "UUID-del-documento-original",
   "replacement_generation_code": "UUID-del-documento-nuevo",
   "reason": {
@@ -147,8 +153,6 @@ const baseURL = "/doc-api-facturacion-sv/";
     "reason_field": "Descripción detallada del motivo de invalidación"
   }
 }`}
-          lang="json"
-          title="Invalidación Tipo 3"
         />
       </div>
     </div>
@@ -156,11 +160,11 @@ const baseURL = "/doc-api-facturacion-sv/";
     <h2>Paso 2: Enviar la solicitud de invalidación</h2>
     <p>Envía la solicitud al endpoint de invalidación:</p>
 
-    <CodeBlock
-      code={`POST /api/v1/invalidation
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...
-
-{
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/invalidation"
+      description="Enviar solicitud de invalidación"
+      requestExample={`{
   "generation_code": "UUID-del-documento-original",
   "reason": {
     "type": 2,
@@ -172,18 +176,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...
     "requestor_num_doc": "06142301891012"
   }
 }`}
-      lang="http"
-      title="Solicitud de invalidación"
-    />
-
-    <h3>Respuesta esperada</h3>
-    <CodeBlock
-      code={`{
+      responseExample={`{
   "success": true,
   "data": "DTE invalidated successfully"
 }`}
-      lang="json"
-      title="Respuesta de invalidación exitosa"
     />
 
     <h2>Paso 3: Verificar el estado de invalidación</h2>
@@ -192,14 +188,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...
       consultándolo:
     </p>
 
-    <CodeBlock
-      code={`GET /api/v1/dte/UUID-del-documento-original
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...`}
-      lang="http"
-      title="Verificación del estado"
+    <ApiEndpoint
+      method="GET"
+      endpoint="/api/v1/dte/UUID-del-documento-original"
+      description="Verificar el estado de invalidación del documento"
     />
-
-    <p>El documento debería mostrar su estado como "INVALIDATED".</p>
 
     <h2>Consideraciones importantes</h2>
 

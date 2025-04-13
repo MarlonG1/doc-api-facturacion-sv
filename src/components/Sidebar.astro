@@ -85,11 +85,15 @@ const isSectionActive = (items: Array<{ href: string }>) => {
 };
 ---
 
-<nav class="h-full pt-8 overflow-y-auto bg-gray-50 dark:bg-gray-900 pb-24">
+<!-- Sidebar para escritorio (visible siempre) -->
+<nav
+  id="sidebar"
+  class="h-full pt-4 sm:pt-8 overflow-y-auto bg-gray-50 dark:bg-gray-900 pb-16 md:pb-24 hidden md:block"
+>
   {
     sidebarItems.map((item) => (
-      <div class="mb-6 px-4">
-        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 uppercase tracking-wider px-2">
+      <div class="mb-4 sm:mb-6 px-4">
+        <h3 class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 uppercase tracking-wider px-2">
           {item.title}
         </h3>
         <ul class="space-y-1">
@@ -100,7 +104,7 @@ const isSectionActive = (items: Array<{ href: string }>) => {
                 <a
                   href={link.href}
                   class:list={[
-                    "block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 pl-8 pr-3 border-l-2 transition-colors duration-200 rounded-r-md",
+                    "block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-1.5 sm:py-2 pl-6 sm:pl-8 pr-3 border-l-2 transition-colors duration-200 rounded-r-md text-sm sm:text-base",
                     active
                       ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium"
                       : "border-transparent hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10",
@@ -122,7 +126,7 @@ const isSectionActive = (items: Array<{ href: string }>) => {
   // Marcar el enlace activo en la barra lateral
   document.addEventListener("astro:page-load", () => {
     const currentPath = window.location.pathname;
-    const sidebarLinks = document.querySelectorAll("aside a");
+    const sidebarLinks = document.querySelectorAll("#sidebar a");
 
     sidebarLinks.forEach((link) => {
       const href = link.getAttribute("href");

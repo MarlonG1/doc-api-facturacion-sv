@@ -2,21 +2,84 @@
 // Este componente genera automáticamente una tabla de contenidos basada en los encabezados h2 y h3 de la página actual
 ---
 
-<nav class="h-full overflow-y-auto pb-8">
+<nav class="h-full overflow-y-auto pb-4 sm:pb-8">
   <div class="px-0">
     <h3
-      class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 uppercase tracking-wider"
+      class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 uppercase tracking-wider"
     >
-      En esta página
+      EN ESTA PÁGINA
     </h3>
-    <ul class="toc-list space-y-1"></ul>
+    <ul
+      class="toc-list space-y-1 border-l border-gray-200 dark:border-gray-700"
+    >
+    </ul>
+  </div>
+  <div class="mt-4 hidden md:block">
+    <button
+      id="show-mobile-toc"
+      class="lg:hidden text-sm text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+    >
+      <span class="sr-only">Mostrar tabla de contenidos</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h7"></path>
+      </svg>
+    </button>
   </div>
 </nav>
+
+<!-- Versión móvil de la tabla de contenidos -->
+<div
+  id="mobile-toc"
+  class="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 hidden"
+>
+  <div
+    class="bg-white dark:bg-gray-900 w-4/5 max-w-sm h-full overflow-y-auto p-4 ml-auto shadow-xl"
+  >
+    <div class="flex justify-between items-center mb-4">
+      <h3
+        class="text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider"
+      >
+        En esta página
+      </h3>
+      <button
+        id="close-mobile-toc"
+        class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+      >
+        <span class="sr-only">Cerrar</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <ul class="mobile-toc-list space-y-1"></ul>
+  </div>
+</div>
 
 <script is:inline>
   document.addEventListener("astro:page-load", function () {
     const tocList = document.querySelector(".toc-list");
-    if (!tocList) return;
+    const mobileTocList = document.querySelector(".mobile-toc-list");
+    if (!tocList || !mobileTocList) return;
 
     // Obtener los encabezados
     const headings = document.querySelectorAll(".prose h2, .prose h3");
@@ -26,14 +89,16 @@
       return;
     }
 
-    // Limpiar la lista
+    // Limpiar las listas
     tocList.innerHTML = "";
+    mobileTocList.innerHTML = "";
 
     // Variables para construir la tabla de contenidos
     let lastH2Item = null;
+    let lastMobileH2Item = null;
 
-    // Construir la tabla de contenidos
-    headings.forEach(function (heading) {
+    // Función para construir un elemento de TOC
+    function buildTocItem(heading, isMobile = false) {
       // Asegurar que tenga un ID
       if (!heading.id) {
         const text = heading.textContent || "";
@@ -49,12 +114,22 @@
       const link = document.createElement("a");
       link.href = `#${heading.id}`;
       link.textContent = heading.textContent || "";
-      link.className =
-        "block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 pl-6 pr-2 border-l-2 transition-colors duration-200 rounded-r-md border-transparent hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10";
+
+      // Clases específicas para móvil o escritorio
+      const baseClasses =
+        "block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-1.5 sm:py-2 pl-6 pr-2 border-l-2 transition-colors duration-200 rounded-r-md border-transparent hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10";
+      link.className = baseClasses;
 
       // Crear el elemento de lista
       const listItem = document.createElement("li");
       listItem.appendChild(link);
+
+      return { listItem, link, level };
+    }
+
+    // Construir la tabla de contenidos (desktop)
+    headings.forEach(function (heading) {
+      const { listItem, link, level } = buildTocItem(heading);
 
       if (level === 2) {
         // Para h2, añadir directamente a la lista
@@ -75,6 +150,55 @@
         subList.appendChild(listItem);
       }
     });
+
+    // Construir la tabla de contenidos (mobile)
+    headings.forEach(function (heading) {
+      const { listItem, link, level } = buildTocItem(heading, true);
+
+      if (level === 2) {
+        // Para h2, añadir directamente a la lista
+        mobileTocList.appendChild(listItem);
+        lastMobileH2Item = listItem;
+      } else if (level === 3 && lastMobileH2Item) {
+        // Para h3, añadir al grupo h2 previo con indentación
+        link.style.paddingLeft = "1.25rem"; // Más indentación para h3
+
+        // Verificar si existe sublista
+        let subList = lastMobileH2Item.querySelector("ul");
+        if (!subList) {
+          subList = document.createElement("ul");
+          subList.className = "mt-1 space-y-1";
+          lastMobileH2Item.appendChild(subList);
+        }
+
+        subList.appendChild(listItem);
+      }
+    });
+
+    // Manejar el modal móvil de la tabla de contenidos
+    const showMobileTocBtn = document.getElementById("show-mobile-toc");
+    const closeMobileTocBtn = document.getElementById("close-mobile-toc");
+    const mobileToc = document.getElementById("mobile-toc");
+
+    if (showMobileTocBtn && closeMobileTocBtn && mobileToc) {
+      showMobileTocBtn.addEventListener("click", function () {
+        mobileToc.classList.remove("hidden");
+        document.body.classList.add("overflow-hidden");
+      });
+
+      closeMobileTocBtn.addEventListener("click", function () {
+        mobileToc.classList.add("hidden");
+        document.body.classList.remove("overflow-hidden");
+      });
+
+      // Cerrar al hacer clic fuera del menú
+      mobileToc.addEventListener("click", function (e) {
+        if (e.target === mobileToc) {
+          mobileToc.classList.add("hidden");
+          document.body.classList.remove("overflow-hidden");
+        }
+      });
+    }
 
     // Función para actualizar el enlace activo
     function updateActiveLink() {
@@ -104,24 +228,10 @@
       }
 
       // Quitar clase activa de todos los enlaces
-      document.querySelectorAll(".toc-list a").forEach(function (link) {
-        link.classList.remove(
-          "border-blue-500",
-          "bg-blue-50",
-          "dark:bg-blue-900/20",
-          "text-blue-700",
-          "dark:text-blue-300",
-          "font-medium"
-        );
-      });
-
-      // Activar el enlace correspondiente
-      if (activeHeading) {
-        const activeLink = document.querySelector(
-          `.toc-list a[href="#${activeHeading.id}"]`
-        );
-        if (activeLink) {
-          activeLink.classList.add(
+      document
+        .querySelectorAll(".toc-list a, .mobile-toc-list a")
+        .forEach(function (link) {
+          link.classList.remove(
             "border-blue-500",
             "bg-blue-50",
             "dark:bg-blue-900/20",
@@ -129,36 +239,19 @@
             "dark:text-blue-300",
             "font-medium"
           );
+        });
 
-          // Hacer que el enlace sea visible en el contenedor
-          const tocContainer = activeLink.closest("nav");
-          if (tocContainer) {
-            const activeLinkRect = activeLink.getBoundingClientRect();
-            const containerRect = tocContainer.getBoundingClientRect();
+      // Activar el enlace correspondiente
+      if (activeHeading) {
+        const activeSelectors = [
+          `.toc-list a[href="#${activeHeading.id}"]`,
+          `.mobile-toc-list a[href="#${activeHeading.id}"]`,
+        ];
 
-            if (
-              activeLinkRect.top < containerRect.top ||
-              activeLinkRect.bottom > containerRect.bottom
-            ) {
-              tocContainer.scrollTop =
-                activeLink.offsetTop - containerRect.height / 2;
-            }
-          }
-        }
-      }
-    }
-
-    // Agregar evento de clic para navegación suave
-    document.querySelectorAll(".toc-list a").forEach(function (link) {
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute("href").substring(1);
-        const targetElement = document.getElementById(targetId);
-
-        if (targetElement) {
-          // Desactivar todos los enlaces
-          document.querySelectorAll(".toc-list a").forEach(function (l) {
-            l.classList.remove(
+        activeSelectors.forEach((selector) => {
+          const activeLink = document.querySelector(selector);
+          if (activeLink) {
+            activeLink.classList.add(
               "border-blue-500",
               "bg-blue-50",
               "dark:bg-blue-900/20",
@@ -166,29 +259,77 @@
               "dark:text-blue-300",
               "font-medium"
             );
-          });
 
-          // Activar el enlace actual
-          this.classList.add(
-            "border-blue-500",
-            "bg-blue-50",
-            "dark:bg-blue-900/20",
-            "text-blue-700",
-            "dark:text-blue-300",
-            "font-medium"
-          );
+            // Hacer que el enlace sea visible en el contenedor
+            const tocContainer = activeLink.closest("nav, div");
+            if (tocContainer) {
+              const activeLinkRect = activeLink.getBoundingClientRect();
+              const containerRect = tocContainer.getBoundingClientRect();
 
-          // Desplazamiento suave
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: "smooth",
-          });
+              if (
+                activeLinkRect.top < containerRect.top ||
+                activeLinkRect.bottom > containerRect.bottom
+              ) {
+                tocContainer.scrollTop =
+                  activeLink.offsetTop - containerRect.height / 2;
+              }
+            }
+          }
+        });
+      }
+    }
 
-          // Actualizar la URL
-          history.pushState(null, "", `#${targetId}`);
-        }
+    // Agregar evento de clic para navegación suave
+    document
+      .querySelectorAll(".toc-list a, .mobile-toc-list a")
+      .forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href").substring(1);
+          const targetElement = document.getElementById(targetId);
+
+          if (targetElement) {
+            // Desactivar todos los enlaces
+            document
+              .querySelectorAll(".toc-list a, .mobile-toc-list a")
+              .forEach(function (l) {
+                l.classList.remove(
+                  "border-blue-500",
+                  "bg-blue-50",
+                  "dark:bg-blue-900/20",
+                  "text-blue-700",
+                  "dark:text-blue-300",
+                  "font-medium"
+                );
+              });
+
+            // Activar el enlace actual
+            this.classList.add(
+              "border-blue-500",
+              "bg-blue-50",
+              "dark:bg-blue-900/20",
+              "text-blue-700",
+              "dark:text-blue-300",
+              "font-medium"
+            );
+
+            // Cerrar el menú móvil si está abierto
+            if (mobileToc) {
+              mobileToc.classList.add("hidden");
+              document.body.classList.remove("overflow-hidden");
+            }
+
+            // Desplazamiento suave
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: "smooth",
+            });
+
+            // Actualizar la URL
+            history.pushState(null, "", `#${targetId}`);
+          }
+        });
       });
-    });
 
     // Configurar observador de desplazamiento
     let scrollTimeout = null;
@@ -199,29 +340,7 @@
       scrollTimeout = setTimeout(updateActiveLink, 100);
     });
 
-    // Inicializar al cargar
+    // Llamada inicial para resaltar el enlace activo
     updateActiveLink();
-
-    // Resaltar enlace correspondiente si hay un hash en la URL
-    if (window.location.hash) {
-      const hash = window.location.hash.substring(1);
-      const link = document.querySelector(`.toc-list a[href="#${hash}"]`);
-      if (link) {
-        link.classList.add(
-          "border-blue-500",
-          "bg-blue-50",
-          "dark:bg-blue-900/20",
-          "text-blue-700",
-          "dark:text-blue-300",
-          "font-medium"
-        );
-        // Hacer scroll al enlace en la tabla de contenidos
-        const tocContainer = link.closest("nav");
-        if (tocContainer) {
-          tocContainer.scrollTop =
-            link.offsetTop - tocContainer.offsetHeight / 2;
-        }
-      }
-    }
   });
 </script>

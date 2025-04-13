@@ -28,38 +28,38 @@ const methodColors = {
 ---
 
 <div
-  class="my-8 border rounded-lg shadow-sm dark:shadow-gray-900 border-gray-200 dark:border-gray-800 overflow-hidden"
+  class="my-6 sm:my-8 border rounded-lg shadow-sm dark:shadow-gray-900 border-gray-200 dark:border-gray-800 overflow-hidden"
 >
   <div
-    class="p-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900"
+    class="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900"
   >
-    <div class="flex flex-wrap items-center gap-3">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
       <span
-        class={`px-3 py-1 rounded-full text-xs font-semibold ${methodColors[method]}`}
+        class={`px-2.5 sm:px-3 py-1 rounded-full text-xs font-semibold ${methodColors[method]} w-fit`}
       >
         {method}
       </span>
       <code
-        class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded font-mono flex-1"
+        class="text-xs sm:text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded font-mono w-full overflow-x-auto whitespace-nowrap"
         >{endpoint}</code
       >
     </div>
     {
       description && (
-        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
           {description}
         </p>
       )
     }
   </div>
 
-  <div class="p-4 bg-white dark:bg-gray-950">
+  <div class="p-3 sm:p-4 bg-white dark:bg-gray-950">
     <slot />
 
     {
       requestExample && (
-        <div class="mt-4">
-          <h4 class="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+        <div class="mt-3 sm:mt-4">
+          <h4 class="text-xs sm:text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
             Ejemplo de Solicitud
           </h4>
           <CodeBlock code={requestExample} lang="json" title="Request" />
@@ -69,8 +69,8 @@ const methodColors = {
 
     {
       responseExample && (
-        <div class="mt-4">
-          <h4 class="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+        <div class="mt-3 sm:mt-4">
+          <h4 class="text-xs sm:text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
             Ejemplo de Respuesta
           </h4>
           <CodeBlock code={responseExample} lang="json" title="Response" />

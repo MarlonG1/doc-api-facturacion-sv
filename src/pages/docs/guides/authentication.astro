@@ -38,10 +38,11 @@ const baseURL = "/doc-api-facturacion-sv/";
       de registro:
     </p>
 
-    <CodeBlock
-      code={`POST /api/v1/auth/register
-
-{
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/auth/register"
+      description="Registra tu empresa y establecimientos"
+      requestExample={`{
   "nit": "12345678911227",
   "nrc": "1233260",
   "auth_type": "STANDARD",
@@ -70,36 +71,7 @@ const baseURL = "/doc-api-facturacion-sv/";
     }
   ]
 }`}
-      lang="json"
-      title="Solicitud de registro"
-    />
-
-    <div
-      class="bg-white dark:bg-gray-800 p-4 rounded-md border border-gray-200 dark:border-gray-700 my-4"
-    >
-      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
-        Campos obligatorios
-      </h3>
-      <ul class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400">
-        <li><strong>nit</strong>: NIT de la empresa (14 dígitos)</li>
-        <li><strong>nrc</strong>: Número de registro fiscal (1-8 dígitos)</li>
-        <li><strong>business_name</strong>: Razón social (1-150 caracteres)</li>
-        <li>
-          <strong>economic_activity</strong>: Código de actividad económica
-          según CAT-019
-        </li>
-        <li>
-          <strong>branch_offices</strong>: Al menos una sucursal tipo "02" (Casa
-          matriz)
-        </li>
-      </ul>
-    </div>
-
-    <h3>Respuesta de registro</h3>
-    <p>Recibirás tus credenciales de API para cada sucursal que registraste:</p>
-
-    <CodeBlock
-      code={`{
+      responseExample={`{
   "success": true,
   "data": [
     {
@@ -118,9 +90,30 @@ const baseURL = "/doc-api-facturacion-sv/";
     }
   ]
 }`}
-      lang="json"
-      title="Respuesta de registro"
-    />
+    >
+      <div
+        class="bg-white dark:bg-gray-800 p-4 rounded-md border border-gray-200 dark:border-gray-700 my-4"
+      >
+        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+          Campos obligatorios
+        </h3>
+        <ul class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400">
+          <li><strong>nit</strong>: NIT de la empresa (14 dígitos)</li>
+          <li><strong>nrc</strong>: Número de registro fiscal (1-8 dígitos)</li>
+          <li>
+            <strong>business_name</strong>: Razón social (1-150 caracteres)
+          </li>
+          <li>
+            <strong>economic_activity</strong>: Código de actividad económica
+            según CAT-019
+          </li>
+          <li>
+            <strong>branch_offices</strong>: Al menos una sucursal tipo "02"
+            (Casa matriz)
+          </li>
+        </ul>
+      </div>
+    </ApiEndpoint>
 
     <div class="not-prose my-6">
       <Card
@@ -133,10 +126,11 @@ const baseURL = "/doc-api-facturacion-sv/";
     <h2>Paso 2: Obtener token JWT</h2>
     <p>Utiliza las credenciales recibidas para obtener un token JWT:</p>
 
-    <CodeBlock
-      code={`POST /api/v1/auth/login
-
-{
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/auth/login"
+      description="Obtener un token JWT para autenticar solicitudes"
+      requestExample={`{
   "api_key": "b5fdbe3ed9d919ae0298...",
   "api_secret": "4sIQwMA5CDc7wRIXU...",
   "credentials": {
@@ -144,25 +138,12 @@ const baseURL = "/doc-api-facturacion-sv/";
     "password": "TU-HACIENDA-PASSWORD-API"
   }
 }`}
-      lang="json"
-      title="Solicitud de inicio de sesión"
-    />
-
-    <p>
-      Recibirás un token JWT que será válido por el tiempo especificado en <code
-        >token_lifetime</code
-      > (por defecto 30 días):
-    </p>
-
-    <CodeBlock
-      code={`{
+      responseExample={`{
   "success": true,
   "data": {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC..."
   }
 }`}
-      lang="json"
-      title="Respuesta de inicio de sesión"
     />
 
     <h2>Paso 3: Usar el token para autenticarte</h2>
@@ -171,12 +152,17 @@ const baseURL = "/doc-api-facturacion-sv/";
       posteriores:
     </p>
 
-    <CodeBlock
-      code={`GET /api/v1/dte/123456
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...`}
-      lang="http"
-      title="Ejemplo de solicitud autenticada"
-    />
+    <ApiEndpoint
+      method="GET"
+      endpoint="/api/v1/dte/123456"
+      description="Ejemplo de solicitud autenticada usando el token JWT"
+    >
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Incluye el siguiente encabezado en todas tus solicitudes:
+      </p>
+      <pre
+        class="text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded overflow-x-auto">Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...</pre>
+    </ApiEndpoint>
 
     <h2>Renovación del token</h2>
     <p>
