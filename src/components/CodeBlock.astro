@@ -14,24 +14,27 @@ let formattedCode = code;
 ---
 
 <div
-  class="my-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 bg-white"
+  class="my-4 sm:my-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 bg-white"
 >
   {
     title && (
-      <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-4 py-2">
-        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+      <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-3 sm:px-4 py-2">
+        <p class="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
           {title}
         </p>
-        <button class="copy-button text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none">
+        <button
+          class="copy-button text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none"
+          data-copy={code}
+        >
           <span class="copy-text">Copiar</span>
           <span class="copied-text hidden">¡Copiado!</span>
         </button>
       </div>
     )
   }
-  <div class="overflow-x-auto p-4">
+  <div class="overflow-x-auto p-3 sm:p-4">
     <pre
-      class:list={["text-sm", showLineNumbers && "line-numbers"]}
+      class:list={["text-xs sm:text-sm", showLineNumbers && "line-numbers"]}
       data-language={lang}><code class={`language-${lang}`}>{formattedCode}</code></pre>
   </div>
 </div>
@@ -85,24 +88,66 @@ let formattedCode = code;
     const copyButtons = document.querySelectorAll(".copy-button");
 
     copyButtons.forEach((button) => {
-      const preElement = button.closest("div.my-6")?.querySelector("pre");
+      const preElement = button
+        .closest("div.my-4, div.my-6")
+        ?.querySelector("pre");
       const codeElement = preElement?.querySelector("code");
+      const copyText = button.getAttribute("data-copy");
 
       button.addEventListener("click", () => {
-        if (codeElement) {
+        if (copyText) {
           navigator.clipboard
-            .writeText(codeElement.textContent || "")
+            .writeText(copyText)
             .then(() => {
-              const copyText = button.querySelector(".copy-text");
-              const copiedText = button.querySelector(".copied-text");
+              const copyTextSpan = button.querySelector(".copy-text");
+              const copiedTextSpan = button.querySelector(".copied-text");
 
-              if (copyText && copiedText) {
-                copyText.classList.add("hidden");
-                copiedText.classList.remove("hidden");
+              if (copyTextSpan && copiedTextSpan) {
+                copyTextSpan.classList.add("hidden");
+                copiedTextSpan.classList.remove("hidden");
 
                 setTimeout(() => {
-                  copyText.classList.remove("hidden");
-                  copiedText.classList.add("hidden");
+                  copyTextSpan.classList.remove("hidden");
+                  copiedTextSpan.classList.add("hidden");
+                }, 2000);
+              }
+            })
+            .catch((err) => {
+              console.error("Error al copiar el texto: ", err);
+            });
+        }
+      });
+    });
+  });
+
+  // También manejar el evento astro:page-load para la navegación del lado del cliente
+  document.addEventListener("astro:page-load", () => {
+    // Inicializar Prism si está disponible
+    if (window.Prism) {
+      window.Prism.highlightAll();
+    }
+
+    // Configurar los botones de copia
+    const copyButtons = document.querySelectorAll(".copy-button");
+
+    copyButtons.forEach((button) => {
+      const copyText = button.getAttribute("data-copy");
+
+      button.addEventListener("click", () => {
+        if (copyText) {
+          navigator.clipboard
+            .writeText(copyText)
+            .then(() => {
+              const copyTextSpan = button.querySelector(".copy-text");
+              const copiedTextSpan = button.querySelector(".copied-text");
+
+              if (copyTextSpan && copiedTextSpan) {
+                copyTextSpan.classList.add("hidden");
+                copiedTextSpan.classList.remove("hidden");
+
+                setTimeout(() => {
+                  copyTextSpan.classList.remove("hidden");
+                  copiedTextSpan.classList.add("hidden");
                 }, 2000);
               }
             })

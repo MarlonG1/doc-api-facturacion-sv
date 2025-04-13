@@ -2,6 +2,7 @@
 import DocsLayout from "../../../layouts/DocsLayout.astro";
 import Card from "../../../components/Card.astro";
 import CodeBlock from "../../../components/CodeBlock.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
 
 const title = "Guía de Inicio Rápido";
 const description =
@@ -88,48 +89,47 @@ const baseURL = "/doc-api-facturacion-sv/";
       endpoint <code>/api/v1/auth/register</code>.
     </p>
 
-    <CodeBlock
-      code={`curl -X POST https://tudominio:7319/api/v1/auth/register \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "nit": "12345678911227",
-    "nrc": "1233260",
-    "auth_type": "STANDARD",
-    "business_name": "EMPRESA DE PRUEBAS SA DE CV",
-    "commercial_name": "EMPRESA DE PRUEBAS",
-    "economic_activity": "47190",
-    "economic_activity_desc": "Venta al por mayor de otros productos",
-    "phone": "21212828",
-    "email": "facturacion@empresa.com.sv",
-    "password_pri": "Tu-password-de-certificado#",
-    "year_in_dte": true,
-    "token_lifetime": 30,
-    "branch_offices": [
-      {
-        "establishment_type": "02",
-        "establishment_code": "CENTRAL",
-        "address": {
-          "department": "06",
-          "municipality": "20",
-          "complement": "BOULEVARD SANTA ELENA SUR, SANTA TECLA"
-        }
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/auth/register"
+      description="Registra tu empresa y sucursales en el sistema"
+      requestExample={`{
+  "nit": "12345678911227",
+  "nrc": "1233260",
+  "auth_type": "STANDARD",
+  "business_name": "EMPRESA DE PRUEBAS SA DE CV",
+  "commercial_name": "EMPRESA DE PRUEBAS",
+  "economic_activity": "47190",
+  "economic_activity_desc": "Venta al por mayor de otros productos",
+  "phone": "21212828",
+  "email": "facturacion@empresa.com.sv",
+  "password_pri": "Tu-password-de-certificado#",
+  "year_in_dte": true,
+  "token_lifetime": 30,
+  "branch_offices": [
+    {
+      "establishment_type": "02",
+      "establishment_code": "CENTRAL",
+      "address": {
+        "department": "06",
+        "municipality": "20",
+        "complement": "BOULEVARD SANTA ELENA SUR, SANTA TECLA"
       }
-    ]
-  }'`}
-      lang="bash"
-      title="Registro de cuenta"
-    />
-
-    <div
-      class="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-md my-6 border border-indigo-100 dark:border-indigo-800"
+    }
+  ]
+}`}
     >
-      <p class="text-indigo-700 dark:text-indigo-300 text-sm">
-        <strong>💡 Consejo:</strong> Guarda de forma segura las credenciales <code
-          >api_key</code
-        > y <code>api_secret</code> que recibirás en la respuesta. Las necesitarás
-        para todos los pasos siguientes.
-      </p>
-    </div>
+      <div
+        class="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-md my-6 border border-indigo-100 dark:border-indigo-800"
+      >
+        <p class="text-indigo-700 dark:text-indigo-300 text-sm">
+          <strong>💡 Consejo:</strong> Guarda de forma segura las credenciales <code
+            >api_key</code
+          > y <code>api_secret</code> que recibirás en la respuesta. Las necesitarás
+          para todos los pasos siguientes.
+        </p>
+      </div>
+    </ApiEndpoint>
 
     <h2>Paso 2: Obtén un token JWT</h2>
     <p>
@@ -137,68 +137,64 @@ const baseURL = "/doc-api-facturacion-sv/";
       tus solicitudes:
     </p>
 
-    <CodeBlock
-      code={`curl -X POST https://tudominio:7319/api/v1/auth/login \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "api_key": "b5fdbe3ed9d919ae0298...",
-    "api_secret": "4sIQwMA5CDc7wRIXU...",
-    "credentials": {
-      "username": "TU-HACIENDA-USERNAME",
-      "password": "TU-HACIENDA-PASSWORD-API"
-    }
-  }'`}
-      lang="bash"
-      title="Obtención de token JWT"
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/auth/login"
+      description="Obtén un token JWT para autenticar tus peticiones"
+      requestExample={`{
+  "api_key": "b5fdbe3ed9d919ae0298...",
+  "api_secret": "4sIQwMA5CDc7wRIXU...",
+  "credentials": {
+    "username": "TU-HACIENDA-USERNAME",
+    "password": "TU-HACIENDA-PASSWORD-API"
+  }
+}`}
     />
 
     <h2>Paso 3: Emite tu primera factura</h2>
     <p>Ahora puedes emitir tu primera factura electrónica:</p>
 
-    <CodeBlock
-      code={`curl -X POST https://tudominio:7319/api/v1/invoices \\
-  -H "Content-Type: application/json" \\
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..." \\
-  -d '{
-   "items": [
-      {
-        "type": 1,
-        "description": "Producto de ejemplo",
-        "quantity": 2,
-        "unit_measure": 59,
-        "unit_price": 50.00,
-        "taxed_sale": 100.00,
-        "iva_item": 11.50
-      }
-    ],
-    "summary": {
-      "total_taxed": 100.00,
-      "sub_total": 100.00,
-      "sub_total_sales": 100.00,
-      "total_operation": 100.00,
-      "total_to_pay": 100.00,
-      "operation_condition": 1,
-      "total_iva": 11.50,
-      "payment_types": [
-        {
-          "code": "01",
-          "amount": 100.00
-        }
-      ]
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/invoices"
+      description="Emite una nueva factura electrónica"
+      requestExample={`{
+ "items": [
+    {
+      "type": 1,
+      "description": "Producto de ejemplo",
+      "quantity": 2,
+      "unit_measure": 59,
+      "unit_price": 50.00,
+      "taxed_sale": 100.00,
+      "iva_item": 11.50
     }
-  }'`}
-      lang="bash"
-      title="Emisión de factura"
+  ],
+  "summary": {
+    "total_taxed": 100.00,
+    "sub_total": 100.00,
+    "sub_total_sales": 100.00,
+    "total_operation": 100.00,
+    "total_to_pay": 100.00,
+    "operation_condition": 1,
+    "total_iva": 11.50,
+    "payment_types": [
+      {
+        "code": "01",
+        "amount": 100.00
+      }
+    ]
+  }
+}`}
     />
 
     <h2>Paso 4: Verifica el estado del documento</h2>
     <p>Confirma que tu documento fue recibido correctamente:</p>
 
-    <CodeBlock
-      code={`curl -X GET https://tudominio:7319/api/v1/dte/F64D69AD-05AB-4555-AE2A-76C610513DA0 \\
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..."`}
-      lang="bash"
-      title="Consulta de estado"
+    <ApiEndpoint
+      method="GET"
+      endpoint="/api/v1/dte/F64D69AD-05AB-4555-AE2A-76C610513DA0"
+      description="Consulta el estado de un documento emitido usando su UUID"
     />
 
     <h2>¿Qué sigue?</h2>

@@ -211,6 +211,50 @@ const baseURL = "/doc-api-facturacion-sv";
       pre[class*="language-"] {
         tab-size: 2;
       }
+
+      /* Ajustes responsivos para bloques de código */
+      @media (max-width: 768px) {
+        pre[class*="language-"] {
+          padding: 1rem;
+          font-size: 0.875rem;
+          margin: 1.25rem 0;
+        }
+      }
+
+      @media (max-width: 640px) {
+        pre[class*="language-"] {
+          padding: 0.75rem;
+          font-size: 0.8125rem;
+          margin: 1rem 0;
+        }
+      }
+
+      /* Eliminar el efecto de fondo alternado en líneas de código */
+      pre[class*="language-"] .line {
+        background: transparent !important;
+      }
+
+      pre[class*="language-"] .line:nth-child(odd),
+      pre[class*="language-"] .line:nth-child(even) {
+        background: transparent !important;
+      }
+
+      .token.operator,
+      .token.entity,
+      .token.url,
+      .language-css .token.string,
+      .style .token.string {
+        background: transparent !important;
+      }
+
+      /* Fondo uniforme para todos los bloques de código */
+      .dark pre[class*="language-"] {
+        background: #192441 !important; /* Azul oscuro coherente */
+      }
+
+      .light pre[class*="language-"] {
+        background: #f8fafc !important; /* Fondo muy claro */
+      }
     </style>
   </head>
   <body
@@ -229,24 +273,91 @@ const baseURL = "/doc-api-facturacion-sv";
 
       <!-- Main content -->
       <main class="flex-1 min-w-0">
-        <div class="flex flex-col xl:flex-row">
+        <div class="flex flex-col xl:flex-row max-w-[1600px] mx-auto">
           <!-- Contenido principal -->
           <div
-            class="flex-1 px-6 lg:px-10 py-8 min-w-0 max-w-4xl mx-auto xl:mx-0"
+            class="flex-1 px-4 sm:px-6 lg:px-10 xl:px-8 py-6 sm:py-8 min-w-0 w-full xl:max-w-[calc(100%-18rem)] mx-auto"
           >
-            <slot />
+            <!-- Botón móvil para mostrar la tabla de contenidos -->
+            <div class="mb-6 xl:hidden flex justify-end">
+              <button
+                id="show-toc-button"
+                class="text-sm flex items-center px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-1.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h7"></path>
+                </svg>
+                Contenido
+              </button>
+            </div>
+
+            <!-- Contenido principal de la página -->
+            <div
+              class="prose prose-slate dark:prose-invert max-w-none prose-headings:scroll-mt-20 prose-img:rounded-xl prose-pre:!bg-transparent"
+            >
+              <slot />
+            </div>
           </div>
 
           <!-- Tabla de contenidos (derecha) -->
-          <div class="w-full xl:w-72 shrink-0 hidden xl:block">
+          <div class="w-full xl:w-72 xl:min-w-[18rem] shrink-0 hidden xl:block">
             <div
-              class="sticky top-16 pt-8 pl-2 h-[calc(100vh-4rem)] overflow-y-auto"
+              class="sticky top-16 pt-8 px-4 mx-auto h-[calc(100vh-4rem)] overflow-y-auto"
             >
               <TableOfContents />
             </div>
           </div>
         </div>
       </main>
+    </div>
+
+    <!-- Modal móvil de tabla de contenidos -->
+    <div
+      id="mobile-toc-modal"
+      class="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 hidden"
+    >
+      <div
+        class="w-4/5 max-w-sm h-full overflow-y-auto bg-white dark:bg-gray-900 ml-auto"
+      >
+        <div
+          class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center"
+        >
+          <h3 class="text-base font-semibold text-gray-900 dark:text-white">
+            Contenido de la página
+          </h3>
+          <button
+            id="close-toc-button"
+            class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="mobile-toc-content" class="p-4">
+          <!-- El contenido se generará dinámicamente -->
+        </div>
+      </div>
     </div>
 
     <footer class="border-t border-slate-200 dark:border-slate-700 py-6 mt-8">
@@ -260,52 +371,281 @@ const baseURL = "/doc-api-facturacion-sv";
       </div>
     </footer>
 
+    <script is:inline src="/doc-api-facturacion-sv/js/theme-handler.js"
+    ></script>
+
     <script is:inline>
-      // Documentación para el botón de "copiar al portapapeles"
-      document.addEventListener("DOMContentLoaded", () => {
-        const copyButtons = document.querySelectorAll(".copy-button");
-        copyButtons.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const text = btn.dataset.copy;
-            if (text) {
-              navigator.clipboard.writeText(text);
-              btn.classList.add("copied");
-              setTimeout(() => {
-                btn.classList.remove("copied");
-              }, 2000);
+      document.addEventListener("astro:page-load", function () {
+        // Gestionar botones móviles para tabla de contenidos
+        const showTocButton = document.getElementById("show-toc-button");
+        const closeTocButton = document.getElementById("close-toc-button");
+        const mobileTocModal = document.getElementById("mobile-toc-modal");
+
+        // Función para generar la tabla de contenidos en el modal
+        function generateTOC() {
+          const modalTocContainer = document.querySelector(
+            "#mobile-toc-content"
+          );
+          if (!modalTocContainer) return;
+
+          // Obtener los encabezados
+          const headings = document.querySelectorAll(".prose h2, .prose h3");
+          if (headings.length === 0) return;
+
+          // Crear contenedor para el título y la lista
+          let tocHTML = `
+            <h3 class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 uppercase tracking-wider">
+              EN ESTA PÁGINA
+            </h3>
+            <ul class="modal-toc-list space-y-1 border-l border-gray-200 dark:border-gray-700">
+          `;
+
+          // Variables para construir la tabla de contenidos
+          let lastH2Item = null;
+          let currentH2HTML = "";
+          let h3ListHTML = "";
+
+          // Construir la tabla de contenidos
+          headings.forEach(function (heading) {
+            // Asegurar que tenga un ID
+            if (!heading.id) {
+              const text = heading.textContent || "";
+              heading.id = text
+                .toLowerCase()
+                .replace(/[^\w\s-]/g, "")
+                .replace(/\s+/g, "-");
+            }
+
+            const level = parseInt(heading.tagName.substring(1));
+            const text = heading.textContent || "";
+
+            if (level === 2) {
+              // Si teníamos un H2 anterior con H3s, agregarlo
+              if (lastH2Item && h3ListHTML) {
+                tocHTML += `
+                  <li>
+                    ${currentH2HTML}
+                    <ul class="mt-1 space-y-1">
+                      ${h3ListHTML}
+                    </ul>
+                  </li>
+                `;
+              } else if (lastH2Item) {
+                // H2 sin H3s
+                tocHTML += `<li>${currentH2HTML}</li>`;
+              }
+
+              // Crear nuevo H2
+              currentH2HTML = `
+                <a href="#${heading.id}" 
+                   class="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-1.5 sm:py-2 pl-6 pr-2 border-l-2 transition-colors duration-200 rounded-r-md border-transparent hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                  ${text}
+                </a>
+              `;
+              lastH2Item = heading;
+              h3ListHTML = "";
+            } else if (level === 3 && lastH2Item) {
+              // Agregar H3
+              h3ListHTML += `
+                <li>
+                  <a href="#${heading.id}" 
+                     class="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-1.5 sm:py-2 pl-8 pr-2 border-l-2 transition-colors duration-200 rounded-r-md border-transparent hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                    ${text}
+                  </a>
+                </li>
+              `;
             }
           });
-        });
-      });
 
-      // Código para gestionar temas claros y oscuros usando funciones globales
-      function applyThemeToCodeBlocks(elements) {
-        const theme = getThemePreference();
-        elements.forEach((block) => {
-          if (theme === "dark") {
-            block.classList.add("dark");
-            block.classList.remove("light");
-          } else {
-            block.classList.add("light");
-            block.classList.remove("dark");
+          // Agregar el último H2 si existe
+          if (lastH2Item && h3ListHTML) {
+            tocHTML += `
+              <li>
+                ${currentH2HTML}
+                <ul class="mt-1 space-y-1">
+                  ${h3ListHTML}
+                </ul>
+              </li>
+            `;
+          } else if (lastH2Item) {
+            tocHTML += `<li>${currentH2HTML}</li>`;
           }
-        });
-      }
 
-      // Escuchar cambios de tema
-      document.addEventListener("themeChanged", (e) => {
-        const codeBlocks = document.querySelectorAll("pre[class*='language-']");
-        const responseBlocks = document.querySelectorAll(".response");
-        applyThemeToCodeBlocks(codeBlocks);
-        applyThemeToCodeBlocks(responseBlocks);
+          tocHTML += "</ul>";
+
+          // Establecer el HTML generado
+          modalTocContainer.innerHTML = tocHTML;
+
+          // Añadir eventos de clic a los enlaces
+          modalTocContainer.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", function () {
+              // Cerrar el modal al hacer clic en un enlace
+              mobileTocModal.classList.add("hidden");
+              document.body.classList.remove("overflow-hidden");
+            });
+          });
+        }
+
+        if (showTocButton && mobileTocModal && closeTocButton) {
+          showTocButton.addEventListener("click", function () {
+            // Generar el contenido del TOC
+            generateTOC();
+
+            // Mostrar el modal
+            mobileTocModal.classList.remove("hidden");
+            document.body.classList.add("overflow-hidden");
+          });
+
+          closeTocButton.addEventListener("click", function () {
+            mobileTocModal.classList.add("hidden");
+            document.body.classList.remove("overflow-hidden");
+          });
+
+          // Cerrar al hacer clic fuera del modal
+          mobileTocModal.addEventListener("click", function (e) {
+            if (e.target === mobileTocModal) {
+              mobileTocModal.classList.add("hidden");
+              document.body.classList.remove("overflow-hidden");
+            }
+          });
+        }
       });
 
-      // Aplicar tema a bloques de código al cargar la página
-      document.addEventListener("astro:page-load", () => {
-        const codeBlocks = document.querySelectorAll("pre[class*='language-']");
-        const responseBlocks = document.querySelectorAll(".response");
-        applyThemeToCodeBlocks(codeBlocks);
-        applyThemeToCodeBlocks(responseBlocks);
+      // También inicializar en la carga inicial
+      document.addEventListener("DOMContentLoaded", function () {
+        // El mismo código de arriba para la carga inicial
+        const showTocButton = document.getElementById("show-toc-button");
+        const closeTocButton = document.getElementById("close-toc-button");
+        const mobileTocModal = document.getElementById("mobile-toc-modal");
+
+        // Función para generar la tabla de contenidos en el modal
+        function generateTOC() {
+          const modalTocContainer = document.querySelector(
+            "#mobile-toc-content"
+          );
+          if (!modalTocContainer) return;
+
+          // Obtener los encabezados
+          const headings = document.querySelectorAll(".prose h2, .prose h3");
+          if (headings.length === 0) return;
+
+          // Crear contenedor para el título y la lista
+          let tocHTML = `
+            <h3 class="text-xs sm:text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 uppercase tracking-wider">
+              EN ESTA PÁGINA
+            </h3>
+            <ul class="modal-toc-list space-y-1 border-l border-gray-200 dark:border-gray-700">
+          `;
+
+          // Variables para construir la tabla de contenidos
+          let lastH2Item = null;
+          let currentH2HTML = "";
+          let h3ListHTML = "";
+
+          // Construir la tabla de contenidos
+          headings.forEach(function (heading) {
+            // Asegurar que tenga un ID
+            if (!heading.id) {
+              const text = heading.textContent || "";
+              heading.id = text
+                .toLowerCase()
+                .replace(/[^\w\s-]/g, "")
+                .replace(/\s+/g, "-");
+            }
+
+            const level = parseInt(heading.tagName.substring(1));
+            const text = heading.textContent || "";
+
+            if (level === 2) {
+              // Si teníamos un H2 anterior con H3s, agregarlo
+              if (lastH2Item && h3ListHTML) {
+                tocHTML += `
+                  <li>
+                    ${currentH2HTML}
+                    <ul class="mt-1 space-y-1">
+                      ${h3ListHTML}
+                    </ul>
+                  </li>
+                `;
+              } else if (lastH2Item) {
+                // H2 sin H3s
+                tocHTML += `<li>${currentH2HTML}</li>`;
+              }
+
+              // Crear nuevo H2
+              currentH2HTML = `
+                <a href="#${heading.id}" 
+                   class="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-1.5 sm:py-2 pl-6 pr-2 border-l-2 transition-colors duration-200 rounded-r-md border-transparent hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                  ${text}
+                </a>
+              `;
+              lastH2Item = heading;
+              h3ListHTML = "";
+            } else if (level === 3 && lastH2Item) {
+              // Agregar H3
+              h3ListHTML += `
+                <li>
+                  <a href="#${heading.id}" 
+                     class="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-1.5 sm:py-2 pl-8 pr-2 border-l-2 transition-colors duration-200 rounded-r-md border-transparent hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10">
+                    ${text}
+                  </a>
+                </li>
+              `;
+            }
+          });
+
+          // Agregar el último H2 si existe
+          if (lastH2Item && h3ListHTML) {
+            tocHTML += `
+              <li>
+                ${currentH2HTML}
+                <ul class="mt-1 space-y-1">
+                  ${h3ListHTML}
+                </ul>
+              </li>
+            `;
+          } else if (lastH2Item) {
+            tocHTML += `<li>${currentH2HTML}</li>`;
+          }
+
+          tocHTML += "</ul>";
+
+          // Establecer el HTML generado
+          modalTocContainer.innerHTML = tocHTML;
+
+          // Añadir eventos de clic a los enlaces
+          modalTocContainer.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", function () {
+              // Cerrar el modal al hacer clic en un enlace
+              mobileTocModal.classList.add("hidden");
+              document.body.classList.remove("overflow-hidden");
+            });
+          });
+        }
+
+        if (showTocButton && mobileTocModal && closeTocButton) {
+          showTocButton.addEventListener("click", function () {
+            // Generar el contenido del TOC
+            generateTOC();
+
+            // Mostrar el modal
+            mobileTocModal.classList.remove("hidden");
+            document.body.classList.add("overflow-hidden");
+          });
+
+          closeTocButton.addEventListener("click", function () {
+            mobileTocModal.classList.add("hidden");
+            document.body.classList.remove("overflow-hidden");
+          });
+
+          // Cerrar al hacer clic fuera del modal
+          mobileTocModal.addEventListener("click", function (e) {
+            if (e.target === mobileTocModal) {
+              mobileTocModal.classList.add("hidden");
+              document.body.classList.remove("overflow-hidden");
+            }
+          });
+        }
       });
     </script>
   </body>

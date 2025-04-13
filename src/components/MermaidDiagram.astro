@@ -19,24 +19,96 @@ const { chart, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } =
 <script>
   import mermaid from "mermaid";
 
-  // Configuración de temas claro/oscuro
-  const isDark = document.documentElement.classList.contains("dark");
+  function initializeMermaid() {
+    // Configuración de temas claro/oscuro
+    const isDark = document.documentElement.classList.contains("dark");
 
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: isDark ? "dark" : "default",
-    securityLevel: "loose",
-    fontFamily: "Inter, sans-serif",
-  });
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: isDark ? "dark" : "default",
+      securityLevel: "loose",
+      fontFamily: "Inter, sans-serif",
+    });
+
+    try {
+      // Renderizar todos los diagramas en la página actual
+      const elements = document.querySelectorAll(
+        ".mermaid:not([data-processed='true'])"
+      );
+      elements.forEach((element) => {
+        // Solo inicializar si no ha sido procesado antes
+        if (!element.hasAttribute("data-processed")) {
+          const chart = element.textContent?.trim() || "";
+          // Limpiar el elemento
+          element.innerHTML = "";
+          // Añadir atributo para evitar reprocesamiento
+          element.setAttribute("data-processed", "true");
+
+          try {
+            // Renderizar el diagrama
+            mermaid
+              .render(
+                `mermaid-svg-${Math.random().toString(36).substring(2, 10)}`,
+                chart
+              )
+              .then((result) => {
+                element.innerHTML = result.svg;
+              })
+              .catch((error) => {
+                console.error("Error rendering mermaid chart:", error);
+                element.textContent = chart; // Restaurar el texto original en caso de error
+              });
+          } catch (error) {
+            console.error("Error rendering mermaid:", error);
+            element.textContent = chart; // Restaurar el texto original en caso de error
+          }
+        }
+      });
+    } catch (error) {
+      console.error("Error initializing mermaid:", error);
+    }
+  }
+
+  // Inicializar en la carga de página y después de las transiciones
+  document.addEventListener("astro:page-load", initializeMermaid);
+
+  // Inicializar también en DOMContentLoaded para la primera carga
+  document.addEventListener("DOMContentLoaded", initializeMermaid);
 
   // Escuchar cambios de tema
-  document.addEventListener("themeChanged", (e: Event) => {
+  document.addEventListener("themeChanged", (e) => {
     const customEvent = e as CustomEvent;
     const isDarkNow = customEvent.detail?.theme === "dark";
+
+    // Reinicializar mermaid con el nuevo tema
     mermaid.initialize({
       startOnLoad: false,
       theme: isDarkNow ? "dark" : "default",
     });
-    mermaid.init(undefined, document.querySelectorAll(".mermaid"));
+
+    // Limpiar completamente los diagramas y restaurar el contenido original
+    const elements = document.querySelectorAll(".mermaid");
+    elements.forEach((element) => {
+      // Verificar si el elemento tiene el atributo original-content
+      if (!element.hasAttribute("original-content")) {
+        // Guardar el contenido original si no lo ha hecho ya
+        const id = element.getAttribute("id") || "";
+        const originalContent = id.startsWith("mermaid-")
+          ? element.textContent?.trim() || ""
+          : element.innerHTML;
+        element.setAttribute("original-content", originalContent);
+      }
+
+      // Restaurar el contenido original
+      const originalContent = element.getAttribute("original-content") || "";
+
+      // Eliminar cualquier SVG generado anteriormente
+      element.innerHTML = originalContent;
+      // Eliminar el indicador de procesamiento para permitir re-renderizado
+      element.removeAttribute("data-processed");
+    });
+
+    // Volver a inicializar después de un breve retraso
+    setTimeout(initializeMermaid, 50);
   });
 </script>

@@ -46,11 +46,14 @@ const baseURL = "/doc-api-facturacion-sv/";
         </a>
         <ThemeToggle />
         <button
+          id="mobile-menu-button"
           type="button"
           class="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+          aria-expanded="false"
         >
           <span class="sr-only">Abrir menú</span>
           <svg
+            id="menu-icon-open"
             class="h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -63,8 +66,160 @@ const baseURL = "/doc-api-facturacion-sv/";
               stroke-width="2"
               d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
+          <svg
+            id="menu-icon-close"
+            class="h-6 w-6 hidden"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
         </button>
       </div>
     </div>
+
+    <!-- Menú móvil -->
+    <div id="mobile-menu" class="md:hidden hidden px-2 pt-2 pb-4 space-y-1">
+      <a
+        href={`${baseURL}docs/introduction`}
+        class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
+      >
+        Documentación
+      </a>
+    </div>
   </div>
 </header>
+
+<script>
+  // Script para el menú móvil
+  document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuIconOpen = document.getElementById("menu-icon-open");
+    const menuIconClose = document.getElementById("menu-icon-close");
+
+    // Inicializar el botón de tema
+    const themeToggle = document.getElementById("theme-toggle");
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        // Usando una versión tipada de window
+        const win = window as any;
+
+        const currentTheme =
+          typeof win.getThemePreference === "function"
+            ? win.getThemePreference()
+            : document.documentElement.classList.contains("dark")
+              ? "dark"
+              : "light";
+
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        // Usar la función global si está disponible
+        if (typeof win.setTheme === "function") {
+          win.setTheme(newTheme);
+        } else {
+          // Implementación de respaldo
+          if (newTheme === "dark") {
+            document.documentElement.classList.add("dark");
+            document.documentElement.classList.remove("light");
+          } else {
+            document.documentElement.classList.add("light");
+            document.documentElement.classList.remove("dark");
+          }
+
+          if (typeof localStorage !== "undefined") {
+            localStorage.setItem("theme", newTheme);
+          }
+
+          // Disparar evento manual
+          document.dispatchEvent(
+            new CustomEvent("themeChanged", { detail: { theme: newTheme } })
+          );
+        }
+      });
+    }
+
+    if (mobileMenuButton && mobileMenu && menuIconOpen && menuIconClose) {
+      mobileMenuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        menuIconOpen.classList.toggle("hidden");
+        menuIconClose.classList.toggle("hidden");
+        mobileMenuButton.setAttribute(
+          "aria-expanded",
+          mobileMenuButton.getAttribute("aria-expanded") === "false"
+            ? "true"
+            : "false"
+        );
+      });
+    }
+  });
+
+  // También manejar el evento con Astro
+  document.addEventListener("astro:page-load", () => {
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuIconOpen = document.getElementById("menu-icon-open");
+    const menuIconClose = document.getElementById("menu-icon-close");
+
+    // Inicializar el botón de tema
+    const themeToggle = document.getElementById("theme-toggle");
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        // Usando una versión tipada de window
+        const win = window as any;
+
+        const currentTheme =
+          typeof win.getThemePreference === "function"
+            ? win.getThemePreference()
+            : document.documentElement.classList.contains("dark")
+              ? "dark"
+              : "light";
+
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        // Usar la función global si está disponible
+        if (typeof win.setTheme === "function") {
+          win.setTheme(newTheme);
+        } else {
+          // Implementación de respaldo
+          if (newTheme === "dark") {
+            document.documentElement.classList.add("dark");
+            document.documentElement.classList.remove("light");
+          } else {
+            document.documentElement.classList.add("light");
+            document.documentElement.classList.remove("dark");
+          }
+
+          if (typeof localStorage !== "undefined") {
+            localStorage.setItem("theme", newTheme);
+          }
+
+          // Disparar evento manual
+          document.dispatchEvent(
+            new CustomEvent("themeChanged", { detail: { theme: newTheme } })
+          );
+        }
+      });
+    }
+
+    if (mobileMenuButton && mobileMenu && menuIconOpen && menuIconClose) {
+      mobileMenuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        menuIconOpen.classList.toggle("hidden");
+        menuIconClose.classList.toggle("hidden");
+        mobileMenuButton.setAttribute(
+          "aria-expanded",
+          mobileMenuButton.getAttribute("aria-expanded") === "false"
+            ? "true"
+            : "false"
+        );
+      });
+    }
+  });
+</script>

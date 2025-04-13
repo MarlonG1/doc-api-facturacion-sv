@@ -3,6 +3,7 @@
   aria-label="Cambiar tema"
   class="rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
 >
+  <!-- Icono Luna (visible en modo claro) -->
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -14,6 +15,8 @@
       d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"
       clip-rule="evenodd"></path>
   </svg>
+
+  <!-- Icono Sol (visible en modo oscuro) -->
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -25,40 +28,3 @@
     ></path>
   </svg>
 </button>
-
-<script is:inline>
-  // Función para inicializar el manejo del tema
-  function initThemeToggle() {
-    const themeToggle = document.getElementById("theme-toggle");
-
-    if (themeToggle) {
-      themeToggle.addEventListener("click", () => {
-        // Usar las funciones globales de tema si están disponibles
-        if (
-          typeof getThemePreference === "function" &&
-          typeof setTheme === "function"
-        ) {
-          const currentTheme = getThemePreference();
-          const newTheme = currentTheme === "dark" ? "light" : "dark";
-          setTheme(newTheme);
-        } else {
-          // Fallback para implementación local si las funciones globales no están disponibles
-          const isDark = document.documentElement.classList.contains("dark");
-          if (isDark) {
-            document.documentElement.classList.remove("dark");
-            document.documentElement.classList.add("light");
-            localStorage.setItem("theme", "light");
-          } else {
-            document.documentElement.classList.add("dark");
-            document.documentElement.classList.remove("light");
-            localStorage.setItem("theme", "dark");
-          }
-        }
-      });
-    }
-  }
-
-  // Inicializar al cargar la página y después de transiciones de páginas
-  document.addEventListener("DOMContentLoaded", initThemeToggle);
-  document.addEventListener("astro:page-load", initThemeToggle);
-</script>

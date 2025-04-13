@@ -14,7 +14,7 @@ const baseURL = import.meta.env.BASE_URL + "/" || "";
     <main class="flex-1">
       <!-- Hero Section -->
       <section
-        class="relative bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-indigo-900 dark:to-purple-900 py-20 overflow-hidden"
+        class="relative bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-indigo-900 dark:to-purple-900 py-12 sm:py-16 md:py-20 overflow-hidden"
       >
         <div class="absolute inset-0 opacity-10">
           <svg class="h-full w-full" viewBox="0 0 800 800">
@@ -41,11 +41,13 @@ const baseURL = import.meta.env.BASE_URL + "/" || "";
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div class="max-w-3xl mx-auto text-center">
             <h1
-              class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight"
+              class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-6 leading-tight"
             >
               API de Facturación Electrónica
             </h1>
-            <p class="text-xl text-indigo-100 mb-10 leading-relaxed">
+            <p
+              class="text-base sm:text-lg md:text-xl text-indigo-100 mb-6 sm:mb-8 md:mb-10 leading-relaxed"
+            >
               Solución para la emisión, gestión y seguimiento de documentos
               tributarios electrónicos que cumplen con la normativa de El
               Salvador.
@@ -53,13 +55,13 @@ const baseURL = import.meta.env.BASE_URL + "/" || "";
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href={`${baseURL}docs/introduction`}
-                class="rounded-lg bg-white text-indigo-700 font-medium px-6 py-3 shadow-lg hover:shadow-xl transition-all"
+                class="rounded-lg bg-white text-indigo-700 font-medium px-5 py-2.5 sm:px-6 sm:py-3 shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
               >
                 Comenzar
               </a>
               <a
                 href={`${baseURL}docs/api/endpoints`}
-                class="rounded-lg bg-indigo-800 bg-opacity-50 text-white border border-indigo-400 border-opacity-30 font-medium px-6 py-3 hover:bg-opacity-70 transition-all"
+                class="rounded-lg bg-indigo-800 bg-opacity-50 text-white border border-indigo-400 border-opacity-30 font-medium px-5 py-2.5 sm:px-6 sm:py-3 hover:bg-opacity-70 transition-all text-sm sm:text-base"
               >
                 Referencia API
               </a>
@@ -69,15 +71,17 @@ const baseURL = import.meta.env.BASE_URL + "/" || "";
       </section>
 
       <!-- Features Section -->
-      <section class="py-16 bg-white dark:bg-gray-950">
+      <section class="py-10 sm:py-12 md:py-16 bg-white dark:bg-gray-950">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <h2
-            class="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white"
+            class="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-gray-900 dark:text-white"
           >
             Características Principales
           </h2>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          >
             <Card
               title="Emisión de Documentos Fiscales"
               description="Genera facturas, comprobantes de crédito fiscal, notas de crédito y otros documentos válidos fiscalmente."
@@ -118,74 +122,76 @@ const baseURL = import.meta.env.BASE_URL + "/" || "";
       </section>
 
       <!-- Documentation Section -->
-      <section class="py-16 bg-gray-50 dark:bg-gray-900">
+      <section class="py-10 sm:py-12 md:py-16 bg-gray-50 dark:bg-gray-900">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="max-w-3xl mx-auto">
             <h2
-              class="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center"
+              class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 text-center"
             >
               Documentación Completa
             </h2>
             <p
-              class="text-lg text-gray-600 dark:text-gray-400 mb-8 text-center"
+              class="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 text-center"
             >
               Encuentra todo lo que necesitas para implementar la API en tu
               sistema:
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-6 sm:mt-8"
+            >
               <a
                 href={`${baseURL}docs/introduction`}
-                class="block p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                class="block p-4 sm:p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
               >
                 <h3
-                  class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
+                  class="text-base sm:text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
                 >
                   Guías
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                   Tutoriales paso a paso para comenzar rápidamente con la API.
                 </p>
               </a>
 
               <a
                 href={`${baseURL}docs/api/endpoints`}
-                class="block p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                class="block p-4 sm:p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
               >
                 <h3
-                  class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
+                  class="text-base sm:text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
                 >
                   Referencia API
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                   Documentación detallada de todos los endpoints disponibles.
                 </p>
               </a>
 
               <a
                 href={`${baseURL}docs/catalog`}
-                class="block p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                class="block p-4 sm:p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
               >
                 <h3
-                  class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
+                  class="text-base sm:text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
                 >
                   Catálogos
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                   Referencia de catálogos oficiales del Ministerio de Hacienda.
                 </p>
               </a>
 
               <a
                 href={`${baseURL}docs/common-errors`}
-                class="block p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                class="block p-4 sm:p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
               >
                 <h3
-                  class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
+                  class="text-base sm:text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
                 >
                   Errores Comunes
                 </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                   Soluciones a los problemas más frecuentes durante la
                   integración.
                 </p>
@@ -197,7 +203,7 @@ const baseURL = import.meta.env.BASE_URL + "/" || "";
 
       <!-- CTA Section -->
       <section
-        class="py-16 bg-gradient-to-br from-gray-900 to-indigo-900 text-white"
+        class="py-10 sm:py-12 md:py-16 bg-gradient-to-br from-gray-900 to-indigo-900 text-white"
       >
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="max-w-3xl mx-auto text-center">

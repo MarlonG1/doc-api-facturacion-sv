@@ -1,5 +1,58 @@
 ---
 const baseURL = "/doc-api-facturacion-sv/";
+
+// Importar los mismos ítems del sidebar para el menú móvil
+const sidebarItems = [
+  {
+    title: "Introducción",
+    links: [
+      {
+        text: "Introducción",
+        href: `${baseURL}docs/introduction`,
+      },
+      {
+        text: "Primeros pasos",
+        href: `${baseURL}docs/first-steps`,
+      },
+    ],
+  },
+  {
+    title: "Guías",
+    links: [
+      { text: "Autenticación", href: `${baseURL}docs/guides/authentication` },
+      { text: "Facturación", href: `${baseURL}docs/guides/emission` },
+      { text: "Invalidación", href: `${baseURL}docs/guides/invalidation` },
+    ],
+  },
+  {
+    title: "Referencia API",
+    links: [
+      { text: "Endpoints", href: `${baseURL}docs/api/endpoints` },
+      { text: "Autenticación", href: `${baseURL}docs/api/authentication` },
+      { text: "Factura Electrónica", href: `${baseURL}docs/api/invoices` },
+      {
+        text: "Comprobante de Crédito Fiscal",
+        href: `${baseURL}docs/api/credit-notes`,
+      },
+      { text: "Invalidación", href: `${baseURL}docs/api/invalidation` },
+      { text: "Consulta de DTE", href: `${baseURL}docs/api/consult-dte` },
+      { text: "Monitoreo", href: `${baseURL}docs/api/monitoring` },
+    ],
+  },
+  {
+    title: "Errores",
+    links: [{ text: "Errores comunes", href: `${baseURL}docs/common-errors` }],
+  },
+  {
+    title: "Información adicional",
+    links: [
+      { text: "Contingencia", href: `${baseURL}docs/contingency` },
+      { text: "Ambientes", href: `${baseURL}docs/enviroments` },
+      { text: "Catálogos", href: `${baseURL}docs/catalog` },
+      { text: "FAQ", href: `${baseURL}docs/faq` },
+    ],
+  },
+];
 ---
 
 <header
@@ -82,12 +135,202 @@ const baseURL = "/doc-api-facturacion-sv/";
         </svg>
       </button>
 
-      <a
-        href="https://app.facturacion.sv/login"
-        class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
+      <!-- Botón de menú hamburguesa (solo visible en móviles) -->
+      <button
+        id="navbar-mobile-menu-button"
+        type="button"
+        class="md:hidden text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white rounded-md p-2 transition-colors"
+        aria-expanded="false"
       >
-        Iniciar Sesión
-      </a>
+        <span class="sr-only">Abrir menú</span>
+        <svg
+          id="navbar-menu-icon-open"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="block"
+        >
+          <line x1="4" x2="20" y1="12" y2="12"></line>
+          <line x1="4" x2="20" y1="6" y2="6"></line>
+          <line x1="4" x2="20" y1="18" y2="18"></line>
+        </svg>
+        <svg
+          id="navbar-menu-icon-close"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="hidden"
+        >
+          <line x1="18" x2="6" y1="6" y2="18"></line>
+          <line x1="6" x2="18" y1="6" y2="18"></line>
+        </svg>
+      </button>
     </div>
   </div>
+
+  <!-- Overlay para cerrar el menú al hacer clic fuera -->
+  <div
+    id="navbar-overlay"
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 z-30 hidden"
+  >
+  </div>
+
+  <!-- Menú móvil con todas las secciones del sidebar -->
+  <div
+    id="navbar-mobile-menu"
+    class="fixed inset-y-0 right-0 z-40 w-4/5 max-w-sm bg-white dark:bg-gray-900 shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto"
+  >
+    <div
+      class="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center"
+    >
+      <h2 class="text-lg font-bold text-slate-900 dark:text-white">Menú</h2>
+      <button
+        id="navbar-close-menu"
+        class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="p-4">
+      <!-- Enlaces principales -->
+      <div class="mb-6">
+        <h3
+          class="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-2 uppercase tracking-wider"
+        >
+          Navegación principal
+        </h3>
+        <ul class="space-y-1">
+          <li>
+            <a
+              href={`${baseURL}docs/`}
+              class="block py-2 px-3 rounded-md text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+            >
+              Documentación
+            </a>
+          </li>
+          <li>
+            <a
+              href={`${baseURL}docs/api/endpoints`}
+              class="block py-2 px-3 rounded-md text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+            >
+              API
+            </a>
+          </li>
+          <li>
+            <a
+              href={`${baseURL}docs/resources`}
+              class="block py-2 px-3 rounded-md text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+            >
+              Recursos
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Secciones del sidebar -->
+      {
+        sidebarItems.map((section) => (
+          <div class="mb-6">
+            <h3 class="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-2 uppercase tracking-wider">
+              {section.title}
+            </h3>
+            <ul class="space-y-1">
+              {section.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="block py-2 px-3 rounded-md text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                  >
+                    {link.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </nav>
+  </div>
 </header>
+
+<script>
+  // Script para el menú móvil
+  document.addEventListener("DOMContentLoaded", initMobileMenu);
+  document.addEventListener("astro:page-load", initMobileMenu);
+
+  function initMobileMenu() {
+    const mobileMenuButton = document.getElementById(
+      "navbar-mobile-menu-button"
+    );
+    const mobileMenu = document.getElementById("navbar-mobile-menu");
+    const menuIconOpen = document.getElementById("navbar-menu-icon-open");
+    const menuIconClose = document.getElementById("navbar-menu-icon-close");
+    const closeMenuButton = document.getElementById("navbar-close-menu");
+    const overlay = document.getElementById("navbar-overlay");
+
+    function openMobileMenu() {
+      mobileMenu?.classList.remove("translate-x-full");
+      mobileMenu?.classList.add("translate-x-0");
+      menuIconOpen?.classList.add("hidden");
+      menuIconClose?.classList.remove("hidden");
+      overlay?.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+      mobileMenuButton?.setAttribute("aria-expanded", "true");
+    }
+
+    function closeMobileMenu() {
+      mobileMenu?.classList.remove("translate-x-0");
+      mobileMenu?.classList.add("translate-x-full");
+      menuIconOpen?.classList.remove("hidden");
+      menuIconClose?.classList.add("hidden");
+      overlay?.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+      mobileMenuButton?.setAttribute("aria-expanded", "false");
+    }
+
+    // Abrir menú
+    mobileMenuButton?.addEventListener("click", openMobileMenu);
+
+    // Cerrar menú
+    closeMenuButton?.addEventListener("click", closeMobileMenu);
+    overlay?.addEventListener("click", closeMobileMenu);
+
+    // Cerrar menú cuando se hace clic en un enlace
+    const menuLinks = mobileMenu?.querySelectorAll("a");
+    menuLinks?.forEach((link) => {
+      link.addEventListener("click", closeMobileMenu);
+    });
+
+    // Cerrar menú al redimensionar la ventana a un tamaño de escritorio
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768) {
+        closeMobileMenu();
+      }
+    });
+  }
+</script>
