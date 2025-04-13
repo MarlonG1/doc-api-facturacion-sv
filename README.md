@@ -1,6 +1,12 @@
 # Documentación API de Facturación Electrónica
 
+> **¿Buscas el repositorio de la API?** Si estás buscando la implementación de la API de Facturación Electrónica (no su documentación), visita el repositorio principal: [marlong1/api-facturacion-sv](https://github.com/marlong1/api-facturacion-sv)
+
 Este repositorio contiene el sitio web de documentación para la API de Facturación Electrónica, diseñado para ayudar a los desarrolladores a integrar fácilmente la facturación electrónica en sus aplicaciones.
+
+## Vista previa
+
+[Visita la documentación](https://marlong1.github.io/doc-api-facturacion-sv/)
 
 ## Características
 
@@ -62,10 +68,10 @@ Este sitio se despliega automáticamente en GitHub Pages cuando se hace push a l
 5. Haz push a la rama (`git push origin feature/amazing-feature`)
 6. Abre un Pull Request
 
+## Repositorios relacionados
+
+- [marlong1/api-facturacion-sv](https://github.com/marlong1/api-facturacion-sv) - Implementación de la API de Facturación Electrónica
+
 ## Licencia
 
 Este proyecto está licenciado bajo [GPL License](LICENSE).
-
-```sh
-npm create astro@latest -- --template basics
-```
