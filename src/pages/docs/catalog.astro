@@ -1,0 +1,1068 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Card from "../../components/Card.astro";
+
+const title = "Catálogos del Sistema de Transmisión";
+const description =
+  "Referencia de los catálogos oficiales del Ministerio de Hacienda para la emisión de Documentos Tributarios Electrónicos";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/catalogos"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Esta página proporciona una referencia rápida a los principales catálogos
+      utilizados en el Sistema de Transmisión para Documentos Tributarios
+      Electrónicos.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Aviso importante"
+        type="warning"
+        description="Los catálogos aquí presentados son extraídos del documento `Catálogos - Sistema de Transmisión` publicado por el Ministerio de Hacienda de El Salvador. Esta página ofrece los catálogos más utilizados para referencia rápida. Para la información completa y última versión, consulte la documentación oficial del Ministerio de Hacienda"
+      />
+    </div>
+
+    <h2>¿Qué son los catálogos?</h2>
+    <p>
+      Los catálogos son listados de codificaciones utilizadas en diferentes
+      campos de las estructuras de los Documentos Tributarios Electrónicos
+      (DTE). Estos catálogos permiten agrupar y localizar fácilmente los
+      diferentes códigos asignados para describir la información clasificada
+      para su uso en los DTE.
+    </p>
+
+    <h2>Catálogos principales</h2>
+
+    <h3 id="cat-001">CAT-001: Ambiente de destino</h3>
+    <p>
+      Define el ambiente en el que se transmite el DTE (pruebas o producción).
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >00</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Modo prueba</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Modo producción</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-002">CAT-002: Tipo de Documento</h3>
+    <p>Identifica el tipo de DTE que se está transmitiendo.</p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Factura</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >03</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Comprobante de crédito fiscal</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >04</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Nota de remisión</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >05</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Nota de crédito</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >06</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Nota de débito</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >07</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Comprobante de retención</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >08</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Comprobante de liquidación</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >09</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Documento contable de liquidación</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >11</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Facturas de exportación</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >14</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Factura de sujeto excluido</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >15</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Comprobante de donación</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-003">CAT-003: Modelo de Facturación</h3>
+    <p>Especifica el modelo de facturación utilizado.</p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Modelo Facturación previo</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Modelo Facturación diferido</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-004">CAT-004: Tipo de Transmisión</h3>
+    <p>Indica el modo en que se realiza la transmisión del documento.</p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Transmisión normal</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Transmisión por contingencia</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-005">CAT-005: Tipo de Contingencia</h3>
+    <p>
+      Clasifica el tipo de causa de fuerza mayor que dificulta la transmisión de
+      un DTE.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >No disponibilidad de sistema del MH</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >No disponibilidad de sistema del emisor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Falla en el suministro de servicio de Internet del Emisor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >4</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Falla en el suministro de servicio de energía eléctrica del
+              emisor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >5</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otro (deberá digitar un máximo de 500 caracteres explicando el
+              motivo)</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-009">CAT-009: Tipo de establecimiento</h3>
+    <p>Especifica el tipo de establecimiento donde se genera el DTE.</p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Sucursal</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >02</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Casa Matriz</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >04</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Bodega</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >07</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Patio</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-011">CAT-011: Tipo de ítem</h3>
+    <p>
+      Indica si la operación corresponde a bienes, servicios o tributos por
+      línea de operación.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Bienes</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Servicios</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Ambos (Bienes y Servicios, incluye los dos inherente a los
+              Productos o servicios)</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >4</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otros tributos por item</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-014">CAT-014: Unidad de Medida</h3>
+    <p>
+      Identifica la unidad de medida a utilizar según el tipo de bien. A
+      continuación se muestran las unidades más comunes.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Observación</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >metro</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Se mantiene unidad de medida</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >23</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Litro</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Se mantiene unidad de medida</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >22</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Galón</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Se refiere al Galón USA</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >34</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Kilogramo</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Se mantiene unidad de medida</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >36</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Libra</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >1kg = 2.204 622 476 lb</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >58</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Docena</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Docena = 12 unidades</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >59</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Unidad</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Unidad = 1</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >99</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otra</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Utilizada para detallar formas de presentación del producto</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm text-gray-500 dark:text-gray-400 italic">
+      Nota: Consulte el documento completo para ver el listado completo de
+      unidades de medida.
+    </p>
+
+    <h3 id="cat-015">CAT-015: Tributos</h3>
+    <p>
+      Contiene los códigos para los diferentes tributos requeridos según el
+      modelo de negocio. A continuación se muestran los más utilizados.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >20</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Impuesto al Valor Agregado 13%</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >C3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Impuesto al Valor Agregado (exportaciones) 0%</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >59</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Turismo: por alojamiento (5%)</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >71</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Turismo: salida del país por vía aérea $7.00</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >D1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >FOVIAL ($0.20 Ctvs. por galón)</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >C8</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >COTRANS ($0.10 Ctvs. por galón)</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >D5</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otras tasas casos especiales</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >D4</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otros impuestos casos especiales</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm text-gray-500 dark:text-gray-400 italic">
+      Nota: Este catálogo tiene muchos más códigos específicos para diferentes
+      tipos de impuestos. Consulte el documento completo para ver todos los
+      códigos disponibles.
+    </p>
+
+    <h3 id="cat-016">CAT-016: Condición de la Operación</h3>
+    <p>
+      Describe las condiciones de la operación pactadas entre el emisor y el
+      receptor para el pago.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Contado</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >A crédito</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otro</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-017">CAT-017: Forma de Pago</h3>
+    <p>
+      Describe las diferentes formas de pago aceptadas por el contribuyente.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Billetes y monedas</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >02</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Tarjeta Débito</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >03</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Tarjeta Crédito</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >04</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Cheque</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >05</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Transferencia-Depósito Bancario</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >08</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Dinero electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >11</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Bitcoin</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >13</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Cuentas por pagar del receptor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >99</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otros (se debe indicar el medio de pago)</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-018">CAT-018: Plazo</h3>
+    <p>Describe los plazos pactados para las operaciones a crédito.</p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Días</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >02</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Meses</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >03</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Años</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-022">
+      CAT-022: Tipo de documento de identificación del Receptor
+    </h3>
+    <p>
+      Indica el código de tipo de documento con el que se identifica el
+      receptor.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >36</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >NIT</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >13</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >DUI</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >37</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otro</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >03</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Pasaporte</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >02</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Carnet de Residente</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-024">CAT-024: Tipo de Invalidación</h3>
+    <p>
+      Clasifica los diferentes motivos válidos por los cuales el emisor
+      realizará el evento de invalidación.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Error en la Información del Documento Tributario Electrónico a
+              invalidar</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Rescindir de la operación realizada</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otro</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Referencia Completa</h2>
+    <p>
+      Esta página presenta solo los catálogos más utilizados del Sistema de
+      Transmisión. Para la referencia completa, incluyendo todos los catálogos
+      (CAT-001 a CAT-032) y sus detalles, consulte el documento oficial
+      "Catálogos - Sistema de Transmisión" publicado por el Ministerio de
+      Hacienda de El Salvador. Ver <a
+        href="https://factura.gob.sv/informacion-tecnica-y-funcional/"
+        >Catálogos - Sistema de Transmisión.</a
+      >
+    </p>
+  </div>
+</DocsLayout>

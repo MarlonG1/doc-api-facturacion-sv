@@ -1,0 +1,355 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Card from "../../components/Card.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+import MermaidDiagram from "../../components/MermaidDiagram.astro";
+
+const title = "Sistema de Contingencia";
+const description =
+  "Documentación detallada del sistema de contingencia para la API de Facturación Electrónica";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+
+// Diagrama de flujo de contingencia
+const contingencyFlowChart = `
+flowchart TB
+    A[Cliente inicia emisión] --> B{Verificar Conexión}
+    B -->|Disponible| C[Emisión Normal]
+    B -->|No Disponible| D[Modo Contingencia]
+    
+    C --> E[Preparar Documento]
+    E --> F[Firmar Documento]
+    F --> G[Transmitir a Hacienda]
+    G --> H{Respuesta OK?}
+    
+    H -->|Sí| I[Documento Recibido]
+    H -->|No| J[Evaluar Error]
+    J -->|Recuperable| K[Reintentar]
+    K --> G
+    J -->|No Recuperable| D
+    
+    D --> L[Almacenar localmente]
+    L --> M[Marcar como pendiente]
+    M --> N[Entregar DTE sin sello]
+    
+    I --> O[Almacenar documento]
+    N --> O
+    O --> P[Fin del proceso]
+`;
+
+const contingencyFlowChartBefore = `
+   graph LR
+    Q[Conexión restablecida] --> R[Procesar documentos pendientes]
+    R --> S[Actualizar estado]
+`;
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/api/contingencia"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      El Sistema de Contingencia permite la continuidad operativa del proceso de
+      emisión de documentos fiscales electrónicos cuando existen problemas de
+      conexión con los servicios del Ministerio de Hacienda.
+    </p>
+
+    <h2>¿Qué es el Sistema de Contingencia?</h2>
+    <p>
+      El Sistema de Contingencia es un mecanismo que permite la emisión de
+      documentos fiscales electrónicos válidos aun cuando no es posible
+      establecer comunicación con los servicios del Ministerio de Hacienda. Este
+      sistema garantiza la continuidad operativa de los contribuyentes,
+      permitiéndoles seguir facturando y generando documentos que luego, una vez
+      restablecida la conexión, serán transmitidos automáticamente.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Importante"
+        type="warning"
+        description="Los documentos emitidos en contingencia son completamente válidos fiscalmente. La única diferencia es que no contarán con el sello de recepción hasta que sean transmitidos a Hacienda."
+      />
+    </div>
+
+    <h2>Diagrama de Flujo del Proceso</h2>
+
+    <MermaidDiagram chart={contingencyFlowChart} />
+
+    <MermaidDiagram chart={contingencyFlowChartBefore} />
+
+    <h2>Activación del Sistema de Contingencia</h2>
+    <p>
+      El sistema de contingencia se activa automáticamente cuando se detecta
+      alguna de las siguientes situaciones:
+    </p>
+    <ul>
+      <li>No hay respuesta del servidor de Hacienda (timeout)</li>
+      <li>Se reciben errores 5XX del servidor de Hacienda</li>
+      <li>El tiempo de respuesta excede 30 segundos</li>
+      <li>El servicio de firmador no está funcionando</li>
+    </ul>
+
+    <h3>Tipos de Contingencia</h3>
+    <p>
+      Según el catálogo CAT-005, existen cinco tipos de contingencia reconocidos
+      por el Ministerio de Hacienda:
+    </p>
+
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >No disponibilidad de sistema del MH</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >No disponibilidad de sistema del emisor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100"
+              >3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Falla en el suministro de servicio de Internet del Emisor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100"
+              >4</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Falla en el suministro de servicio de energía eléctrica del
+              emisor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100"
+              >5</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otro (requiere descripción detallada)</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Proceso de Emisión en Contingencia</h2>
+    <p>
+      Cuando el sistema está en modo contingencia, el proceso de emisión
+      funciona de la siguiente manera:
+    </p>
+    <ol>
+      <li>
+        <strong>Detección</strong>: El sistema detecta automáticamente la
+        necesidad de activar el modo contingencia.
+      </li>
+      <li>
+        <strong>Documentación</strong>: Se registra el motivo de la contingencia
+        (tipo 1-5) y se establece el tipo de transmisión como 2 (Contingencia).
+      </li>
+      <li>
+        <strong>Almacenamiento local</strong>: El documento se firma
+        digitalmente y se almacena en la base de datos local con estado
+        "PENDING".
+      </li>
+      <li>
+        <strong>Entrega</strong>: Se genera el DTE sin sello de recepción y se
+        entrega al receptor.
+      </li>
+      <li>
+        <strong>Monitoreo</strong>: El sistema verifica periódicamente la
+        disponibilidad de los servicios de Hacienda.
+      </li>
+    </ol>
+
+    <h3>Ejemplo de Respuesta en Contingencia</h3>
+    <CodeBlock
+      code={`{
+  "success": true,
+  "data": {
+    "identificacion": {
+      "version": 1,
+      "ambiente": "00",
+      "tipoDte": "01",
+      "numeroControl": "DTE-01-C0020000-000000000000123",
+      "codigoGeneracion": "BC3F4F6F-C16D-4F5E-9AC2-BE3C10C1A89D",
+      "tipoModelo": 1,
+      "tipoOperacion": 1,
+      "tipoContingencia": 1,
+      "motivoContin": "No disponibilidad de sistema del MH",
+      "fecEmi": "2025-04-12",
+      "horEmi": "19:35:06",
+      "tipoMoneda": "USD"
+    },
+    "estado": "PENDING",
+    "tipoTransmision": 2,
+    // ... resto del documento
+  }
+}`}
+      lang="json"
+      title="Respuesta de Documento en Contingencia"
+    />
+    <p>
+      Observe que en la respuesta se incluyen los campos <code
+        >tipoContingencia</code
+      > con valor 1 (No disponibilidad del sistema del MH), <code
+        >tipoTransmision</code
+      > con valor 2 (Contingencia) y el <code>estado</code> como "PENDING".
+    </p>
+
+    <h2>Transmisión Posterior de Documentos</h2>
+    <p>
+      Una vez que se detecta que los servicios de Hacienda están disponibles
+      nuevamente, el sistema realiza las siguientes acciones:
+    </p>
+    <ol>
+      <li>
+        <strong>Verificación</strong>: Confirma la disponibilidad de los
+        servicios con una prueba de conexión.
+      </li>
+      <li>
+        <strong>Agrupación</strong>: Recopila todos los documentos en estado
+        "PENDING" que fueron emitidos durante la contingencia.
+      </li>
+      <li>
+        <strong>Priorización</strong>: Ordena los documentos por fecha y tipo
+        para su procesamiento.
+      </li>
+      <li>
+        <strong>Transmisión por lotes</strong>: Envía los documentos en lotes
+        para optimizar el rendimiento.
+      </li>
+      <li>
+        <strong>Actualización</strong>: Una vez recibida la confirmación de
+        Hacienda, actualiza el estado de los documentos a "RECEIVED" y almacena
+        el sello de recepción.
+      </li>
+    </ol>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Automatización"
+        type="info"
+        description="Todo este proceso es completamente automático y no requiere intervención manual. El sistema intentará transmitir los documentos pendientes cada 30 minutos con backoff exponencial hasta que todos sean procesados."
+      />
+    </div>
+
+    <h3>Consulta de Estado de Transmisión</h3>
+    <p>
+      Puedes verificar el estado de transmisión de tus documentos emitidos en
+      contingencia mediante el endpoint de consulta de DTE:
+    </p>
+    <CodeBlock
+      code={`GET /api/v1/dte?status=PENDING&transmission=CONTINGENCY`}
+      lang="http"
+      title="Consulta de Documentos Pendientes en Contingencia"
+    />
+
+    <h2>Buenas Prácticas</h2>
+    <ul>
+      <li>
+        Mantén sincronizados los relojes de tus servidores para evitar problemas
+        con las fechas y horas de emisión.
+      </li>
+      <li>
+        Considera almacenar los documentos emitidos en contingencia en un
+        respaldo adicional para mayor seguridad.
+      </li>
+      <li>
+        Informa a tus clientes cuando se emitan documentos en contingencia,
+        explicando que estos son igualmente válidos.
+      </li>
+      <li>
+        Revisa periódicamente el log de contingencias para identificar patrones
+        o problemas recurrentes.
+      </li>
+    </ul>
+
+    <h2>Preguntas Frecuentes sobre Contingencia</h2>
+    <div class="space-y-6 mt-8">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Los documentos emitidos en contingencia son válidos legalmente?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Sí, son completamente válidos. La normativa del Ministerio de Hacienda
+          reconoce los documentos emitidos en contingencia como documentos
+          fiscales oficiales.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Qué ocurre si el sistema de Hacienda no se restablece durante varios
+          días?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          El sistema mantendrá los documentos en estado "PENDING" y continuará
+          intentando transmitirlos. No hay límite de tiempo para la transmisión
+          posterior, aunque se recomienda mantener respaldos adicionales en
+          casos extremos.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          ¿Puedo activar manualmente el modo contingencia?
+        </h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Si, puedes activar el modo contingencia manualmente en caso de que
+          desees probar esta funcionalidad, para ello debes ir a las variables
+          de entorno y buscar `FORCE_CONTINGENCY` y establecerla en `true` de
+          esta manera el sistema simulara un estado de contingencia hasta que se
+          cambie su estado a `false`. Es recomendable que solamente actives esta
+          funcionalidad en un ambiente de pruebas y no en producción.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocsLayout>

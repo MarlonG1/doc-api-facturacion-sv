@@ -1,0 +1,81 @@
+---
+import CodeBlock from "./CodeBlock.astro";
+
+interface Props {
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+  endpoint: string;
+  description?: string;
+  requestExample?: string;
+  responseExample?: string;
+}
+
+const {
+  method,
+  endpoint,
+  description = "",
+  requestExample = "",
+  responseExample = "",
+} = Astro.props;
+
+const methodColors = {
+  GET: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+  POST: "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
+  PUT: "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300",
+  DELETE: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300",
+  PATCH:
+    "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300",
+};
+---
+
+<div
+  class="my-8 border rounded-lg shadow-sm dark:shadow-gray-900 border-gray-200 dark:border-gray-800 overflow-hidden"
+>
+  <div
+    class="p-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900"
+  >
+    <div class="flex flex-wrap items-center gap-3">
+      <span
+        class={`px-3 py-1 rounded-full text-xs font-semibold ${methodColors[method]}`}
+      >
+        {method}
+      </span>
+      <code
+        class="text-sm bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded font-mono flex-1"
+        >{endpoint}</code
+      >
+    </div>
+    {
+      description && (
+        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          {description}
+        </p>
+      )
+    }
+  </div>
+
+  <div class="p-4 bg-white dark:bg-gray-950">
+    <slot />
+
+    {
+      requestExample && (
+        <div class="mt-4">
+          <h4 class="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+            Ejemplo de Solicitud
+          </h4>
+          <CodeBlock code={requestExample} lang="json" title="Request" />
+        </div>
+      )
+    }
+
+    {
+      responseExample && (
+        <div class="mt-4">
+          <h4 class="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+            Ejemplo de Respuesta
+          </h4>
+          <CodeBlock code={responseExample} lang="json" title="Response" />
+        </div>
+      )
+    }
+  </div>
+</div>

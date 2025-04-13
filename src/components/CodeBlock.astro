@@ -1,0 +1,116 @@
+---
+interface Props {
+  code: string;
+  lang?: string;
+  title?: string;
+  showLineNumbers?: boolean;
+}
+
+const { code, lang = "json", title = "", showLineNumbers = true } = Astro.props;
+
+// No formatear el JSON para evitar problemas con el formato
+let formattedCode = code;
+// Eliminamos la lógica de formateo que causa problemas
+---
+
+<div
+  class="my-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 bg-white"
+>
+  {
+    title && (
+      <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-4 py-2">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+          {title}
+        </p>
+        <button class="copy-button text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none">
+          <span class="copy-text">Copiar</span>
+          <span class="copied-text hidden">¡Copiado!</span>
+        </button>
+      </div>
+    )
+  }
+  <div class="overflow-x-auto p-4">
+    <pre
+      class:list={["text-sm", showLineNumbers && "line-numbers"]}
+      data-language={lang}><code class={`language-${lang}`}>{formattedCode}</code></pre>
+  </div>
+</div>
+
+<script is:inline>
+  // Cargamos Prism.js desde CDN
+  document.addEventListener("DOMContentLoaded", () => {
+    if (!window.Prism) {
+      const prismScript = document.createElement("script");
+      prismScript.src =
+        "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js";
+      document.head.appendChild(prismScript);
+
+      // Cargar complementos y lenguajes adicionales
+      const prismComponents = [
+        "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js",
+        "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js",
+      ];
+
+      prismComponents.forEach((component) => {
+        const script = document.createElement("script");
+        script.src = component;
+        document.head.appendChild(script);
+      });
+
+      // Cargar solo los estilos de líneas numeradas, sin tema
+      const lineNumbersCss = document.createElement("link");
+      lineNumbersCss.rel = "stylesheet";
+      lineNumbersCss.href =
+        "https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css";
+      document.head.appendChild(lineNumbersCss);
+
+      // Inicializar Prism después de cargar
+      prismScript.onload = () => {
+        Prism.highlightAll();
+      };
+    } else {
+      Prism.highlightAll();
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Inicializar Prism si está disponible
+    if (window.Prism) {
+      window.Prism.highlightAll();
+    }
+
+    // Configurar los botones de copia
+    const copyButtons = document.querySelectorAll(".copy-button");
+
+    copyButtons.forEach((button) => {
+      const preElement = button.closest("div.my-6")?.querySelector("pre");
+      const codeElement = preElement?.querySelector("code");
+
+      button.addEventListener("click", () => {
+        if (codeElement) {
+          navigator.clipboard
+            .writeText(codeElement.textContent || "")
+            .then(() => {
+              const copyText = button.querySelector(".copy-text");
+              const copiedText = button.querySelector(".copied-text");
+
+              if (copyText && copiedText) {
+                copyText.classList.add("hidden");
+                copiedText.classList.remove("hidden");
+
+                setTimeout(() => {
+                  copyText.classList.remove("hidden");
+                  copiedText.classList.add("hidden");
+                }, 2000);
+              }
+            })
+            .catch((err) => {
+              console.error("Error al copiar el texto: ", err);
+            });
+        }
+      });
+    });
+  });
+</script>

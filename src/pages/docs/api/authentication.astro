@@ -1,0 +1,367 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
+import Card from "../../../components/Card.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import FieldsTable from "../../../components/FieldsTable.astro";
+
+const title = "Autenticación";
+const description =
+  "Documentación sobre el proceso de autenticación para la API de Facturación Electrónica";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/api/autenticacion"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      La API de Facturación Electrónica utiliza autenticación basada en JWT
+      (JSON Web Tokens) para proteger los endpoints. Sigue estos pasos para
+      registrarte y obtener tu token.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Seguridad"
+        type="warning"
+        description="Almacena tus credenciales de API de forma segura. No las incluyas en código fuente público ni las compartas con terceros."
+      />
+    </div>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Catálogos de referencia"
+        type="info"
+        description="Para los códigos de tipo de establecimiento (CAT-009) y otros valores requeridos en el registro, consulta la sección de Catálogos."
+        href={`${baseURL}docs/catalog`}
+      />
+    </div>
+
+    <h2>Proceso de Registro</h2>
+
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/auth/register"
+      description="Registra un nuevo cliente en el sistema"
+      requestExample={`{
+  "nit": "12345678911227",
+  "nrc": "1233260",
+  "auth_type": "STANDARD",
+  "phone": "21212828",
+  "email": "facturacion@empresa.com.sv",
+  "password_pri": "Tu-password-de-certificado#",
+  "business_name": "EMPRESA DE PRUEBAS SA DE CV",
+  "commercial_name": "EMPRESA DE PRUEBAS",
+  "economic_activity": "47190",
+  "economic_activity_desc": "Venta al por mayor de otros productos",
+  "year_in_dte": true,
+  "token_lifetime": 30,
+  "branch_offices" : [
+    {
+      "establishment_type": "01",
+      "establishment_code": "C001",
+      "address": {
+        "department": "06",
+        "municipality": "20",
+        "complement": "BOULEVARD SANTA ELENA SUR, SANTA TECLA"
+      }
+    },
+    {
+      "establishment_type": "01",
+      "establishment_code": "C0022323"
+    },
+    {
+      "establishment_type": "02",
+      "establishment_code": "C00312",
+      "establishment_code_mh": "MH02",
+      "email": "facturacion@empresa2.com.sv",
+      "phone": "28282828",
+      "pos_code": "1234123",
+      "pos_code_mh":"MH01",
+      "address": {
+        "department": "09",
+        "municipality": "11",
+        "complement": "Ejemplos"
+      }
+    }
+  ]
+}`}
+      responseExample={`{
+  "success": true,
+  "data": [
+    {
+      "branch_number": 1,
+      "establishment_type": "02",
+      "establishment_code": "C001",
+      "api_key": "b5fdbe3ed9d919ae0298...",
+      "api_secret": "4sIQwMA5CDc7wRIXU..."
+    },
+    {
+      "branch_number": 2,
+      "establishment_type": "01",
+      "establishment_code": "C0022323",
+      "api_key": "4bceed47e1740e9616d9223...",
+      "api_secret": "vOFgMVfnJLcjWqg5uHg2..."
+    },
+    {
+      "branch_number": 3,
+      "establishment_type": "01",
+      "establishment_code": "C00312",
+      "api_key": "dd898528a5d6b168138d2e5...",
+      "api_secret": "dib_qeQp629hu0Qx4hW..."
+    }
+  ]
+}`}
+    >
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Este endpoint permite registrar a tu empresa en el sistema de
+        facturación electrónica y obtener las credenciales de API necesarias
+        para autenticarte.
+      </p>
+    </ApiEndpoint>
+
+    <FieldsTable
+      title="Campos de registro"
+      description="Campos necesarios para el registro"
+      fields={[
+        {
+          name: "business_name",
+          type: "string",
+          description: "Nombre o razón social (1-150 caracteres)",
+          required: true,
+        },
+        {
+          name: "nit",
+          type: "string",
+          description: "NIT del emisor (14 dígitos)",
+          required: true,
+        },
+        {
+          name: "nrc",
+          type: "string",
+          description: "Número de registro fiscal (1-8 dígitos)",
+          required: true,
+        },
+        {
+          name: "economic_activity",
+          type: "string",
+          description: "Código de actividad económica (2-6 dígitos)",
+          required: true,
+        },
+        {
+          name: "economic_activity_desc",
+          type: "string",
+          description: "Descripción de actividad económica (1-150 caracteres)",
+          required: true,
+        },
+        {
+          name: "phone",
+          type: "string",
+          description: "Teléfono de contacto (8-30 caracteres)",
+          required: true,
+        },
+        {
+          name: "email",
+          type: "string",
+          description: "Correo electrónico válido",
+          required: true,
+        },
+        {
+          name: "auth_type",
+          type: "string",
+          description: "Tipo de autenticación (actualmente solo 'STANDARD')",
+          required: true,
+        },
+        {
+          name: "year_in_dte",
+          type: "boolean",
+          description:
+            "Indica si el año se incluye en el DTE (ejemplo: DTE-01-00000000-202500000000001)",
+          required: true,
+        },
+        {
+          name: "token_lifetime",
+          type: "number",
+          description: "Tiempo de vida del token en días (1-90)",
+          required: true,
+        },
+        {
+          name: "password_pri",
+          type: "string",
+          description: "Contraseña para firma digital",
+          required: true,
+        },
+        {
+          name: "commercial_name",
+          type: "string",
+          description: "Nombre comercial (1-150 caracteres)",
+          required: true,
+        },
+        {
+          name: "branch_offices",
+          type: "array",
+          description: "Lista de sucursales",
+          required: true,
+        },
+        {
+          name: "branch_offices[].establishment_type",
+          type: "string",
+          description: "Tipo de establecimiento (01, 02, 04, 07, 20)",
+          required: true,
+        },
+        {
+          name: "branch_offices[].establishment_code",
+          type: "string",
+          description: "Código de establecimiento (1-15 caracteres)",
+          required: false,
+        },
+        {
+          name: "branch_offices[].establishment_code_mh",
+          type: "string",
+          description: "Código MH de establecimiento (1-15 caracteres)",
+          required: false,
+        },
+        {
+          name: "branch_offices[].pos_code",
+          type: "string",
+          description: "Código de punto de venta (1-15 caracteres)",
+          required: false,
+        },
+        {
+          name: "branch_offices[].pos_code_mh",
+          type: "string",
+          description: "Código MH de punto de venta (1-15 caracteres)",
+          required: false,
+        },
+        {
+          name: "branch_offices[].address",
+          type: "object",
+          description: "Dirección del establecimiento",
+          required: true,
+        },
+        {
+          name: "branch_offices[].address.department",
+          type: "string",
+          description: "Código de departamento ('01' - '14')",
+          required: true,
+        },
+        {
+          name: "branch_offices[].address.municipality",
+          type: "string",
+          description: "Código de municipio según departamento",
+          required: true,
+        },
+        {
+          name: "branch_offices[].address.complement",
+          type: "string",
+          description: "Dirección completa (1-200 caracteres)",
+          required: true,
+        },
+      ]}
+    />
+
+    <div class="not-prose my-8">
+      <Card
+        title="Importante"
+        type="info"
+        description="La sucursal '02' que corresponde a 'Sucursal Principal' o 'Casa Matriz' es obligatoria. Para establecimientos secundarios, los campos como dirección, correo y teléfono son opcionales."
+      />
+    </div>
+
+    <h2>Iniciar Sesión</h2>
+
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/auth/login"
+      description="Obtiene un token JWT para autenticación"
+      requestExample={`{
+  "api_key": "10fdb34e788d220f61bc5b8ea6...",
+  "api_secret": "bWnmU5C5_esLxizjwZ-nYKR...",
+  "credentials": {
+    "username": "TU-HACIENDA-USERNAME",
+    "password": "TU-HACIENDA-PASSWORD-API"
+  }
+}`}
+      responseExample={`{
+  "success": true,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..."
+  }
+}`}
+    >
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Este endpoint permite obtener un token JWT para autenticarte en la API.
+        El token debe incluirse en todas las solicitudes posteriores en el
+        encabezado de autorización.
+      </p>
+    </ApiEndpoint>
+
+    <FieldsTable
+      title="Campos de login"
+      description="Campos necesarios para obtener el token"
+      fields={[
+        {
+          name: "api_key",
+          type: "string",
+          description: "API Key obtenida en el registro",
+          required: true,
+        },
+        {
+          name: "api_secret",
+          type: "string",
+          description: "API Secret obtenido en el registro",
+          required: true,
+        },
+        {
+          name: "credentials.username",
+          type: "string",
+          description: "Nombre de usuario de Hacienda",
+          required: true,
+        },
+        {
+          name: "credentials.password",
+          type: "string",
+          description: "Contraseña de usuario de Hacienda",
+          required: true,
+        },
+      ]}
+    />
+
+    <h2>Uso del Token</h2>
+
+    <p>
+      Una vez obtenido el token JWT, debes incluirlo en todas tus solicitudes a
+      la API agregando el encabezado de autorización:
+    </p>
+
+    <CodeBlock
+      code={`Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX...`}
+      lang="http"
+      title="Encabezado de Autorización"
+    />
+
+    <p>
+      La duración del token es la misma que se especificó en el campo <code
+        >token_lifetime</code
+      > al registrarse. Por defecto es de 30 días.
+    </p>
+
+    <h2>Seguridad</h2>
+
+    <ul class="list-disc pl-6 mb-6">
+      <li>Almacena tus credenciales de API de forma segura</li>
+      <li>No incluyas las credenciales en código fuente público</li>
+      <li>
+        Considera usar variables de entorno o sistemas de gestión de secretos
+      </li>
+      <li>Renueva tu token antes de que expire para evitar interrupciones</li>
+      <li>Nunca compartas tu token JWT con terceros</li>
+    </ul>
+  </div>
+</DocsLayout>

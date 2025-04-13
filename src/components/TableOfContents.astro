@@ -1,0 +1,227 @@
+---
+// Este componente genera automáticamente una tabla de contenidos basada en los encabezados h2 y h3 de la página actual
+---
+
+<nav class="h-full overflow-y-auto pb-8">
+  <div class="px-0">
+    <h3
+      class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 uppercase tracking-wider"
+    >
+      En esta página
+    </h3>
+    <ul class="toc-list space-y-1"></ul>
+  </div>
+</nav>
+
+<script is:inline>
+  document.addEventListener("astro:page-load", function () {
+    const tocList = document.querySelector(".toc-list");
+    if (!tocList) return;
+
+    // Obtener los encabezados
+    const headings = document.querySelectorAll(".prose h2, .prose h3");
+    if (headings.length === 0) {
+      const tocNav = tocList.closest("nav");
+      if (tocNav) tocNav.classList.add("hidden");
+      return;
+    }
+
+    // Limpiar la lista
+    tocList.innerHTML = "";
+
+    // Variables para construir la tabla de contenidos
+    let lastH2Item = null;
+
+    // Construir la tabla de contenidos
+    headings.forEach(function (heading) {
+      // Asegurar que tenga un ID
+      if (!heading.id) {
+        const text = heading.textContent || "";
+        heading.id = text
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, "")
+          .replace(/\s+/g, "-");
+      }
+
+      const level = parseInt(heading.tagName.substring(1));
+
+      // Crear el enlace
+      const link = document.createElement("a");
+      link.href = `#${heading.id}`;
+      link.textContent = heading.textContent || "";
+      link.className =
+        "block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 pl-6 pr-2 border-l-2 transition-colors duration-200 rounded-r-md border-transparent hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/10";
+
+      // Crear el elemento de lista
+      const listItem = document.createElement("li");
+      listItem.appendChild(link);
+
+      if (level === 2) {
+        // Para h2, añadir directamente a la lista
+        tocList.appendChild(listItem);
+        lastH2Item = listItem;
+      } else if (level === 3 && lastH2Item) {
+        // Para h3, añadir al grupo h2 previo con indentación
+        link.style.paddingLeft = "1.25rem"; // Más indentación para h3
+
+        // Verificar si existe sublista
+        let subList = lastH2Item.querySelector("ul");
+        if (!subList) {
+          subList = document.createElement("ul");
+          subList.className = "mt-1 space-y-1";
+          lastH2Item.appendChild(subList);
+        }
+
+        subList.appendChild(listItem);
+      }
+    });
+
+    // Función para actualizar el enlace activo
+    function updateActiveLink() {
+      let activeHeading = null;
+      let smallestTop = Infinity;
+
+      // Buscar el encabezado más cercano al borde superior
+      headings.forEach(function (heading) {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top < 300 && rect.top < smallestTop) {
+          smallestTop = rect.top;
+          activeHeading = heading;
+        }
+      });
+
+      // Si no hay encabezado visible y estamos cerca del final
+      if (
+        !activeHeading &&
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 200
+      ) {
+        activeHeading = headings[headings.length - 1];
+      }
+
+      // Si estamos al principio de la página
+      if (!activeHeading && window.scrollY < 300) {
+        activeHeading = headings[0];
+      }
+
+      // Quitar clase activa de todos los enlaces
+      document.querySelectorAll(".toc-list a").forEach(function (link) {
+        link.classList.remove(
+          "border-blue-500",
+          "bg-blue-50",
+          "dark:bg-blue-900/20",
+          "text-blue-700",
+          "dark:text-blue-300",
+          "font-medium"
+        );
+      });
+
+      // Activar el enlace correspondiente
+      if (activeHeading) {
+        const activeLink = document.querySelector(
+          `.toc-list a[href="#${activeHeading.id}"]`
+        );
+        if (activeLink) {
+          activeLink.classList.add(
+            "border-blue-500",
+            "bg-blue-50",
+            "dark:bg-blue-900/20",
+            "text-blue-700",
+            "dark:text-blue-300",
+            "font-medium"
+          );
+
+          // Hacer que el enlace sea visible en el contenedor
+          const tocContainer = activeLink.closest("nav");
+          if (tocContainer) {
+            const activeLinkRect = activeLink.getBoundingClientRect();
+            const containerRect = tocContainer.getBoundingClientRect();
+
+            if (
+              activeLinkRect.top < containerRect.top ||
+              activeLinkRect.bottom > containerRect.bottom
+            ) {
+              tocContainer.scrollTop =
+                activeLink.offsetTop - containerRect.height / 2;
+            }
+          }
+        }
+      }
+    }
+
+    // Agregar evento de clic para navegación suave
+    document.querySelectorAll(".toc-list a").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href").substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          // Desactivar todos los enlaces
+          document.querySelectorAll(".toc-list a").forEach(function (l) {
+            l.classList.remove(
+              "border-blue-500",
+              "bg-blue-50",
+              "dark:bg-blue-900/20",
+              "text-blue-700",
+              "dark:text-blue-300",
+              "font-medium"
+            );
+          });
+
+          // Activar el enlace actual
+          this.classList.add(
+            "border-blue-500",
+            "bg-blue-50",
+            "dark:bg-blue-900/20",
+            "text-blue-700",
+            "dark:text-blue-300",
+            "font-medium"
+          );
+
+          // Desplazamiento suave
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: "smooth",
+          });
+
+          // Actualizar la URL
+          history.pushState(null, "", `#${targetId}`);
+        }
+      });
+    });
+
+    // Configurar observador de desplazamiento
+    let scrollTimeout = null;
+    window.addEventListener("scroll", function () {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      scrollTimeout = setTimeout(updateActiveLink, 100);
+    });
+
+    // Inicializar al cargar
+    updateActiveLink();
+
+    // Resaltar enlace correspondiente si hay un hash en la URL
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      const link = document.querySelector(`.toc-list a[href="#${hash}"]`);
+      if (link) {
+        link.classList.add(
+          "border-blue-500",
+          "bg-blue-50",
+          "dark:bg-blue-900/20",
+          "text-blue-700",
+          "dark:text-blue-300",
+          "font-medium"
+        );
+        // Hacer scroll al enlace en la tabla de contenidos
+        const tocContainer = link.closest("nav");
+        if (tocContainer) {
+          tocContainer.scrollTop =
+            link.offsetTop - tocContainer.offsetHeight / 2;
+        }
+      }
+    }
+  });
+</script>

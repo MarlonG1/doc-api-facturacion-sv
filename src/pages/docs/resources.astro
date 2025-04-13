@@ -1,0 +1,57 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Card from "../../components/Card.astro";
+
+const title = "Recursos Adicionales";
+const description = "Referencias para la API de Facturación Electrónica";
+
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout title={title} description={description} currentPage="/docs/soporte">
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+
+    <p class="lead text-xl">
+      Esta página proporciona información sobre recursos oficiales y
+      documentación adicional para implementar la API de Facturación
+      Electrónica.
+    </p>
+
+    <h2>Recursos Oficiales del Ministerio de Hacienda</h2>
+
+    <p>
+      El Ministerio de Hacienda de El Salvador proporciona documentación oficial
+      sobre la facturación electrónica:
+    </p>
+
+    <div class="not-prose my-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card
+          title="Portal de Facturación Electrónica"
+          description="Sitio oficial del Ministerio de Hacienda con información sobre requisitos, normativas y procesos."
+          href="https://factura.gob.sv/"
+          type="primary"
+        />
+        <Card
+          title="Normativa Legal"
+          description="Leyes, reglamentos y disposiciones oficiales que rigen la facturación electrónica en El Salvador."
+          href="https://factura.gob.sv/normativa/"
+          type="primary"
+        />
+        <Card
+          title="Obtención de certificado"
+          description="Proceso y requisitos para obtener el certificado oficial para emitir documentos tributarios electrónicos."
+          href="https://admin.factura.gob.sv/login"
+          type="primary"
+        />
+        <Card
+          title="Catálogos Oficiales"
+          description="Catálogos oficiales para la codificación de documentos tributarios electrónicos."
+          href="https://factura.gob.sv/informacion-tecnica-y-funcional/"
+          type="primary"
+        />
+      </div>
+    </div>
+  </div>
+</DocsLayout>

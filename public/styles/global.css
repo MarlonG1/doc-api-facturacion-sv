@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --astro-code-color-text: theme('colors.gray.100');
+    --astro-code-color-background: theme('colors.gray.900');
+    --astro-code-token-constant: theme('colors.indigo.300');
+    --astro-code-token-string: theme('colors.amber.300');
+    --astro-code-token-comment: theme('colors.gray.500');
+    --astro-code-token-keyword: theme('colors.rose.300');
+    --astro-code-token-parameter: theme('colors.pink.300');
+    --astro-code-token-function: theme('colors.blue.300');
+    --astro-code-token-string-expression: theme('colors.amber.300');
+    --astro-code-token-punctuation: theme('colors.gray.400');
+    --astro-code-token-link: theme('colors.indigo.300');
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans;
+  }
+
+  /* Estilo para la prosa (contenido tipográfico) */
+  .prose {
+    @apply max-w-none;
+  }
+
+  .prose h1 {
+    @apply text-3xl font-bold mb-6 text-gray-900 dark:text-white;
+  }
+
+  .prose h2 {
+    @apply text-2xl font-semibold mt-12 mb-4 text-gray-900 dark:text-white border-b pb-2 border-gray-200 dark:border-gray-800;
+  }
+
+  .prose h3 {
+    @apply text-xl font-semibold mt-8 mb-3 text-gray-900 dark:text-white;
+  }
+
+  .prose h4 {
+    @apply text-lg font-medium mt-6 mb-2 text-gray-900 dark:text-white;
+  }
+
+  .prose p {
+    @apply text-gray-700 dark:text-gray-300 mb-4 leading-relaxed;
+  }
+
+  .prose p.lead {
+    @apply text-lg text-gray-600 dark:text-gray-400 mb-6;
+  }
+
+  .prose a {
+    @apply text-indigo-600 dark:text-indigo-400 font-medium hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors;
+  }
+
+  .prose ul {
+    @apply list-disc list-inside text-gray-700 dark:text-gray-300 mb-4 space-y-2 pl-4;
+  }
+
+  .prose ol {
+    @apply list-decimal list-inside text-gray-700 dark:text-gray-300 mb-4 space-y-2 pl-4;
+  }
+
+  .prose code:not([class^='language-']) {
+    @apply px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm font-mono;
+  }
+
+  .prose pre {
+    @apply p-4 rounded-lg bg-gray-900 text-gray-100 overflow-x-auto text-sm my-4;
+  }
+
+  .prose blockquote {
+    @apply pl-4 border-l-4 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 italic my-6;
+  }
+
+  .prose table {
+    @apply w-full text-sm my-6 border-collapse;
+  }
+
+  .prose table th {
+    @apply bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-semibold p-3 text-left border border-gray-300 dark:border-gray-700;
+  }
+
+  .prose table td {
+    @apply p-3 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300;
+  }
+
+  /* Modo oscuro para la prosa */
+  .dark .prose {
+    @apply text-gray-300;
+  }
+}
+
+/* Estilos específicos para los componentes */
+@layer components {
+  /* Botones principales */
+  .btn-primary {
+    @apply px-4 py-2 bg-indigo-600 text-white font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-white text-gray-700 font-medium rounded-md shadow-sm border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700;
+  }
+
+  /* Bloques de código con número de línea */
+  pre.line-numbers {
+    counter-reset: line;
+  }
+
+  pre.line-numbers > code > .line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 1.5rem;
+    border-right: 1px solid #374151;
+    padding: 0 0.5rem;
+    margin-right: 0.5rem;
+    color: #6B7280;
+    text-align: right;
+  }
+}

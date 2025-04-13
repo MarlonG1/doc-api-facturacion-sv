@@ -1,0 +1,564 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
+import Card from "../../../components/Card.astro";
+import FieldsTable from "../../../components/FieldsTable.astro";
+
+const title = "Comprobante de Crédito Fiscal (CCF)";
+const description =
+  "Documentación para emitir y gestionar Comprobantes de Crédito Fiscal";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout title={title} description={description} currentPage="/docs/ccf">
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Esta sección describe cómo emitir y gestionar Comprobantes de Crédito
+      Fiscal (CCF) mediante la API.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Autenticación"
+        type="warning"
+        description="Todos los endpoints requieren autenticación JWT. Consulta la sección de Autenticación para más detalles."
+        href={`${baseURL}docs/api/autenticacion`}
+      />
+    </div>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Catálogos de referencia"
+        type="info"
+        description="Para la correcta emisión de créditos fiscales, debes utilizar los códigos de los catálogos oficiales. Consulta la sección de Catálogos para todos los valores permitidos."
+        href={`${baseURL}docs/catalog`}
+      />
+    </div>
+
+    <h2>Crear Comprobante de Crédito Fiscal</h2>
+
+    <ApiEndpoint
+      method="POST"
+      endpoint="/api/v1/dte/ccf"
+      description="Crea y emite un Comprobante de Crédito Fiscal"
+      requestExample={`{
+  "items": [
+    {
+      "type": 1,
+      "description": "(TAXED)",
+      "quantity": 1,
+      "unit_measure": 59,
+      "unit_price": 2000.00,
+      "taxed_sale": 2000.00,
+      "exempt_sale": 0,
+      "non_subject_sale": 0,
+      "taxes": [
+        "20"
+      ]
+    }
+  ],
+  "receiver": {
+    "nrc": "0000",
+    "nit": "00000000000000",
+    "name": "CLIENTE DE PRUEBA",
+    "commercial_name": "EJEMPLO S.A de S.V",
+    "activity_code": "00000",
+    "activity_description": "ACTIVIDAD ECONOMICA DE EJEMPLO",
+    "address": {
+      "department": "06",
+      "municipality": "22",
+      "complement": "Dirección de Prueba 1, N° 1234"
+    },
+    "phone": "21212828",
+    "email": "cliente@gmail.com"
+  },
+  "summary": {
+    "operation_condition": 1,
+    "total_taxed": 2000.00,
+    "total_exempt": 0,
+    "total_non_taxed": 0,
+    "total_non_subject": 0,
+    "sub_total_sales": 2000.00,
+    "sub_total": 2000.00,
+    "iva_perception": 0,
+    "iva_retention": 0,
+    "income_retention": 0,
+    "total_operation": 2260.00,
+    "total_to_pay": 2260.00,
+    "taxes": [
+      {
+        "code": "20",
+        "description": "IVA 13%",
+        "value": 260.00
+      }
+    ],
+    "payment_types": [
+      {
+        "code": "01",
+        "amount": 2260.00
+      }
+    ]
+  },
+
+  // Nota, estos campos si NO seran ocupados, no es necesario enviarlos, los muestra acá unicamente como referencia
+  "third_party_sale": null,
+  "related_docs": null,
+  "other_docs": null,
+  "appendixes": null
+}`}
+      responseExample={`{
+  "success": true,
+  "reception_stamp": "202533D8A3CB39484D...",
+  "qr_link": "https://admin.factura.gob.sv/consultaPublica?ambiente=00&codGen=UUID-GENERADO&fechaEmi=FECHA-EMISION",
+  "data": {
+    "identificacion": {
+      "version": 3,
+      "ambiente": "00",
+      "tipoDte": "03",
+      "numeroControl": "DTE-03-C0020000-000000000000001",
+      "codigoGeneracion": "96B3D5DD-EE92-4...",
+      "tipoModelo": 1,
+      "tipoOperacion": 1,
+      "tipoContingencia": null,
+      "motivoContin": null,
+      "fecEmi": "2025-04-12",
+      "horEmi": "19:38:32",
+      "tipoMoneda": "USD"
+    },
+    "emisor": {
+      "nit": "00000000000000",
+      "nrc": "0000000",
+      "nombre": "EMPRESA DE PRUEBAS SA DE CV 2",
+      "codActividad": "00000",
+      "descActividad": "Venta al por mayor de otros productos",
+      "tipoEstablecimiento": "01",
+      "direccion": {
+        "departamento": "06",
+        "municipio": "20",
+        "complemento": "BOULEVARD SANTA ELENA SUR, SANTA TECLA"
+      },
+      "telefono": "21212121",
+      "correo": "facturacion@empresa.com.sv",
+      "nombreComercial": "EJEMPLO",
+      "codEstableMH": null,
+      "codEstable": "C002",
+      "codPuntoVentaMH": null,
+      "codPuntoVenta": null
+    },
+    "receptor": {
+      "nombre": "CLIENTE DE PRUEBA",
+      "nrc": "0000",
+      "nit": "00000000000000",
+      "codActividad": "00000",
+      "descActividad": "ACTIVIDAD ECONOMICA DE EJEMPLO",
+      "direccion": {
+        "departamento": "06",
+        "municipio": "22",
+        "complemento": "Dirección de Prueba 1, N° 1234"
+      },
+      "telefono": "21212828",
+      "correo": "cliente@gmail.com",
+      "nombreComercial": "EJEMPLO S.A de S.V"
+    },
+    "cuerpoDocumento": [
+      {
+        "numItem": 1,
+        "tipoItem": 1,
+        "numeroDocumento": null,
+        "codigo": null,
+        "codTributo": null,
+        "descripcion": "(TAXED)",
+        "cantidad": 1,
+        "uniMedida": 59,
+        "precioUni": 2000,
+        "montoDescu": 0,
+        "ventaNoSuj": 0,
+        "ventaExenta": 0,
+        "ventaGravada": 2000,
+        "tributos": [
+          "20"
+        ],
+        "psv": 0,
+        "noGravado": 0
+      }
+    ],
+    "resumen": {
+      "totalNoSuj": 0,
+      "totalExenta": 0,
+      "totalGravada": 2000,
+      "subTotalVentas": 2000,
+      "descuNoSuj": 0,
+      "descuExenta": 0,
+      "descuGravada": 0,
+      "porcentajeDescuento": 0,
+      "totalDescu": 0,
+      "tributos": [
+        {
+          "codigo": "20",
+          "descripcion": "IVA 13%",
+          "valor": 260
+        }
+      ],
+      "subTotal": 2000,
+      "ivaRete1": 0,
+      "ivaPerci1": 0,
+      "reteRenta": 0,
+      "montoTotalOperacion": 2260,
+      "totalNoGravado": 0,
+      "totalPagar": 2260,
+      "totalLetras": "DOS MIL DOSCIENTOS SESENTA 00/100",
+      "saldoFavor": 0,
+      "condicionOperacion": 1,
+      "pagos": [
+        {
+          "codigo": "01",
+          "montoPago": 2260,
+          "referencia": null,
+          "plazo": null,
+          "periodo": null
+        }
+      ],
+      "numPagoElectronico": null
+    },
+    "documentoRelacionado": null,
+    "otrosDocumentos": null,
+    "ventaTercero": null,
+    "extension": null,
+    "apendice": [
+      {
+        "campo": "Datos del documento",
+        "etiqueta": "Sello de recepción",
+        "valor": "202533D8A3CB39484D..."
+      }
+    ]
+  }
+}`}
+    >
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Este endpoint permite crear y emitir un Comprobante de Crédito Fiscal
+        (CCF) electrónico.
+      </p>
+    </ApiEndpoint>
+
+    <FieldsTable
+      title="Campos principales"
+      description="Campos necesarios para crear un CCF"
+      fields={[
+        {
+          name: "items",
+          type: "array",
+          description: "Lista de productos o servicios",
+          required: true,
+        },
+        {
+          name: "items[].type",
+          type: "number",
+          description:
+            "Tipo de ítem (1: Producto, 2: Servicio, 3: Ambos, 4: Impuesto)",
+          required: true,
+        },
+        {
+          name: "items[].description",
+          type: "string",
+          description:
+            "Descripción del producto o servicio (1-1000 caracteres)",
+          required: true,
+        },
+        {
+          name: "items[].quantity",
+          type: "number",
+          description: "Cantidad (> 0)",
+          required: true,
+        },
+        {
+          name: "items[].unit_measure",
+          type: "number",
+          description: "Unidad de medida (1-99)",
+          required: true,
+        },
+        {
+          name: "items[].unit_price",
+          type: "number",
+          description: "Precio unitario (≥ 0)",
+          required: true,
+        },
+        {
+          name: "items[].discount",
+          type: "number",
+          description: "Descuento (≥ 0)",
+          required: false,
+        },
+        {
+          name: "items[].code",
+          type: "string",
+          description: "Código del producto (1-25 caracteres)",
+          required: false,
+        },
+        {
+          name: "items[].non_subject_sale",
+          type: "number",
+          description: "Venta no sujeta (≥ 0)",
+          required: true,
+        },
+        {
+          name: "items[].exempt_sale",
+          type: "number",
+          description: "Venta exenta (≥ 0)",
+          required: true,
+        },
+        {
+          name: "items[].taxed_sale",
+          type: "number",
+          description: "Venta gravada (≥ 0)",
+          required: true,
+        },
+        {
+          name: "items[].suggested_price",
+          type: "number",
+          description: "Precio sugerido (≥ 0)",
+          required: false,
+        },
+        {
+          name: "items[].non_taxed",
+          type: "number",
+          description: "Monto no gravado (≥ 0)",
+          required: false,
+        },
+        {
+          name: "items[].iva_item",
+          type: "number",
+          description: "IVA del ítem",
+          required: false,
+        },
+        {
+          name: "receiver",
+          type: "object",
+          description: "Información del receptor",
+          required: true,
+        },
+        {
+          name: "receiver.nrc",
+          type: "string",
+          description: "Número de registro fiscal del receptor",
+          required: true,
+        },
+        {
+          name: "receiver.nit",
+          type: "string",
+          description: "NIT del receptor",
+          required: true,
+        },
+        {
+          name: "receiver.name",
+          type: "string",
+          description: "Nombre completo o razón social del receptor",
+          required: true,
+        },
+        {
+          name: "receiver.activity_code",
+          type: "string",
+          description: "Código de actividad económica",
+          required: true,
+        },
+        {
+          name: "receiver.activity_description",
+          type: "string",
+          description: "Descripción de actividad económica",
+          required: true,
+        },
+        {
+          name: "receiver.commercial_name",
+          type: "string",
+          description: "Nombre comercial del receptor",
+          required: true,
+        },
+        {
+          name: "receiver.address",
+          type: "object",
+          description: "Dirección del receptor",
+          required: true,
+        },
+        {
+          name: "receiver.address.department",
+          type: "string",
+          description: "Código del departamento",
+          required: true,
+        },
+        {
+          name: "receiver.address.municipality",
+          type: "string",
+          description: "Código del municipio",
+          required: true,
+        },
+        {
+          name: "receiver.address.complement",
+          type: "string",
+          description: "Dirección completa",
+          required: true,
+        },
+        {
+          name: "receiver.phone",
+          type: "string",
+          description: "Teléfono del receptor",
+          required: true,
+        },
+        {
+          name: "receiver.email",
+          type: "string",
+          description: "Correo electrónico del receptor",
+          required: true,
+        },
+        {
+          name: "summary",
+          type: "object",
+          description: "Resumen de totales",
+          required: true,
+        },
+        {
+          name: "summary.total_non_subject",
+          type: "number",
+          description: "Total ventas no sujetas",
+          required: true,
+        },
+        {
+          name: "summary.total_exempt",
+          type: "number",
+          description: "Total ventas exentas",
+          required: true,
+        },
+        {
+          name: "summary.total_taxed",
+          type: "number",
+          description: "Total ventas gravadas",
+          required: true,
+        },
+        {
+          name: "summary.sub_total",
+          type: "number",
+          description: "Subtotal",
+          required: true,
+        },
+        {
+          name: "summary.total_discount",
+          type: "number",
+          description: "Total descuentos",
+          required: false,
+        },
+        {
+          name: "summary.sub_total_sales",
+          type: "number",
+          description: "Subtotal de ventas",
+          required: true,
+        },
+        {
+          name: "summary.total_operation",
+          type: "number",
+          description: "Total operación",
+          required: true,
+        },
+        {
+          name: "summary.total_to_pay",
+          type: "number",
+          description: "Total a pagar",
+          required: true,
+        },
+        {
+          name: "summary.operation_condition",
+          type: "number",
+          description:
+            "Condición de operación (1: Contado, 2: Crédito, 3: Otro)",
+          required: true,
+        },
+        {
+          name: "summary.iva_retention",
+          type: "number",
+          description: "IVA retenido",
+          required: false,
+        },
+        {
+          name: "summary.total_iva",
+          type: "number",
+          description: "Total IVA",
+          required: false,
+        },
+        {
+          name: "summary.payment_types",
+          type: "array",
+          description: "Tipos de pago",
+          required: true,
+        },
+        {
+          name: "summary.payment_types[].code",
+          type: "string",
+          description: "Código forma de pago",
+          required: true,
+        },
+        {
+          name: "summary.payment_types[].amount",
+          type: "number",
+          description: "Monto",
+          required: true,
+        },
+        {
+          name: "summary.payment_types[].term",
+          type: "string",
+          description: "Plazo (requerido para crédito)",
+          required: false,
+        },
+        {
+          name: "summary.payment_types[].period",
+          type: "number",
+          description: "Período",
+          required: false,
+        },
+      ]}
+    />
+
+    <h2>Validaciones específicas para CCF</h2>
+
+    <ul class="list-disc pl-6 mb-6">
+      <li>
+        El receptor es <strong>OBLIGATORIO</strong> y debe incluir NRC, NIT, código
+        de actividad, descripción de actividad y nombre comercial
+      </li>
+      <li>Para ítems tipo 4 (impuesto), la unidad de medida debe ser 99</li>
+      <li>Solo se permite impuesto IVA (código "20") para ítems tipo 4</li>
+      <li>
+        Si hay documentos relacionados, cada ítem debe tener un documento
+        relacionado válido
+      </li>
+      <li>
+        El cálculo de IVA debe ser exactamente 13% sobre (venta gravada -
+        descuento gravado)
+      </li>
+      <li>
+        La suma de todos los tipos de pago debe ser igual al total a pagar
+      </li>
+      <li>Los descuentos no pueden superar el subtotal</li>
+      <li>
+        Si la condición de operación es crédito, los campos term y period son
+        obligatorios
+      </li>
+    </ul>
+
+    <h2>Diferencias entre CCF y Factura</h2>
+
+    <ul class="list-disc pl-6 mb-6">
+      <li>
+        Para CCF, los items con <code>taxed_sale > 0</code> y <code
+          >type = 1</code
+        > deben incluir impuestos con código "20" (IVA 13%)
+      </li>
+      <li>
+        No se permite mezclar ventas gravadas y no gravadas en un mismo ítem
+      </li>
+      <li>
+        El receptor es obligatorio y debe incluir información completa del
+        contribuyente
+      </li>
+    </ul>
+  </div>
+</DocsLayout>

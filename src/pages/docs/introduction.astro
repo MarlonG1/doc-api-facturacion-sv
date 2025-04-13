@@ -1,0 +1,187 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Card from "../../components/Card.astro";
+
+const title = "Introducción a la API de Facturación Electrónica";
+const description =
+  "Guía completa para comenzar a utilizar la API de Facturación Electrónica para El Salvador.";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/introduccion"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Bienvenido a la documentación oficial de la API de Facturación Electrónica
+      para El Salvador. Esta guía está diseñada para ayudarte a integrar
+      rápidamente nuestros servicios en tu aplicación o sistema existente.
+    </p>
+
+    <h2>¿Qué es la API de Facturación Electrónica?</h2>
+    <p>
+      Nuestra API proporciona una solución completa para la emisión, gestión y
+      seguimiento de documentos tributarios electrónicos (DTE) que cumplen con
+      la normativa del Ministerio de Hacienda de El Salvador. Está diseñada para
+      adaptarse a cualquier tipo de negocio, desde pequeñas empresas hasta
+      grandes corporaciones.
+    </p>
+
+    <h2>Características Principales</h2>
+    <ul>
+      <li>
+        <strong>Emisión de Documentos Fiscales</strong>: Genera facturas,
+        comprobantes de crédito fiscal, notas de crédito y otros documentos
+        válidos fiscalmente.
+      </li>
+      <li>
+        <strong>Validación Automática</strong>: Verifica que todos los
+        documentos cumplan con los requisitos legales antes de su emisión.
+      </li>
+      <li>
+        <strong>Almacenamiento Seguro</strong>: Todos los documentos se
+        almacenan de forma segura según las normativas fiscales.
+      </li>
+      <li>
+        <strong>Consultas en Tiempo Real</strong>: Accede al estado y detalles
+        de tus documentos fiscales en cualquier momento.
+      </li>
+      <li>
+        <strong>Sistema de Contingencia</strong>: Continuidad operativa incluso
+        cuando hay problemas de conexión con los servicios de Hacienda.
+      </li>
+      <li>
+        <strong>Monitoreo del Sistema</strong>: Endpoints específicos para
+        verificar el estado y métricas del sistema.
+      </li>
+    </ul>
+
+    <h2>Tipos de Documentos Soportados</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-6">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-base font-medium text-indigo-600 dark:text-indigo-400 mb-1"
+        >
+          Factura Electrónica
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Documento fiscal para consumidores finales.
+        </p>
+      </div>
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-base font-medium text-indigo-600 dark:text-indigo-400 mb-1"
+        >
+          Comprobante de Crédito Fiscal (CCF)
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Para transacciones entre contribuyentes con crédito fiscal.
+        </p>
+      </div>
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-base font-medium text-indigo-600 dark:text-indigo-400 mb-1"
+        >
+          Nota de Crédito
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Para devoluciones y modificaciones a la baja de documentos previos.
+        </p>
+      </div>
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-base font-medium text-indigo-600 dark:text-indigo-400 mb-1"
+        >
+          Nota de Débito
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Para modificaciones al alza de documentos previos.
+        </p>
+      </div>
+    </div>
+
+    <h2>Antes de comenzar</h2>
+    <p>Para utilizar nuestra API, necesitarás:</p>
+    <ol>
+      <li>Registrarte en el sistema con tus datos fiscales</li>
+      <li>Obtener credenciales de API (API key y secret)</li>
+      <li>Usar estas credenciales para obtener un token JWT</li>
+      <li>Incluir este token en todas tus peticiones a la API</li>
+    </ol>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Nota importante sobre entornos"
+        type="info"
+        description="La API proporciona dos entornos: Sandbox (para pruebas) y Producción. Te recomendamos comenzar con el entorno de Sandbox para familiarizarte con la API sin generar documentos fiscales reales."
+      />
+    </div>
+
+    <h2>Estructura de la API</h2>
+    <p>La API está organizada en diferentes grupos de endpoints:</p>
+    <ul>
+      <li><strong>Autenticación</strong>: Registro y obtención de token JWT</li>
+      <li>
+        <strong>Facturas Electrónicas</strong>: Creación y gestión de facturas
+      </li>
+      <li><strong>Comprobantes de Crédito Fiscal</strong>: Emisión de CCF</li>
+      <li>
+        <strong>Consulta de DTE</strong>: Búsqueda y obtención de documentos
+      </li>
+      <li><strong>Invalidación</strong>: Anulación de documentos emitidos</li>
+      <li><strong>Monitoreo</strong>: Verificación del estado del sistema</li>
+    </ul>
+
+    <h2>Siguientes pasos</h2>
+    <p>Para empezar a utilizar la API, te recomendamos seguir estos pasos:</p>
+
+    <ol>
+      <li>
+        <a href={`${baseURL}docs/api/authentication`}>Autenticación</a> - Regístrate
+        y obtén tu token JWT
+      </li>
+      <li>
+        <a href={`${baseURL}docs/api/invoices`}>Emitir una factura</a> - Crea tu
+        primera factura electrónica
+      </li>
+      <li>
+        <a href={`${baseURL}docs/api/consult-dte`}>Consultar documentos</a> - Aprende
+        a buscar y verificar documentos emitidos
+      </li>
+    </ol>
+
+    <h2>Documentación completa</h2>
+    <p>
+      Nuestra documentación detallada de la API está disponible en la sección de
+      <a
+        href={`${baseURL}docs/api/endpoints`}
+        class="text-indigo-600 dark:text-indigo-400">Endpoints</a
+      >, donde encontrarás información completa sobre cada endpoint, parámetros,
+      ejemplos de solicitudes y respuestas.
+    </p>
+
+    <h2>Soporte</h2>
+    <p>
+      Si tienes alguna pregunta o problema, no dudes en contactar a nuestro
+      equipo de soporte:
+    </p>
+    <ul>
+      <li>Email: soporte@apifacturacion.sv</li>
+      <li>Teléfono: +503 2222-3333</li>
+      <li>Horario de atención: Lunes a Viernes de 8:00 AM a 5:00 PM</li>
+    </ul>
+  </div>
+</DocsLayout>

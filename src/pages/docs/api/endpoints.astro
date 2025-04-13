@@ -1,0 +1,267 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
+import Card from "../../../components/Card.astro";
+
+const title = "Endpoints de la API";
+const description =
+  "Referencia completa de los endpoints disponibles en la API de Facturación Electrónica.";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/api/endpoints"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Esta página proporciona una lista completa de todos los endpoints
+      disponibles en la API, junto con su descripción y funcionalidad.
+    </p>
+
+    <h2>URL Base</h2>
+    <p>
+      Todos los endpoints de API deben usarse con la URL base correspondiente al
+      entorno:
+    </p>
+    <ul>
+      <li>
+        <code>https://tudominio:7319/api/v1</code>
+      </li>
+    </ul>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Autenticación requerida"
+        type="warning"
+        description="Todos los endpoints requieren autenticación mediante token JWT. Consulta la sección de Autenticación para más detalles."
+        href={`${baseURL}docs/api/authentication`}
+      />
+    </div>
+
+    <h2>Estructura de la API</h2>
+    <p>
+      La API está organizada en diferentes grupos de endpoints según su
+      funcionalidad:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 mb-8">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Autenticación
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Endpoints para registro y autenticación de usuarios.
+        </p>
+        <ul
+          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+        >
+          <li>
+            <code>POST /api/v1/auth/register</code> - Registro de usuarios
+          </li>
+          <li><code>POST /api/v1/auth/login</code> - Obtener token JWT</li>
+        </ul>
+        <a
+          href={`${baseURL}docs/api/authentication`}
+          class="text-indigo-600 dark:text-indigo-400 text-sm font-medium mt-4 inline-block"
+        >
+          Ver documentación →
+        </a>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Facturas Electrónicas
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Endpoints para gestionar facturas electrónicas.
+        </p>
+        <ul
+          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+        >
+          <li><code>POST /api/v1/dte/invoices</code> - Crear factura</li>
+        </ul>
+        <a
+          href={`${baseURL}docs/api/invoices`}
+          class="text-indigo-600 dark:text-indigo-400 text-sm font-medium mt-4 inline-block"
+        >
+          Ver documentación →
+        </a>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Comprobantes de Crédito Fiscal
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Endpoints para gestionar CCF.
+        </p>
+        <ul
+          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+        >
+          <li>
+            <code>POST /api/v1/dte/ccf</code> - Crear comprobante de crédito fiscal
+          </li>
+        </ul>
+        <a
+          href={`${baseURL}docs/api/credit-notes`}
+          class="text-indigo-600 dark:text-indigo-400 text-sm font-medium mt-4 inline-block"
+        >
+          Ver documentación →
+        </a>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Invalidación
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Endpoints para invalidar documentos emitidos.
+        </p>
+        <ul
+          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+        >
+          <li>
+            <code>POST /api/v1/dte/invalidate</code> - Invalidar documento
+          </li>
+        </ul>
+        <a
+          href={`${baseURL}docs/api/invalidation`}
+          class="text-indigo-600 dark:text-indigo-400 text-sm font-medium mt-4 inline-block"
+        >
+          Ver documentación →
+        </a>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Consulta de DTE
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Endpoints para consultar documentos emitidos.
+        </p>
+        <ul
+          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+        >
+          <li>
+            <code>GET /api/v1/dte/{"{"}"id"{"}"}</code> - Consultar documento por
+            ID
+          </li>
+          <li><code>GET /api/v1/dte</code> - Listar documentos con filtros</li>
+        </ul>
+        <a
+          href={`${baseURL}docs/api/consult-dte`}
+          class="text-indigo-600 dark:text-indigo-400 text-sm font-medium mt-4 inline-block"
+        >
+          Ver documentación →
+        </a>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Monitoreo
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Endpoints para monitorear el estado del sistema.
+        </p>
+        <ul
+          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+        >
+          <li><code>GET /api/v1/health</code> - Health check</li>
+          <li><code>GET /api/v1/metrics</code> - Métricas del sistema</li>
+          <li><code>GET /api/v1/test</code> - Test del sistema</li>
+        </ul>
+        <a
+          href={`${baseURL}docs/api/monitoring`}
+          class="text-indigo-600 dark:text-indigo-400 text-sm font-medium mt-4 inline-block"
+        >
+          Ver documentación →
+        </a>
+      </div>
+    </div>
+
+    <h2>Formatos de Respuesta</h2>
+    <p>Todas las respuestas de la API siguen un formato estándar en JSON:</p>
+
+    <h3>Respuestas Exitosas</h3>
+    <pre
+      class="language-json"><code>{"{"}"success": true,"data": {"{"}"}{"}"}</code></pre>
+
+    <h3>Respuestas de Error</h3>
+    <pre
+      class="language-json"><code>{"{"}"success": false,"error": {"{"}"message": "Mensaje descriptivo del error","details": ["Detalle 1", "Detalle 2"],"code": "CÓDIGO_ERROR"{"}"}{"}"}</code></pre>
+
+    <h2>Códigos de Estado HTTP</h2>
+    <p>La API utiliza los siguientes códigos de estado HTTP:</p>
+    <ul>
+      <li><code>200 OK</code> - La solicitud se completó correctamente</li>
+      <li><code>201 Created</code> - El recurso se creó correctamente</li>
+      <li>
+        <code>400 Bad Request</code> - Error en los parámetros o datos enviados
+      </li>
+      <li>
+        <code>401 Unauthorized</code> - Falta de autenticación o token inválido
+      </li>
+      <li>
+        <code>403 Forbidden</code> - No tiene permisos para acceder al recurso
+      </li>
+      <li><code>404 Not Found</code> - El recurso solicitado no existe</li>
+      <li>
+        <code>500 Internal Server Error</code> - Error interno del servidor
+      </li>
+    </ul>
+
+    <h2>Sistema de Contingencia</h2>
+    <p>
+      La API incluye un mecanismo de contingencia que se activa automáticamente
+      cuando:
+    </p>
+    <ul>
+      <li>No hay respuesta del servidor de Hacienda</li>
+      <li>Se reciben errores 5XX del servidor</li>
+      <li>El tiempo de respuesta excede 30 segundos</li>
+      <li>El servicio de firmador no está funcionando</li>
+    </ul>
+    <p>
+      Una vez la API detecte que la contingencia termino, comenzara un proceso
+      en el cual se enviaran lotes de documentos a hacienda emitidos en el dia
+      de la contingencia.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Documentación Completa"
+        type="primary"
+        description="Para más detalles sobre cada endpoint, consulta las secciones específicas de la documentación."
+      />
+    </div>
+  </div>
+</DocsLayout>

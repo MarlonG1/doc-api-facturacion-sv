@@ -1,0 +1,255 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+// URL base para enlaces
+const baseURL = import.meta.env.BASE_URL + "/" || "";
+---
+
+<Layout title="API de Facturación Electrónica | El Salvador">
+  <div class="flex flex-col min-h-screen">
+    <Header />
+    <main class="flex-1">
+      <!-- Hero Section -->
+      <section
+        class="relative bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-indigo-900 dark:to-purple-900 py-20 overflow-hidden"
+      >
+        <div class="absolute inset-0 opacity-10">
+          <svg class="h-full w-full" viewBox="0 0 800 800">
+            <defs>
+              <pattern
+                id="blue-pattern"
+                x="0"
+                y="0"
+                width="20"
+                height="20"
+                patternUnits="userSpaceOnUse"
+              >
+                <rect x="0" y="0" width="4" height="4" fill="white"></rect>
+              </pattern>
+            </defs>
+            <rect
+              x="0"
+              y="0"
+              width="100%"
+              height="100%"
+              fill="url(#blue-pattern)"></rect>
+          </svg>
+        </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="max-w-3xl mx-auto text-center">
+            <h1
+              class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight"
+            >
+              API de Facturación Electrónica
+            </h1>
+            <p class="text-xl text-indigo-100 mb-10 leading-relaxed">
+              Solución para la emisión, gestión y seguimiento de documentos
+              tributarios electrónicos que cumplen con la normativa de El
+              Salvador.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href={`${baseURL}docs/introduction`}
+                class="rounded-lg bg-white text-indigo-700 font-medium px-6 py-3 shadow-lg hover:shadow-xl transition-all"
+              >
+                Comenzar
+              </a>
+              <a
+                href={`${baseURL}docs/api/endpoints`}
+                class="rounded-lg bg-indigo-800 bg-opacity-50 text-white border border-indigo-400 border-opacity-30 font-medium px-6 py-3 hover:bg-opacity-70 transition-all"
+              >
+                Referencia API
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="py-16 bg-white dark:bg-gray-950">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2
+            class="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white"
+          >
+            Características Principales
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card
+              title="Emisión de Documentos Fiscales"
+              description="Genera facturas, comprobantes de crédito fiscal, notas de crédito y otros documentos válidos fiscalmente."
+              icon='<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>'
+            />
+
+            <Card
+              title="Validación Automática"
+              description="Verifica que todos los documentos cumplan con los requisitos legales antes de su emisión."
+              icon='<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z" /></svg>'
+            />
+
+            <Card
+              title="Sistema de Contingencia"
+              description="Continuidad operativa incluso cuando hay problemas de conexión con los servicios de Hacienda."
+              icon='<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>'
+            />
+
+            <Card
+              title="Almacenamiento Seguro"
+              description="Todos los documentos se almacenan de forma segura según las normativas fiscales."
+              icon='<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>'
+            />
+
+            <Card
+              title="Consultas en Tiempo Real"
+              description="Accede al estado y detalles de tus documentos fiscales en cualquier momento."
+              icon='<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>'
+            />
+
+            <Card
+              title="Monitoreo del Sistema"
+              description="Endpoints específicos para verificar el estado y métricas del sistema."
+              icon='<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>'
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Documentation Section -->
+      <section class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="max-w-3xl mx-auto">
+            <h2
+              class="text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center"
+            >
+              Documentación Completa
+            </h2>
+            <p
+              class="text-lg text-gray-600 dark:text-gray-400 mb-8 text-center"
+            >
+              Encuentra todo lo que necesitas para implementar la API en tu
+              sistema:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+              <a
+                href={`${baseURL}docs/introduction`}
+                class="block p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+              >
+                <h3
+                  class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
+                >
+                  Guías
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Tutoriales paso a paso para comenzar rápidamente con la API.
+                </p>
+              </a>
+
+              <a
+                href={`${baseURL}docs/api/endpoints`}
+                class="block p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+              >
+                <h3
+                  class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
+                >
+                  Referencia API
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Documentación detallada de todos los endpoints disponibles.
+                </p>
+              </a>
+
+              <a
+                href={`${baseURL}docs/catalog`}
+                class="block p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+              >
+                <h3
+                  class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
+                >
+                  Catálogos
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Referencia de catálogos oficiales del Ministerio de Hacienda.
+                </p>
+              </a>
+
+              <a
+                href={`${baseURL}docs/common-errors`}
+                class="block p-6 rounded-lg border transition-all hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+              >
+                <h3
+                  class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100"
+                >
+                  Errores Comunes
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Soluciones a los problemas más frecuentes durante la
+                  integración.
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section
+        class="py-16 bg-gradient-to-br from-gray-900 to-indigo-900 text-white"
+      >
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">¿Listo para comenzar?</h2>
+            <p class="text-lg text-indigo-200 mb-8">
+              Nuestra documentación detallada te guiará paso a paso en la
+              integración con tu sistema.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href={`${baseURL}docs/first-steps`}
+                class="rounded-lg bg-white text-indigo-700 font-medium px-6 py-3 shadow-md hover:bg-indigo-50 transition-all"
+              >
+                Primeros Pasos
+              </a>
+              <a
+                href="https://github.com/marlong1/doc-api-facturacion-sv"
+                class="rounded-lg bg-indigo-800 text-white border border-indigo-600 font-medium px-6 py-3 hover:bg-indigo-700 transition-all"
+                target="_blank"
+              >
+                <div class="flex items-center">
+                  <svg
+                    class="h-5 w-5 mr-2"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  GitHub
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </div>
+</Layout>
+
+<style>
+  .header {
+    z-index: 10000; /* Asegura que el header esté por encima del contenido */
+  }
+
+  /* Agregamos esta clase para evitar problemas con posicionamiento */
+  .relative {
+    position: relative;
+    z-index: 10;
+  }
+</style>

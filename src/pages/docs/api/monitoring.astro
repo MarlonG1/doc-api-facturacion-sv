@@ -1,0 +1,245 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
+import Card from "../../../components/Card.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import FieldsTable from "../../../components/FieldsTable.astro";
+
+const title = "Monitoreo y Estado del Sistema";
+const description =
+  "Documentación de los endpoints para monitorear el estado del sistema, verificar la salud de los componentes y obtener métricas.";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+  title={title}
+  description={description}
+  currentPage="/docs/api/monitoring"
+>
+  <div class="prose prose-indigo dark:prose-invert max-w-none">
+    <h1>{title}</h1>
+    <p class="lead text-xl">
+      Esta sección describe los endpoints para monitorear el estado del sistema,
+      verificar la salud de sus componentes y obtener métricas de rendimiento.
+    </p>
+
+    <div class="not-prose my-8">
+      <Card
+        title="Autenticación"
+        type="warning"
+        description="Todos los endpoints de esta sección de monitoreo requieren autenticación JWT excepto el endpoint de health check. Consulta la sección de Autenticación para más detalles."
+        href={`${baseURL}docs/api/autenticacion`}
+      />
+    </div>
+
+    <h2>Health Check</h2>
+
+    <ApiEndpoint
+      method="GET"
+      endpoint="/api/v1/health"
+      description="Verifica el estado de salud del sistema y sus componentes"
+      responseExample={`{
+  "success": true,
+  "data": {
+    "status": "UP",
+    "components": {
+      "database": {
+        "status": "UP",
+        "details": "Database service is healthy"
+      },
+      "redis": {
+        "status": "UP",
+        "details": "Cache service is healthy"
+      },
+      "filesystem": {
+        "status": "UP",
+        "details": "Storage system is healthy"
+      },
+      "hacienda": {
+        "status": "UP",
+        "details": "Service is healthy"
+      },
+      "dte_signer": {
+        "status": "UP",
+        "details": "Service is healthy"
+      }
+    },
+    "timestamp": "2024-02-01T10:30:00Z"
+  }
+}`}
+    >
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Este endpoint verifica el estado de salud del sistema y todos sus
+        componentes, proporcionando información sobre la disponibilidad de cada
+        servicio.
+      </p>
+    </ApiEndpoint>
+
+    <p>El endpoint de health check es útil para:</p>
+    <ul class="list-disc pl-6 mb-6">
+      <li>Verificar si el sistema está operativo</li>
+      <li>Identificar qué componentes específicos pueden estar fallando</li>
+      <li>Monitoreo automático y alertas</li>
+      <li>Verificaciones de balanceadores de carga</li>
+    </ul>
+
+    <div class="not-prose my-6">
+      <Card
+        title="Nota"
+        type="info"
+        description="Si algún componente tiene estado 'DOWN', el estado global del sistema también será 'DOWN'."
+      />
+    </div>
+
+    <h2>Métricas del Sistema</h2>
+
+    <ApiEndpoint
+      method="GET"
+      endpoint="/api/v1/metrics"
+      description="Recupera métricas del sistema para monitoreo"
+      responseExample={`{
+  "success": true,
+  "data": {
+    "path": "invoices",
+    "method": "POST",
+    "system_nit": "06140101231101",
+    "total_requests": 1500,
+    "success_count": 1450,
+    "error_count": 50,
+    "current_average_ms": 245,
+    "max_duration_ms": 850,
+    "min_duration_ms": 120,
+    "last_durations": [235, 242, 238, 251, 240]
+  }
+}`}
+    >
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Este endpoint proporciona métricas detalladas sobre el rendimiento del
+        sistema, incluyendo tiempos de respuesta y tasas de éxito/error.
+      </p>
+      <h4 class="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+        Parámetros de consulta
+      </h4>
+      <ul
+        class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+      >
+        <li>
+          <code>endpoint</code> - Filtrar métricas por ruta específica (opcional)
+        </li>
+        <li>
+          <code>method</code> - Filtrar métricas por método HTTP (opcional)
+        </li>
+      </ul>
+    </ApiEndpoint>
+
+    <h2>Prueba del Sistema</h2>
+
+    <ApiEndpoint
+      method="GET"
+      endpoint="/api/v1/test"
+      description="Ejecuta pruebas del sistema para verificar la conexión con servicios externos"
+      responseExample={`{
+  "success": true,
+  "data": {
+    "success": true,
+    "tests": [
+      {
+        "name": "database_connection",
+        "success": true,
+        "duration_ms": 1
+      },
+      {
+        "name": "dte_mapping",
+        "success": true,
+        "duration_ms": 0
+      },
+      {
+        "name": "sequence_generation",
+        "success": true,
+        "duration_ms": 4
+      },
+      {
+        "name": "hacienda_transmission",
+        "success": true,
+        "duration_ms": 364
+      }
+    ],
+    "duration_ms": 370
+  }
+}`}
+    >
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Este endpoint ejecuta una serie de pruebas diagnósticas para verificar
+        la conectividad y funcionalidad de los componentes clave del sistema,
+        especialmente aquellos que implican servicios externos como la conexión
+        con Hacienda.
+      </p>
+    </ApiEndpoint>
+
+    <h3>Pruebas Ejecutadas</h3>
+
+    <div class="grid grid-cols-1 gap-6">
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h4
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          database_connection
+        </h4>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          Verifica la conectividad con la base de datos realizando una consulta
+          simple. Esta prueba asegura que el sistema puede realizar operaciones
+          básicas de lectura/escritura.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h4
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          dte_mapping
+        </h4>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          Valida el correcto funcionamiento del mapeo de documentos tributarios
+          electrónicos (DTE). Comprueba que las transformaciones de datos y
+          validaciones funcionen según lo esperado.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h4
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          sequence_generation
+        </h4>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          Prueba la generación de secuencias únicas para documentos. Verifica
+          que el sistema pueda generar correctamente números correlativos para
+          los diferentes tipos de documentos.
+        </p>
+      </div>
+
+      <div
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h4
+          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          hacienda_transmission
+        </h4>
+        <p class="text-gray-700 dark:text-gray-300 mb-3">
+          Comprueba la conectividad con los servicios del Ministerio de
+          Hacienda. Verifica que el sistema pueda establecer conexión y realizar
+          transmisiones de prueba exitosas.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocsLayout>
