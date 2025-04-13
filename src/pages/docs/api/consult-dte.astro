@@ -30,7 +30,7 @@ const baseURL = "/doc-api-facturacion-sv/";
         title="Autenticación requerida"
         type="warning"
         description="Todos los endpoints requieren autenticación mediante token JWT. Consulta la sección de Autenticación para más detalles."
-        href={`${baseURL}docs/autenticacion`}
+        href={`${baseURL}docs/authentication`}
       />
     </div>
 
@@ -181,35 +181,6 @@ const baseURL = "/doc-api-facturacion-sv/";
       />
     </ApiEndpoint>
 
-    <h2>Descargar PDF</h2>
-
-    <ApiEndpoint
-      method="GET"
-      endpoint="/api/v1/dte/{id}/pdf"
-      description="Descarga el PDF de un documento tributario electrónico"
-    >
-      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-        Este endpoint genera y descarga el PDF correspondiente a un DTE. El
-        servidor responde con el archivo binario en formato PDF.
-      </p>
-      <h4 class="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
-        Parámetros opcionales
-      </h4>
-      <ul
-        class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
-      >
-        <li><code>format</code>: Formato del PDF (A4, TICKET)</li>
-        <li><code>type</code>: Tipo de PDF (ORIGINAL, COPIA, CEDIBLE)</li>
-      </ul>
-    </ApiEndpoint>
-
-    <div class="not-prose my-8">
-      <Card
-        title="Buenas prácticas"
-        type="info"
-        description="Es recomendable almacenar localmente los PDFs generados para documentos finalizados, evitando generar el mismo PDF repetidamente."
-      />
-    </div>
   </div>
 </DocsLayout>
 
