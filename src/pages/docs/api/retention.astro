@@ -1,0 +1,655 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
+import Card from "../../../components/Card.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import FieldsTable from "../../../components/FieldsTable.astro";
+
+const title = "Comprobante de Retención Electrónico";
+const description =
+    "Documentación para la emisión, consulta e invalidación de Comprobantes de Retención Electrónicos";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+        title={title}
+        description={description}
+        currentPage="/docs/api/retention"
+>
+    <div class="prose prose-indigo dark:prose-invert max-w-none">
+        <h1>{title}</h1>
+        <p class="lead text-xl">
+            Esta sección describe los endpoints necesarios para crear comprobantes de retención
+            electrónicos en el sistema de facturación electrónica de El Salvador.
+        </p>
+
+        <div class="not-prose my-8">
+            <Card
+                    title="Autenticación requerida"
+                    type="warning"
+                    description="Todos los endpoints requieren autenticación mediante token JWT. Consulta la sección de Autenticación para más detalles."
+                    href={`${baseURL}docs/api/authentication`}
+            />
+        </div>
+
+        <div class="not-prose my-8">
+            <Card
+                    title="Catálogos de referencia"
+                    type="info"
+                    description="Para la correcta emisión de comprobantes de retención, debes utilizar los códigos de los catálogos oficiales. Consulta la sección de Catálogos para todos los valores permitidos."
+                    href={`${baseURL}docs/catalog`}
+            />
+        </div>
+
+        <h2>Crear Comprobante de Retención Electrónico</h2>
+
+        <ApiEndpoint
+                method="POST"
+                endpoint="/api/v1/retention"
+                description="Crea y emite un comprobante de retención electrónico"
+                requestExample={`{
+    "items": [
+        {
+            "type": 2,
+            "document_number": "1EEAB582-AA75-4D9C-A...",
+            "description": "Compra de equipos informáticos",
+            "retention_code": "22"
+        }
+    ],
+    "receiver": {
+    "document_type": "36",
+    "document_number": "00000000000000",
+    "nrc": "000000",
+    "name": "EJEMPLO S.A de S.V",
+    "commercial_name": "EJEMPLO",
+    "activity_code": "00000",
+    "activity_description": "ACTIVIDADES JURÍDICAS Y CONTABLES",
+    "address": {
+      "department": "06",
+      "municipality": "20",
+      "complement": "Dirección de Prueba 1, N° 1234"
+    },
+    "phone": "21212121",
+    "email": "cliente@gmail.com"
+  },
+   "extension": {
+        "delivery_name": "Juan Pérez",
+        "delivery_document": "06141809931020",
+        "receiver_name": "María López",
+        "receiver_document": "06142509882011",
+        "observation": "Entrega en oficina central"
+    },
+    
+    // Nota, estos campos si NO seran ocupados, no es necesario enviarlos, los muestra acá unicamente como referencia
+    appendixes: null
+}`}
+                responseExample={`{
+    "success": true,
+    "reception_stamp": "202534D1BECF3321453...",
+    "qr_link": "https://admin.factura.gob.sv/consultaPublica?ambiente=00&codGen=5367521F-DD80-4B6B-9...&fechaEmi=FECHA-DE-EMISION",
+    "data":{
+  "identificacion": {
+    "version": 1,
+    "ambiente": "00",
+    "tipoDte": "07",
+    "numeroControl": "DTE-07-C0020000-000000000000001",
+    "codigoGeneracion": "EB399033-E184-41D2-B01...",
+    "tipoModelo": 1,
+    "tipoOperacion": 1,
+    "tipoContingencia": null,
+    "motivoContin": null,
+    "fecEmi": "2025-04-16",
+    "horEmi": "20:40:56",
+    "tipoMoneda": "USD"
+  },
+  "resumen": {
+    "totalSujetoRetencion": 80097.35,
+    "totalIVAretenido": 800.97,
+    "totalIVAretenidoLetras": "OCHOCIENTOS 97/100"
+  },
+  "emisor": {
+    "nit": "00000000000000",
+    "nrc": "0000000",
+    "nombre": "EMPRESA DE PRUEBAS SA DE CV 2",
+    "codActividad": "00000",
+    "descActividad": "Venta al por mayor de otros productos",
+    "tipoEstablecimiento": "01",
+    "direccion": {
+      "departamento": "06",
+      "municipio": "20",
+      "complemento": "BOULEVARD SANTA ELENA SUR, SANTA TECLA"
+    },
+    "telefono": "21212828",
+    "correo": "facturacion@empresa.com.sv",
+    "nombreComercial": "JEMEPLO",
+    "codigoMH": null,
+    "codigo": "C002",
+    "puntoVentaMH": null,
+    "puntoVenta": null
+  },
+  "receptor": {
+    "nombre": "EJEMPLO S.A DE C.V",
+    "tipoDocumento": "36",
+    "numDocumento": "00000000000000",
+    "nrc": "000000",
+    "codActividad": "00000",
+    "descActividad": "ACTIVIDADES JURÍDICAS Y CONTABLES",
+    "direccion": {
+      "departamento": "06",
+      "municipio": "20",
+      "complemento": "Dirección de Prueba 1, N° 1234"
+    },
+    "telefono": "21212121",
+    "correo": "cliente@gmail.com",
+    "nombreComercial": "EJEMPLO"
+  },
+  "cuerpoDocumento": [
+    {
+      "numItem": 1,
+      "tipoDte": "03",
+      "tipoDoc": 2,
+      "numDocumento": "1EEAB582-AA75-4D9C-AFF...",
+      "fechaEmision": "2025-04-11",
+      "montoSujetoGrav": 80097.35,
+      "codigoRetencionMH": "22",
+      "ivaRetenido": 800.97,
+      "descripcion": "Compra de equipos informáticos"
+    }
+  ],
+  "extension": {
+    "nombEntrega": "Juan Pérez",
+    "docuEntrega": "06141809931020",
+    "nombRecibe": "María López",
+    "docuRecibe": "06142509882011",
+    "observaciones": "Entrega en oficina central"
+  },
+        "apendice": [
+            {
+                "campo": "Datos del documento",
+                "etiqueta": "Sello de recepción",
+                "valor": "202534D1BECF33214..."
+            }
+        ]
+}
+`}
+        >
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                Este endpoint permite crear y emitir un comprobante de retención electrónico que cumple
+                con los requisitos del Ministerio de Hacienda. Los comprobantes de retención documentan
+                las retenciones de IVA realizadas a otros contribuyentes.
+            </p>
+        </ApiEndpoint>
+
+        <h2>Alternativa - Generación fisica</h2>
+        <p>
+            Si todos los documentos sujetos a retención son de generación física, se debe seguir un formato mas detallado, como se muestra a continuación.
+        </p>
+
+        <CodeBlock
+                code={`{
+  "items": [
+    {
+      "type": 1,
+      "document_number": "S221001345",
+      "description": "Compra de suministros de oficina",
+      "retention_code": "22",
+      "taxed_amount": 115.25,
+      "iva_amount": 1.15,
+      "emission_date": "2025-04-11",
+      "dte_type": "03"
+    },
+    {
+      "type": 1,
+      "document_number": "S221001346",
+      "description": "Servicio de limpieza",
+      "retention_code": "C4",
+      "taxed_amount": 226.50,
+       "iva_amount": 29.44,
+      "emission_date": "2025-03-22",
+      "dte_type": "03"
+    }
+  ],
+  "summary": {
+    "total_retention_amount": 341.75,
+    "total_retention_iva": 30.59
+  },
+    "receiver": {
+    "document_type": "36",
+    "document_number": "00000000000000",
+    "nrc": "000000",
+    "name": "EJEMPLO S.A de S.V",
+    "commercial_name": "EJEMPLO",
+    "activity_code": "00000",
+    "activity_description": "ACTIVIDADES JURÍDICAS Y CONTABLES",
+    "address": {
+      "department": "06",
+      "municipality": "20",
+      "complement": "Dirección de Prueba 1, N° 1234"
+    },
+    "phone": "21212121",
+    "email": "cliente@gmail.com"
+  },
+   "extension": {
+        "delivery_name": "Juan Pérez",
+        "delivery_document": "06141809931020",
+        "receiver_name": "María López",
+        "receiver_document": "06142509882011",
+        "observation": "Entrega en oficina central"
+    }
+  }`}
+                lang="json"
+                title="Estructura de request cuando todos los items son de generación física"
+        />
+
+        <h2>Alternativa - Generación Mixta</h2>
+        <p>
+            Si los documentos sujetos a retención son de generación mixta (algunos físicos y otros electrónicos), en este caso
+            <strong>NO SE DEBE INCLUIR LA SECCIÓN <code>SUMMARY</code></strong>, como se muestra a continuación.
+        </p>
+
+        <CodeBlock code={`{
+  "items": [
+    {
+      "type": 1,
+      "document_number": "S221001347",
+      "description": "Consultoría financiera",
+      "retention_code": "C9",
+      "taxed_amount": 450.00,
+      "iva_amount": 19.00,
+      "emission_date": "2025-03-15",
+      "dte_type": "03"
+    },
+    {
+      "type": 2,
+      "document_number": "FF32E9DB-79C3-42...",
+      "description": "Servicios de auditoría",
+      "retention_code": "C4"
+    }
+  ],
+  "receiver": {
+    "document_type": "36",
+    "document_number": "00000000000000",
+    "nrc": "000000",
+    "name": "EJEMPLO S.A de S.V",
+    "commercial_name": "EJEMPLO",
+    "activity_code": "00000",
+    "activity_description": "ACTIVIDADES JURÍDICAS Y CONTABLES",
+    "address": {
+      "department": "06",
+      "municipality": "20",
+      "complement": "Dirección de Prueba 1, N° 1234"
+    },
+    "phone": "21212121",
+    "email": "cliente@gmail.com"
+  },
+  "extension": {
+    "delivery_name": "Juan Pérez",
+    "delivery_document": "06141809931020",
+    "receiver_name": "María López",
+    "receiver_document": "06142509882011",
+    "observation": "Entrega en oficina central"
+  }
+}
+`}
+                lang="json"
+                title="Estructura de request cuando todos los items son de generación mixta"
+        />
+
+        <FieldsTable
+                title="Campos principales"
+                description="Los campos necesarios para crear un comprobante de retención electrónico"
+                fields={[
+                    {
+                        name: "items",
+                        type: "array",
+                        description: "Lista de documentos sobre los cuales se realiza la retención",
+                        required: true,
+                    },
+                    {
+                        name: "items[].type",
+                        type: "integer",
+                        description: "Tipo de generación del documento (1: Físico, 2: Electrónico - Emisión DTE)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].document_number",
+                        type: "string",
+                        description: "Número del documento sujeto a retención (máx. 20 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].dte_type",
+                        type: "string",
+                        description: "Tipo de documento fiscal (ver lista de tipos válidos para retención)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].emission_date",
+                        type: "string",
+                        description: "Fecha de emisión del documento retenido (formato YYYY-MM-DD)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].taxed_amount",
+                        type: "number",
+                        description: "Monto sujeto a retención (> 0 y <= 9999999999.99)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].retention_code",
+                        type: "string",
+                        description: "Código de retención según catálogo del MH (22: 1%, C4: 13%, C9: Otros)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].iva_amount",
+                        type: "number",
+                        description: "Monto de IVA retenido (taxed_amount * porcentaje_retención)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].description",
+                        type: "string",
+                        description: "Descripción de la retención (1-1000 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver",
+                        type: "object",
+                        description: "Información del sujeto al que se le realiza la retención",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.name",
+                        type: "string",
+                        description: "Nombre completo del receptor (1-250 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.nrc",
+                        type: "string",
+                        description: "Número de Registro de Contribuyente (1-8 dígitos)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.activity_code",
+                        type: "string",
+                        description: "Código de actividad económica (2-6 dígitos)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.activity_description",
+                        type: "string",
+                        description: "Descripción de la actividad económica (1-150 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.address",
+                        type: "object",
+                        description: "Dirección del receptor",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.address.department",
+                        type: "string",
+                        description: "Código de departamento del receptor",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.address.municipality",
+                        type: "string",
+                        description: "Código de municipio del receptor",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.address.complement",
+                        type: "string",
+                        description: "Complemento de la dirección del receptor",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.document_type",
+                        type: "string",
+                        description: "Tipo de documento de identificación",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.document_number",
+                        type: "string",
+                        description: "Número de documento de identificación",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.commercial_name",
+                        type: "string",
+                        description: "Nombre comercial (1-150 caracteres)",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.phone",
+                        type: "string",
+                        description: "Teléfono del receptor (8-30 caracteres)",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.email",
+                        type: "string",
+                        description: "Correo electrónico del receptor (formato válido)",
+                        required: false,
+                    },
+                    {
+                        name: "summary",
+                        type: "object",
+                        description: "Resumen de totales de retención",
+                        required: true,
+                    },
+                    {
+                        name: "summary.total_retention_amount",
+                        type: "number",
+                        description: "Total de montos sujetos a retención (suma de todos los taxed_amount)",
+                        required: true,
+                    },
+                    {
+                        name: "summary.total_retention_iva",
+                        type: "number",
+                        description: "Total de IVA retenido (suma de todos los iva_amount)",
+                        required: true,
+                    },
+                ]}
+        />
+
+        <h3>Códigos de Retención</h3>
+        <p>
+            Los códigos de retención deben corresponder a los catálogos definidos por el Ministerio de Hacienda:
+        </p>
+
+        <div class="overflow-x-auto my-6">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-800">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Código</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Descripción</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Porcentaje</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">22</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Retención IVA 1%</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">0.01</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">C4</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Retención IVA 13%</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">0.13</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">C9</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Otros</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Variable</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Validaciones específicas para Comprobante de Retención</h3>
+        <ul>
+            <li>
+                <strong>Validación de Fechas</strong>: Los documentos retenidos deben estar dentro del plazo permitido:
+                <ul>
+                    <li>Si pertenecen al mismo mes de emisión del comprobante, cualquier día es válido.</li>
+                    <li>Si pertenecen al mes anterior, el comprobante debe emitirse dentro de los primeros 10 días hábiles del mes siguiente.</li>
+                    <li>No se permiten documentos de meses anteriores fuera de estos plazos.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Cálculo de Retención</strong>: El monto de IVA retenido (<code>iva_amount</code>) debe ser exactamente igual al monto sujeto a retención (<code>taxed_amount</code>) multiplicado por el porcentaje correspondiente al código de retención.
+            </li>
+            <li>
+                <strong>Validación de Totales</strong>:
+                <ul>
+                    <li>El <code>total_retention_amount</code> debe ser igual a la suma de todos los <code>taxed_amount</code> de los ítems.</li>
+                    <li>El <code>total_retention_iva</code> debe ser igual a la suma de todos los <code>iva_amount</code> de los ítems.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Documentos Válidos para Retención</strong>: No todos los tipos de documentos fiscales son válidos para aplicar retención. Los tipos permitidos incluyen:
+                <ul>
+                    <li>01 - Facturas Electrónicas</li>
+                    <li>03 - Comprobantes de Crédito Fiscal Electrónicos</li>
+                    <li>14 - Facturas de Exportación Electrónicas</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Montos Monetarios</strong>:
+                <ul>
+                    <li>Ningún monto monetario puede ser negativo.</li>
+                    <li>Los montos sujetos a retención deben ser mayores a cero.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Extensión del Comprobante de Retención</h2>
+        <p>
+            Cuando el monto del comprobante de retención es mayor o igual a $1,095.00, es obligatorio
+            incluir el campo <code>extension</code>:
+        </p>
+
+        <CodeBlock
+                code={`{
+  "extension": {
+    "delivery_name": "Nombre de quien entrega",
+    "delivery_document": "00000000-0",
+    "receiver_name": "Nombre de quien recibe",
+    "receiver_document": "00000000-0",
+    "observation": "Observaciones adicionales"
+  }
+}`}
+                lang="json"
+                title="Ejemplo de extensión requerida"
+        />
+
+        <FieldsTable
+                title="Campos del objeto extension"
+                description="La extensión es obligatoria cuando el monto total es mayor o igual a $1,095.00"
+                fields={[
+                    {
+                        name: "delivery_name",
+                        type: "string",
+                        description: "Nombre de quien entrega (1-100 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "delivery_document",
+                        type: "string",
+                        description: "Documento de quien entrega (1-25 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver_name",
+                        type: "string",
+                        description: "Nombre de quien recibe (1-100 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver_document",
+                        type: "string",
+                        description: "Documento de quien recibe (1-25 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "observation",
+                        type: "string",
+                        description: "Observaciones adicionales (máx. 3000 caracteres)",
+                        required: false,
+                    },
+                ]}
+        />
+
+        <h2>Appendixes (Apéndices)</h2>
+        <p>
+            Los apéndices contienen información adicional complementaria.
+        </p>
+
+        <CodeBlock
+                code={`{
+  "appendixes": {
+    "items": [
+      {
+        "field": "campo_adicional",
+        "label": "Información Adicional",
+        "value": "Detalle adicional para el documento"
+      }
+    ],
+    "type": "array"
+  }
+}`}
+                lang="json"
+                title="Ejemplo de apéndices"
+        />
+
+        <FieldsTable
+                title="Campos de Apéndices"
+                description="Validaciones para el objeto appendixes"
+                fields={[
+                    {
+                        name: "field",
+                        type: "string",
+                        description: "Identificador del campo (2-25 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "label",
+                        type: "string",
+                        description: "Etiqueta descriptiva (3-50 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "value",
+                        type: "string",
+                        description: "Valor del campo (1-150 caracteres)",
+                        required: true,
+                    },
+                ]}
+        />
+
+        <p>
+            <strong>Consideraciones importantes:</strong>
+        </p>
+        <ul>
+            <li>Los apéndices son <strong>opcionales</strong>.</li>
+            <li>Si se incluyen, todos sus campos son obligatorios.</li>
+        </ul>
+
+        <div class="not-prose my-8">
+            <Card
+                    title="Nota"
+                    type="info"
+                    description="Para consultar comprobantes de retención ya emitidos, utiliza los endpoints de Consulta de DTE en la sección correspondiente."
+                    href={`${baseURL}docs/api/consult-dte`}
+            />
+        </div>
+    </div>
+</DocsLayout>

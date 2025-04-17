@@ -10,24 +10,20 @@ const description =
 const baseURL = "/doc-api-facturacion-sv/";
 ---
 
-<DocsLayout
-  title={title}
-  description={description}
-  currentPage="/docs/catalogos"
->
+<DocsLayout title={title} description={description} currentPage="/docs/catalog">
   <div class="prose prose-indigo dark:prose-invert max-w-none">
     <h1>{title}</h1>
     <p class="lead text-xl">
-      Esta página proporciona una referencia rápida a los principales catálogos
+      Esta página proporciona una referencia completa de los catálogos
       utilizados en el Sistema de Transmisión para Documentos Tributarios
-      Electrónicos.
+      Electrónicos de El Salvador.
     </p>
 
     <div class="not-prose my-8">
       <Card
         title="Aviso importante"
         type="warning"
-        description="Los catálogos aquí presentados son extraídos del documento `Catálogos - Sistema de Transmisión` publicado por el Ministerio de Hacienda de El Salvador. Esta página ofrece los catálogos más utilizados para referencia rápida. Para la información completa y última versión, consulte la documentación oficial del Ministerio de Hacienda"
+        description="Los catálogos aquí presentados son extraídos del documento 'Catálogos - Sistema de Transmisión' publicado por el Ministerio de Hacienda de El Salvador. Para la última versión oficial, consulte la documentación proporcionada por el Ministerio de Hacienda."
       />
     </div>
 
@@ -40,7 +36,175 @@ const baseURL = "/doc-api-facturacion-sv/";
       para su uso en los DTE.
     </p>
 
-    <h2>Catálogos principales</h2>
+    <div class="my-8">
+      <nav class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+        <h3 class="font-semibold mb-3">Índice de catálogos</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+          <a
+            href="#cat-001"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-001: Ambiente de destino</a
+          >
+          <a
+            href="#cat-002"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-002: Tipo de Documento</a
+          >
+          <a
+            href="#cat-003"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-003: Modelo de Facturación</a
+          >
+          <a
+            href="#cat-004"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-004: Tipo de Transmisión</a
+          >
+          <a
+            href="#cat-005"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-005: Tipo de Contingencia</a
+          >
+          <a
+            href="#cat-006"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-006: Retención IVA MH</a
+          >
+          <a
+            href="#cat-007"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-007: Tipo de Generación del Documento</a
+          >
+          <a
+            href="#cat-008"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-008: (Catálogo eliminado por el Ministerio de Hacienda)</a
+          >
+          <a
+            href="#cat-009"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-009: Tipo de establecimiento</a
+          >
+          <a
+            href="#cat-010"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-010: Código tipo de Servicio (Médico)</a
+          >
+          <a
+            href="#cat-011"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-011: Tipo de ítem</a
+          >
+          <a
+            href="#cat-012"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-012: Departamento</a
+          >
+          <a
+            href="#cat-013"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-013: Municipio</a
+          >
+          <a
+            href="#cat-014"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-014: Unidad de Medida</a
+          >
+          <a
+            href="#cat-015"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-015: Tributos</a
+          >
+          <a
+            href="#cat-016"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-016: Condición de la Operación</a
+          >
+          <a
+            href="#cat-017"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-017: Forma de Pago</a
+          >
+          <a
+            href="#cat-018"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-018: Plazo</a
+          >
+          <a
+            href="#cat-019"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-019: Código de Actividad Económica</a
+          >
+          <a
+            href="#cat-020"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-020: País</a
+          >
+          <a
+            href="#cat-021"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-021: Otros Documentos Asociados</a
+          >
+          <a
+            href="#cat-022"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-022: Tipo de documento de identificación del Receptor</a
+          >
+          <a
+            href="#cat-023"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-023: Tipo de Documento en Contingencia</a
+          >
+          <a
+            href="#cat-024"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-024: Tipo de Invalidación</a
+          >
+          <a
+            href="#cat-025"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-025: Título a que se remiten los bienes</a
+          >
+          <a
+            href="#cat-026"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-026: Tipo de Donación</a
+          >
+          <a
+            href="#cat-027"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-027: Recinto fiscal</a
+          >
+          <a
+            href="#cat-028"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-028: Régimen</a
+          >
+          <a
+            href="#cat-029"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-029: Tipo de persona</a
+          >
+          <a
+            href="#cat-030"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-030: Transporte</a
+          >
+          <a
+            href="#cat-031"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-031: INCOTERMS</a
+          >
+          <a
+            href="#cat-032"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+            >CAT-032: Domicilio Fiscal</a
+          >
+        </div>
+      </nav>
+    </div>
+
+    <h2>Catálogos completos</h2>
 
     <h3 id="cat-001">CAT-001: Ambiente de destino</h3>
     <p>
@@ -345,7 +509,7 @@ const baseURL = "/doc-api-facturacion-sv/";
             >
             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
               >Falla en el suministro de servicio de energía eléctrica del
-              emisor</td
+              emisor que impida la transmisión de los DTE</td
             >
           </tr>
           <tr>
@@ -356,6 +520,128 @@ const baseURL = "/doc-api-facturacion-sv/";
             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
               >Otro (deberá digitar un máximo de 500 caracteres explicando el
               motivo)</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-006">CAT-006: Retención IVA MH</h3>
+    <p>Códigos asignados para el tipo de retención que se aplica en el DTE.</p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >22</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Retención IVA 1%</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >C4</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Retención IVA 13%</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >C</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otras retenciones IVA casos especiales</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-007">CAT-007: Tipo de Generación del Documento</h3>
+    <p>Indica la forma en que fue generado el documento que se relaciona.</p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Físico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Electrónico</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-008">CAT-008: (Catálogo eliminado)</h3>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >N/A</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Catálogo eliminado</td
             >
           </tr>
         </tbody>
@@ -415,6 +701,94 @@ const baseURL = "/doc-api-facturacion-sv/";
             >
             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
               >Patio</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >20</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otro</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-010">CAT-010: Código tipo de Servicio (Médico)</h3>
+    <p>
+      Código de tipo de servicio médico cuando el modelo de negocio lo requiere.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Cirugía</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Operación</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Tratamiento médico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >4</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Cirugía instituto salvadoreño de Bienestar Magisterial</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >5</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Operación Instituto Salvadoreño de Bienestar Magisterial</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >6</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Tratamiento médico Instituto Salvadoreño de Bienestar Magisterial</td
             >
           </tr>
         </tbody>
@@ -484,10 +858,602 @@ const baseURL = "/doc-api-facturacion-sv/";
       </table>
     </div>
 
+    <h3 id="cat-012">CAT-012: Departamento</h3>
+    <p>
+      Códigos asignados para indicar el Departamento donde se encuentra ubicado
+      el establecimiento del emisor del DTE.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >00</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otro (Para extranjeros)</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Ahuachapán</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >02</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Santa Ana</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >03</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Sonsonate</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >04</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Chalatenango</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >05</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >La Libertad</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >06</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >San Salvador</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >07</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Cuscatlán</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >08</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >La Paz</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >09</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Cabañas</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >10</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >San Vicente</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >11</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Usulután</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >12</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >San Miguel</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >13</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Morazán</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >14</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >La Unión</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-013">CAT-013: Municipio</h3>
+    <p>
+      Códigos asignados para indicar el Municipio donde se encuentra ubicado el
+      establecimiento donde se genera el DTE.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+        <tr>
+          <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+          >Código</th
+          >
+          <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+          >Descripción</th
+          >
+        </tr>
+        </thead>
+        <tbody
+            class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >00</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >Otro (Para extranjeros)</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >13</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >AHUACHAPAN NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >14</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >AHUACHAPAN CENTRO</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >15</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >AHUACHAPAN SUR</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >14</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SANTA ANA NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >15</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SANTA ANA CENTRO</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >16</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SANTA ANA ESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >17</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SANTA ANA OESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >17</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SONSONATE NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >18</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SONSONATE CENTRO</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >19</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SONSONATE ESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >20</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SONSONATE OESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >34</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >CHALATENANGO NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >35</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >CHALATENANGO CENTRO</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >36</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >CHALATENANGO SUR</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >23</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA LIBERTAD NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >24</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA LIBERTAD CENTRO</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >25</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA LIBERTAD OESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >26</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA LIBERTAD ESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >27</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA LIBERTAD COSTA</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >28</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA LIBERTAD SUR</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >20</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN SALVADOR NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >21</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN SALVADOR OESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >22</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN SALVADOR ESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >23</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN SALVADOR CENTRO</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >24</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN SALVADOR SUR</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >17</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >CUSCATLAN NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >18</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >CUSCATLAN SUR</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >23</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA PAZ OESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >24</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA PAZ CENTRO</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >25</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA PAZ ESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >10</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >CABAÑAS OESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >11</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >CABAÑAS ESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >14</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN VICENTE NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >15</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN VICENTE SUR</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >24</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >USULUTAN NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >25</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >USULUTAN ESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >26</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >USULUTAN OESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >21</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN MIGUEL NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >22</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN MIGUEL CENTRO</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >23</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >SAN MIGUEL OESTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >27</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >MORAZAN NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >28</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >MORAZAN SUR</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >19</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA UNION NORTE</td
+          >
+        </tr>
+        <tr>
+          <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+          >20</td
+          >
+          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+          >LA UNION SUR</td
+          >
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
     <h3 id="cat-014">CAT-014: Unidad de Medida</h3>
     <p>
       Identifica la unidad de medida a utilizar según el tipo de bien. A
-      continuación se muestran las unidades más comunes.
+      continuación se muestran algunas de las unidades más utilizadas.
     </p>
     <div class="overflow-x-auto my-6">
       <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -543,7 +1509,7 @@ const baseURL = "/doc-api-facturacion-sv/";
               >Galón</td
             >
             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
-              >Se refiere al Galón USA</td
+              >Se refiere al Galón USA (1 Galón USA = 3.785412 L)</td
             >
           </tr>
           <tr>
@@ -606,18 +1572,30 @@ const baseURL = "/doc-api-facturacion-sv/";
               >Utilizada para detallar formas de presentación del producto</td
             >
           </tr>
+          <tr>
+            <td
+              colspan="3"
+              class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400 italic"
+            >
+              (Se muestran solo los ejemplos más comunes. El catálogo completo
+              contiene más de 40 unidades de medida)
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
     <p class="text-sm text-gray-500 dark:text-gray-400 italic">
-      Nota: Consulte el documento completo para ver el listado completo de
-      unidades de medida.
+      Nota: El CENTRO DE INVESTIGACIONES DE METROLOGÍA (CIM), como responsable
+      técnico de las mediciones en el país, ha establecido los valores de
+      conversión oficial a utilizar para la implementación del Sistema
+      Internacional de Unidades (SI) en la TABLA OFICIAL DE CONVERSIÓN DE
+      UNIDADES versión vigente.
     </p>
 
     <h3 id="cat-015">CAT-015: Tributos</h3>
     <p>
       Contiene los códigos para los diferentes tributos requeridos según el
-      modelo de negocio. A continuación se muestran los más utilizados.
+      modelo de negocio.
     </p>
     <div class="overflow-x-auto my-6">
       <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -636,6 +1614,14 @@ const baseURL = "/doc-api-facturacion-sv/";
         <tbody
           class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
         >
+          <tr>
+            <td
+              colspan="2"
+              class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
+              1- TRIBUTOS APLICADOS POR ÍTEMS REFLEJADOS EN EL RESUMEN DEL DTE
+            </td>
+          </tr>
           <tr>
             <td
               class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
@@ -701,21 +1687,43 @@ const baseURL = "/doc-api-facturacion-sv/";
           </tr>
           <tr>
             <td
+              colspan="2"
+              class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
+              2- TRIBUTOS APLICADOS POR ÍTEMS REFLEJADOS EN EL CUERPO DEL
+              DOCUMENTO
+            </td>
+          </tr>
+          <tr>
+            <td
               class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
-              >D4</td
+              >A8</td
             >
             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
-              >Otros impuestos casos especiales</td
+              >Impuesto Especial al Combustible (0%, 0.5%, 1%)</td
             >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >57</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Impuesto industria de Cemento</td
+            >
+          </tr>
+          <tr>
+            <td
+              colspan="2"
+              class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400 italic"
+            >
+              (Este catálogo contiene más de 40 códigos de tributos. Se muestran
+              los más utilizados)
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="text-sm text-gray-500 dark:text-gray-400 italic">
-      Nota: Este catálogo tiene muchos más códigos específicos para diferentes
-      tipos de impuestos. Consulte el documento completo para ver todos los
-      códigos disponibles.
-    </p>
 
     <h3 id="cat-016">CAT-016: Condición de la Operación</h3>
     <p>
@@ -848,6 +1856,15 @@ const baseURL = "/doc-api-facturacion-sv/";
           <tr>
             <td
               class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >09</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Monedero electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
               >11</td
             >
             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
@@ -857,10 +1874,28 @@ const baseURL = "/doc-api-facturacion-sv/";
           <tr>
             <td
               class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >12</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otras Criptomonedas</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
               >13</td
             >
             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
               >Cuentas por pagar del receptor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >14</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Giro bancario</td
             >
           </tr>
           <tr>
@@ -920,6 +1955,213 @@ const baseURL = "/doc-api-facturacion-sv/";
             >
             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
               >Años</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-019">CAT-019: Código de Actividad Económica</h3>
+    <p>
+      Códigos asignados para clasificar las diferentes Actividades Económicas.
+      Este catálogo es extenso (más de 500 códigos).
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01111</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Cultivo de cereales excepto arroz y para forrajes</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01112</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Cultivo de legumbres</td
+            >
+          </tr>
+          <tr>
+            <td
+              colspan="2"
+              class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400 italic"
+            >
+              (Este catálogo contiene más de 500 códigos de actividades
+              económicas. Consulte el documento oficial para el listado
+              completo)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-020">CAT-020: País</h3>
+    <p>
+      Códigos asignados para identificar el país de origen del receptor,
+      aplicable para Factura de Exportación.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >AF</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Afganistán</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >DE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Alemania</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >AR</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Argentina</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >SV</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >El Salvador</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >US</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Estados Unidos</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >MX</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >México</td
+            >
+          </tr>
+          <tr>
+            <td
+              colspan="2"
+              class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400 italic"
+            >
+              (Se muestran solo algunos ejemplos. El catálogo contiene todos los
+              países)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-021">CAT-021: Otros Documentos Asociados</h3>
+    <p>
+      Identifica si el Documento Asociado corresponde al receptor, al emisor,
+      identificación de medios de transporte o identificación de médicos según
+      el modelo de negocio.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Emisor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Receptor</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Médico (solo aplica para contribuyentes obligados a la
+              presentación de F-958)</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >4</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Transporte (solo aplica para Factura de exportación)</td
             >
           </tr>
         </tbody>
@@ -999,6 +2241,92 @@ const baseURL = "/doc-api-facturacion-sv/";
       </table>
     </div>
 
+    <h3 id="cat-023">CAT-023: Tipo de Documento en Contingencia</h3>
+    <p>Identifica el tipo de documento que se transmitirá en Contingencia.</p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Factura Electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >03</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Comprobante de Crédito Fiscal Electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >04</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Nota de Remisión Electrónica</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >05</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Nota de Crédito Electrónica</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >06</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Nota de Débito Electrónica</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >11</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Factura de Exportación Electrónica</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >14</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Factura de Sujeto Excluido Electrónica</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <h3 id="cat-024">CAT-024: Tipo de Invalidación</h3>
     <p>
       Clasifica los diferentes motivos válidos por los cuales el emisor
@@ -1053,16 +2381,719 @@ const baseURL = "/doc-api-facturacion-sv/";
       </table>
     </div>
 
+    <h3 id="cat-025">CAT-025: Título a que se remiten los bienes</h3>
+    <p>
+      Códigos que clasifican la condición para el traslado de los bienes por
+      medio de una nota de remisión.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Depósito</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >02</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Propiedad</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >03</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Consignación</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >04</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Traslado</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >05</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Otros</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-026">CAT-026: Tipo de Donación</h3>
+    <p>
+      Códigos que clasifican el tipo de donación de los bienes o servicios por
+      medio de un comprobante de donación.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Efectivo</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Bien</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Servicio</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-027">CAT-027: Recinto fiscal</h3>
+    <p>
+      Describe el Código de Recinto Fiscal, hace referencia al punto de aduana
+      donde será el despacho de la mercancía a exportar.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Terrestre San Bartolo</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >02</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Marítima de Acajutla</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >03</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Aérea De Comalapa</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >04</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Terrestre Las Chinamas</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >05</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Terrestre La Hachadura</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >06</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Terrestre Santa Ana</td
+            >
+          </tr>
+          <tr>
+            <td
+              colspan="2"
+              class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400 italic"
+            >
+              (Este catálogo contiene más de 25 códigos de recinto fiscal. Se
+              muestran los más utilizados)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-028">CAT-028: Régimen</h3>
+    <p>
+      Contiene los códigos que describen la condición bajo la cual se exporta la
+      mercancía.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >EX-1.1000.000</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Exportación Definitiva, Exportación Definitiva, Régimen Común</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >EX-1.1040.000</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Exportación Definitiva, Exportación Definitiva Sustitución de
+              Mercancías, Régimen Común</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >EX-1.1041.020</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Exportación Definitiva, Exportación Definitiva Proveniente de
+              Franquicia Provisional, Frang. Presidenciales exento de DAI</td
+            >
+          </tr>
+          <tr>
+            <td
+              colspan="2"
+              class="px-6 py-4 text-sm text-center text-gray-500 dark:text-gray-400 italic"
+            >
+              (Este catálogo contiene numerosos códigos de régimen de
+              exportación. Se muestran solo algunos ejemplos)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-029">CAT-029: Tipo de persona</h3>
+    <p>
+      Contiene los códigos que describen el Tipo de Persona sean estas Naturales
+      o Jurídicas, a la que se le va a realizar la exportación.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Persona Natural</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Persona Jurídica</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-030">CAT-030: Transporte</h3>
+    <p>
+      Contiene los códigos que identifica el tipo de transporte utilizado para
+      trasladar las mercancías.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >TERRESTRE</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >AÉREO</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >3</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >MARÍTIMO</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >4</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >FÉRREO</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >5</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >MULTIMODAL</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >6</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >CORREO</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-031">CAT-031: INCOTERMS</h3>
+    <p>
+      Contiene los códigos asignados por la Administración Tributaria que
+      describen los términos y condiciones pactadas sobre las responsabilidades
+      asumidas por cada una de las partes en la entrega de las mercancías.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >01</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >EXW-En fábrica</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >02</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >FCA-Libre transportista</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >03</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >CPT-Transporte pagado hasta</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >04</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >CIP-Transporte y seguro pagado hasta</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >05</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >DAP-Entrega en el lugar</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >06</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >DPU-Entregado en el lugar descargado</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >07</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >DDP-Entrega con impuestos pagados</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >08</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >FAS-Libre al costado del buque</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >09</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >FOB-Libre a bordo</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >10</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >CFR-Costo y flete</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >11</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >CIF- Costo seguro y flete</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="cat-032">CAT-032: Domicilio Fiscal</h3>
+    <p>
+      Contiene los códigos que identifica el territorio o lugar de residencia
+      del donante.
+    </p>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Código</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Descripción</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >1</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Domiciliado</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >2</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >No Domiciliado</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Abreviaturas utilizadas en el documento</h2>
+    <div class="overflow-x-auto my-6">
+      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-800">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Abreviatura</th
+            >
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+              >Significado</th
+            >
+          </tr>
+        </thead>
+        <tbody
+          class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800"
+        >
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >DTE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Documento Tributario Electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >CCFE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Comprobante de Crédito Fiscal Electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >NCE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Nota de Crédito Electrónica</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >NDE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Nota de Débito Electrónica</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >NRE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Nota de Remisión Electrónica</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >CRE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Comprobante de Retención Electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >CLE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Comprobante de Liquidación Electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >DCLE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Documento Contable de Liquidación Electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >FSEE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Factura Sujeto Excluido Electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >CDE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Comprobante de Donación Electrónico</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >FE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Factura Electrónica</td
+            >
+          </tr>
+          <tr>
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100"
+              >FEXE</td
+            >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400"
+              >Factura de Exportación Electrónica</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <h2>Referencia Completa</h2>
     <p>
-      Esta página presenta solo los catálogos más utilizados del Sistema de
-      Transmisión. Para la referencia completa, incluyendo todos los catálogos
-      (CAT-001 a CAT-032) y sus detalles, consulte el documento oficial
-      "Catálogos - Sistema de Transmisión" publicado por el Ministerio de
-      Hacienda de El Salvador. Ver <a
+      Esta página complementa la primera parte de los catálogos del Sistema de
+      Transmisión. Para la referencia completa, incluyendo todos los detalles de
+      cada catálogo, consulte el documento oficial "Catálogos - Sistema de
+      Transmisión" publicado por el Ministerio de Hacienda de El Salvador en
+      <a
         href="https://factura.gob.sv/informacion-tecnica-y-funcional/"
-        >Catálogos - Sistema de Transmisión.</a
-      >
+        target="_blank"
+        rel="noopener noreferrer"
+        >https://factura.gob.sv/informacion-tecnica-y-funcional/</a
+      >.
     </p>
   </div>
 </DocsLayout>

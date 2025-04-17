@@ -107,6 +107,19 @@
     @apply px-4 py-2 bg-white text-gray-700 font-medium rounded-md shadow-sm border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700;
   }
 
+  /* Diagramas Mermaid centrados */
+  .mermaid-wrapper {
+    @apply flex justify-center w-full;
+  }
+  
+  .mermaid {
+    @apply flex justify-center items-center w-full;
+  }
+  
+  .mermaid svg {
+    @apply block mx-auto max-w-full;
+  }
+
   /* Bloques de código con número de línea */
   pre.line-numbers {
     counter-reset: line;

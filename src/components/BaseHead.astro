@@ -1,5 +1,4 @@
 ---
-// Import utilities from astro:content
 const { title, description } = Astro.props;
 
 // Valores predeterminados para las metaetiquetas
@@ -7,7 +6,6 @@ const defaultTitle = "API de Facturación Electrónica";
 const defaultDescription =
   "Documentación oficial para la API de Facturación Electrónica de El Salvador";
 
-// baseURL termine con una barra /
 const baseURL = import.meta.env.BASE_URL
   ? import.meta.env.BASE_URL.endsWith("/")
     ? import.meta.env.BASE_URL

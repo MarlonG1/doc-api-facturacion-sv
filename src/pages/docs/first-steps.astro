@@ -78,7 +78,7 @@ flowchart LR
 
     <h2>Arquitectura recomendada</h2>
     <p>
-      Recomendamos la siguiente arquitectura para la integración con la API:
+      Se recomienda la siguiente arquitectura para la integración con la API:
     </p>
 
     <!-- Usando el componente MermaidDiagram con las clases aplicadas -->
@@ -86,51 +86,6 @@ flowchart LR
       class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 my-6"
     >
       <MermaidDiagram chart={architectureDiagram} />
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-      <div
-        class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700"
-      >
-        <h3
-          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
-        >
-          Integración Básica
-        </h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-          Para negocios pequeños o con volumen bajo de facturación.
-        </p>
-        <ul
-          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
-        >
-          <li>Emisión directa a través de la API</li>
-          <li>Almacenamiento local de respuestas</li>
-          <li>Proceso manual de contingencia</li>
-          <li>Consultas según demanda</li>
-        </ul>
-      </div>
-
-      <div
-        class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700"
-      >
-        <h3
-          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
-        >
-          Integración Completa
-        </h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-          Para empresas con alto volumen de facturación o múltiples sucursales.
-        </p>
-        <ul
-          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
-        >
-          <li>Integración profunda con ERP</li>
-          <li>Sistema de cola para emisiones</li>
-          <li>Base de datos de respaldo</li>
-          <li>Gestión automatizada de contingencias</li>
-          <li>Sistema de reportes y monitoreo</li>
-        </ul>
-      </div>
     </div>
 
     <h2>Secuencia de implementación</h2>
@@ -171,7 +126,7 @@ flowchart LR
         <strong>Desarrollo del gestor de contingencias</strong>
         <p class="text-gray-600 dark:text-gray-400 mt-1">
           Implementa la lógica para manejar situaciones de contingencia según
-           <a
+          <a
             href={`${baseURL}docs/contingency`}
             class="text-indigo-600 dark:text-indigo-400">guía de contingencia</a
           >.

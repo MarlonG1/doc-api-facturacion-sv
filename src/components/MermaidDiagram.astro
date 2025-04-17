@@ -2,19 +2,188 @@
 interface Props {
   chart: string;
   id?: string;
+  showZoomControls?: boolean;
 }
 
-const { chart, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } =
-  Astro.props;
+const {
+  chart,
+  id = `mermaid-${Math.random().toString(36).substring(2, 11)}`,
+  showZoomControls = false,
+} = Astro.props;
 ---
 
-<div
-  class="mermaid-wrapper my-8 overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
->
-  <div class="mermaid" id={id}>
-    {chart}
-  </div>
-</div>
+{
+  showZoomControls ? (
+    <div
+      class="mermaid-container relative my-8"
+      data-has-zoom={showZoomControls}
+    >
+      <div class="zoom-controls absolute top-2 right-2 flex gap-2 z-10 bg-white/80 dark:bg-gray-800/80 p-1 rounded-md shadow-sm">
+        <button
+          class="zoom-in p-1 text-sm rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
+          aria-label="Acercar"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <>
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              <line x1="11" y1="8" x2="11" y2="14" />
+              <line x1="8" y1="11" x2="14" y2="11" />
+            </>
+          </svg>
+        </button>
+        <button
+          class="zoom-out p-1 text-sm rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
+          aria-label="Alejar"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <>
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              <line x1="8" y1="11" x2="14" y2="11" />
+            </>
+          </svg>
+        </button>
+        <button
+          class="zoom-reset p-1 text-sm rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
+          aria-label="Resetear zoom"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <>
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+            </>
+          </svg>
+        </button>
+      </div>
+      <div class="mermaid-wrapper with-zoom overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
+        <div class="mermaid-content">
+          <div class="mermaid flex justify-center items-center" id={id}>
+            {chart}
+          </div>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div class="mermaid-wrapper-standard my-8 overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
+      <div class="mermaid" id={id}>
+        {chart}
+      </div>
+    </div>
+  )
+}
+
+<style>
+  /* Estilos para diagramas normales (sin zoom) */
+  .mermaid-wrapper-standard {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .mermaid-wrapper-standard .mermaid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Estilos para diagramas con zoom */
+  .mermaid-container {
+    width: 100%;
+    min-height: 100px;
+  }
+
+  .mermaid-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+  }
+
+  .mermaid-wrapper.with-zoom {
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+    max-height: none;
+  }
+
+  .mermaid-content {
+    transform-origin: center;
+    transition: transform 0.2s ease;
+  }
+
+  .mermaid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  :global(.mermaid svg) {
+    display: block !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+  }
+
+  .zoom-controls {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .zoom-controls.ready {
+    opacity: 0.7;
+    pointer-events: auto;
+  }
+
+  .zoom-controls.ready:hover {
+    opacity: 1;
+  }
+
+  .zoom-controls button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease;
+  }
+
+  .zoom-controls button:active {
+    transform: scale(0.95);
+  }
+</style>
 
 <script>
   import mermaid from "mermaid";
@@ -31,20 +200,16 @@ const { chart, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } =
     });
 
     try {
-      // Renderizar todos los diagramas en la página actual
       const elements = document.querySelectorAll(
         ".mermaid:not([data-processed='true'])"
       );
       elements.forEach((element) => {
-        // Solo inicializar si no ha sido procesado antes
         if (!element.hasAttribute("data-processed")) {
           const chart = element.textContent?.trim() || "";
-          // Limpiar el elemento
           element.innerHTML = "";
           element.setAttribute("data-processed", "true");
 
           try {
-            // Renderizar el diagrama
             mermaid
               .render(
                 `mermaid-svg-${Math.random().toString(36).substring(2, 10)}`,
@@ -52,6 +217,39 @@ const { chart, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } =
               )
               .then((result) => {
                 element.innerHTML = result.svg;
+
+                // Aplicar estilos de centrado al SVG generado
+                const svg = element.querySelector("svg");
+                if (svg) {
+                  svg.style.display = "block";
+                  svg.style.margin = "0 auto";
+                  svg.style.maxWidth = "100%";
+
+                  if (
+                    !svg.hasAttribute("width") ||
+                    !svg.hasAttribute("height")
+                  ) {
+                    svg.setAttribute("width", "100%");
+                    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+                  }
+                }
+
+                // Configurar los controles de zoom después de renderizar solo si tiene la opción activada
+                const container = element.closest(".mermaid-container");
+                if (
+                  container &&
+                  container.getAttribute("data-has-zoom") === "true"
+                ) {
+                  setupZoomControls(container as HTMLElement);
+
+                  setTimeout(() => {
+                    const zoomControls =
+                      container.querySelector(".zoom-controls");
+                    if (zoomControls) {
+                      zoomControls.classList.add("ready");
+                    }
+                  }, 100);
+                }
               })
               .catch((error) => {
                 console.error("Error rendering mermaid chart:", error);
@@ -68,12 +266,189 @@ const { chart, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } =
     }
   }
 
-  document.addEventListener("astro:page-load", initializeMermaid);
-  document.addEventListener("DOMContentLoaded", initializeMermaid);
+  function setupZoomControls(container: HTMLElement) {
+    if (!container) return;
+
+    const wrapper = container.querySelector(".mermaid-wrapper") as HTMLElement;
+    const content = container.querySelector(".mermaid-content") as HTMLElement;
+    const zoomIn = container.querySelector(".zoom-in") as HTMLElement;
+    const zoomOut = container.querySelector(".zoom-out") as HTMLElement;
+    const zoomReset = container.querySelector(".zoom-reset") as HTMLElement;
+
+    if (!content || !zoomIn || !zoomOut || !zoomReset || !wrapper) return;
+
+    // Escala inicial y paso de zoom
+    let scale = 1;
+    const zoomStep = 0.2;
+    const minZoom = 0.5;
+    const maxZoom = 3;
+
+    // Variables para el desplazamiento con arrastre
+    let isDragging = false;
+    let startX: number, startY: number, scrollLeft: number, scrollTop: number;
+
+    // Ajustar altura inicial basada en el contenido del diagrama
+    function adjustInitialHeight() {
+      const svg = content.querySelector("svg");
+      if (svg) {
+        const svgHeight = svg.getBoundingClientRect().height;
+        const containerHeight = svgHeight + 40;
+
+        wrapper.style.height = `${containerHeight}px`;
+        container.style.height = "auto";
+      }
+    }
+
+    [100, 300, 500, 1000].forEach((delay) => {
+      setTimeout(adjustInitialHeight, delay);
+    });
+
+    function applyZoom() {
+      content.style.transform = `scale(${scale})`;
+    }
+
+    zoomIn.addEventListener("click", () => {
+      if (scale < maxZoom) {
+        scale = Math.min(scale + zoomStep, maxZoom);
+        applyZoom();
+      }
+    });
+
+    zoomOut.addEventListener("click", () => {
+      if (scale > minZoom) {
+        scale = Math.max(scale - zoomStep, minZoom);
+        applyZoom();
+      }
+    });
+
+    zoomReset.addEventListener("click", () => {
+      scale = 1;
+      applyZoom();
+      // Restaurar la posición de desplazamiento
+      wrapper.scrollLeft = 0;
+      wrapper.scrollTop = 0;
+    });
+
+    // Soporte para rueda del ratón con tecla ctrl presionada
+    wrapper.addEventListener(
+      "wheel",
+      (e: WheelEvent) => {
+        if (e.ctrlKey) {
+          e.preventDefault();
+
+          // Calcular la posición relativa del cursor en el contenedor
+          const rect = wrapper.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          // Calcular la posición relativa del cursor como porcentaje
+          const relX = x / wrapper.clientWidth;
+          const relY = y / wrapper.clientHeight;
+
+          // Recordar la posición de desplazamiento actual
+          const oldScroll = {
+            left: wrapper.scrollLeft,
+            top: wrapper.scrollTop,
+          };
+
+          const oldScale = scale;
+
+          if (e.deltaY < 0 && scale < maxZoom) {
+            scale = Math.min(scale + zoomStep, maxZoom);
+          } else if (e.deltaY > 0 && scale > minZoom) {
+            scale = Math.max(scale - zoomStep, minZoom);
+          }
+
+          applyZoom();
+          const scaleFactor = scale / oldScale;
+
+          wrapper.scrollLeft =
+            oldScroll.left * scaleFactor +
+            (scaleFactor - 1) * wrapper.clientWidth * relX;
+          wrapper.scrollTop =
+            oldScroll.top * scaleFactor +
+            (scaleFactor - 1) * wrapper.clientHeight * relY;
+        }
+      },
+      { passive: false }
+    );
+
+    // Funcionalidad de desplazamiento con arrastre
+    wrapper.addEventListener("mousedown", (e: MouseEvent) => {
+      if (scale > 1) {
+        isDragging = true;
+        startX = e.pageX - wrapper.offsetLeft;
+        startY = e.pageY - wrapper.offsetTop;
+        scrollLeft = wrapper.scrollLeft;
+        scrollTop = wrapper.scrollTop;
+
+        wrapper.style.cursor = "grabbing";
+      }
+    });
+
+    wrapper.addEventListener("mouseleave", () => {
+      isDragging = false;
+      wrapper.style.cursor = "auto";
+    });
+
+    wrapper.addEventListener("mouseup", () => {
+      isDragging = false;
+      wrapper.style.cursor = "auto";
+    });
+
+    wrapper.addEventListener("mousemove", (e: MouseEvent) => {
+      if (!isDragging) return;
+      e.preventDefault();
+
+      const x = e.pageX - wrapper.offsetLeft;
+      const y = e.pageY - wrapper.offsetTop;
+      const walkX = (x - startX) * -1;
+      const walkY = (y - startY) * -1;
+
+      wrapper.scrollLeft = scrollLeft + walkX;
+      wrapper.scrollTop = scrollTop + walkY;
+    });
+
+    // Cambiar cursor al pasar sobre diagramas con zoom > 1
+    function updateCursor() {
+      if (scale > 1) {
+        wrapper.style.cursor = "grab";
+      } else {
+        wrapper.style.cursor = "auto";
+      }
+    }
+
+    zoomIn.addEventListener("click", updateCursor);
+    zoomOut.addEventListener("click", updateCursor);
+    zoomReset.addEventListener("click", updateCursor);
+    wrapper.addEventListener("wheel", updateCursor);
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    initializeMermaid();
+
+    // Configurar controles de zoom solo para los diagramas que tienen la opción activada
+    document
+      .querySelectorAll('.mermaid-container[data-has-zoom="true"]')
+      .forEach((container) => {
+        setupZoomControls(container as HTMLElement);
+      });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeMermaid();
+
+    // Configurar controles de zoom solo para los diagramas que tienen la opción activada
+    document
+      .querySelectorAll('.mermaid-container[data-has-zoom="true"]')
+      .forEach((container) => {
+        setupZoomControls(container as HTMLElement);
+      });
+  });
 
   // Escuchar cambios de tema
   document.addEventListener("themeChanged", (e) => {
-    const customEvent = e as CustomEvent;
+    const customEvent = e as CustomEvent<{ theme: string }>;
     const isDarkNow = customEvent.detail?.theme === "dark";
 
     // Reinicializar mermaid con el nuevo tema
@@ -86,7 +461,6 @@ const { chart, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } =
     const elements = document.querySelectorAll(".mermaid");
     elements.forEach((element) => {
       if (!element.hasAttribute("original-content")) {
-        // Guardar el contenido original si no lo ha hecho ya
         const id = element.getAttribute("id") || "";
         const originalContent = id.startsWith("mermaid-")
           ? element.textContent?.trim() || ""
@@ -94,7 +468,6 @@ const { chart, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } =
         element.setAttribute("original-content", originalContent);
       }
 
-      // Restaurar el contenido original
       const originalContent = element.getAttribute("original-content") || "";
 
       // Eliminar cualquier SVG generado anteriormente
@@ -102,6 +475,14 @@ const { chart, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } =
       element.removeAttribute("data-processed");
     });
 
-    setTimeout(initializeMermaid, 50);
+    setTimeout(() => {
+      initializeMermaid();
+
+      document
+        .querySelectorAll('.mermaid-container[data-has-zoom="true"]')
+        .forEach((container) => {
+          setupZoomControls(container as HTMLElement);
+        });
+    }, 50);
   });
 </script>

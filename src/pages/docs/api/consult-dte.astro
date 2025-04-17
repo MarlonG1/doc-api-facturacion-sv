@@ -41,50 +41,19 @@ const baseURL = "/doc-api-facturacion-sv/";
       endpoint="/api/v1/dte/{id}"
       description="Recupera un documento tributario electrónico por su código de generación"
       responseExample={`{
-  "success": true,
-  "data": {
-    "identificacion": {
-      "version": 1,
-      "ambiente": "00",
-      "tipoDte": "01",
-      "numeroControl": "DTE-01-C0020000-000000000000001",
-      "codigoGeneracion": "BC3F4F6F-C16D-4...",
-      "tipoModelo": 1,
-      "tipoOperacion": 1,
-      "fecEmi": "2025-04-12",
-      "horEmi": "19:35:06",
-      "tipoMoneda": "USD"
-    },
-    "emisor": {
-      "nit": "00000000000000",
-      "nrc": "0000000",
-      "nombre": "EMPRESA DE PRUEBAS SA DE CV",
-      "codActividad": "00000",
-      "descActividad": "Venta al por mayor de otros productos",
-      "nombreComercial": "EJEMPLO",
-      "tipoEstablecimiento": "01"
-    },
-    "receptor": {
-      "nombre": "CLIENTE DE PRUEBA",
-      "tipoDocumento": "13",
-      "numDocumento": "00000000-0"
-    },
-    "resumen": {
-      "totalGravada": 100.05,
-      "totalIva": 11.51,
-      "subTotal": 100.05,
-      "totalPagar": 99.05,
-      "totalLetras": "NOVENTA Y NUEVE 05/100",
-      "condicionOperacion": 1
-    },
-    "estado": "RECIBIDO",
-    "fechaEmision": "2025-04-12T19:35:06Z",
-    "documentoRelacionado": null,
-    "cuerpoDocumento": [
-      // Lista de ítems del documento
-    ]
-  }
-}`}
+    "success": true,
+    "data": {
+        "control_number": "DTE-03-00000000-000000000000000",
+        "generation_code": "A10A53BF-86E0-4...",
+        "reception_stamp": "2025F05DF0B4560...",
+        "transmission": "NORMAL",
+        "status": "INVALIDATED",
+        "created_at": "2025-04-16 02:56:33",
+        "updated_at": "2025-04-16 02:56:49",
+        "json_data": {
+          // El DTE emitido
+        }
+    }`}
     >
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
         Este endpoint permite recuperar la información completa de un documento
@@ -99,36 +68,40 @@ const baseURL = "/doc-api-facturacion-sv/";
       endpoint="/api/v1/dte"
       description="Lista todos los documentos tributarios con posibilidad de filtrado"
       responseExample={`{
-  "success": true,
-  "data": {
-    "documents": [
-      {
-        "codigoGeneracion": "AB12CD34-5678-90EF-GHIJ-KLMNOPQRSTUV",
-        "tipoDte": "01",
-        "numeroControl": "DTE-01-C0020000-000000000000123",
-        "fechaEmision": "2025-04-10T14:30:22Z",
-        "nombre": "CLIENTE DE PRUEBA",
-        "totalPagar": 125.50,
-        "estado": "RECIBIDO"
-      },
-      // Más documentos...
-    ],
-    "summary": {
-      "total": 104,
-      "received": 63,
-      "invalid": 8,
-      "rejected": 33,
-      "pending": 0,
-      "by_contingency": 57,
-      "by_normal": 47
-    },
-    "pagination": {
-      "total_pages": 21,
-      "page": 1,
-      "page_size": 5
-    }
-  }
-}`}
+    "success": true,
+    "data": {
+        "documents": [
+              {
+                "status": "INVALIDATED",
+                "transmission_type": "NORMAL",
+                "document": {
+                  // El DTE emitido
+                },
+              },
+              {
+                "status": "RECEIVED",
+                "transmission_type": "CONTINGENCY",
+                "document": {
+                  // El DTE emitido
+                },
+              },
+              // ...
+        ],
+        "summary": {
+            "total": 189,
+            "received": 133,
+            "invalid": 10,
+            "rejected": 46,
+            "pending": 0,
+            "by_contingency": 75,
+            "by_normal": 114
+        },
+        "pagination": {
+            "total_pages": 38,
+            "page": 1,
+            "page_size": 5
+        }
+    }`}
     >
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
         Este endpoint devuelve una lista paginada de documentos tributarios
