@@ -29,8 +29,7 @@ flowchart TB
     K --> G
     J -->|No Recuperable| D
     
-    D --> L[Almacenar localmente]
-    L --> M[Marcar como pendiente]
+    D --> M[Marcar como pendiente]
     M --> N[Entregar DTE sin sello]
     
     I --> O[Almacenar documento]
@@ -78,7 +77,7 @@ const contingencyFlowChartBefore = `
 
     <h2>Diagrama de Flujo del Proceso</h2>
 
-    <MermaidDiagram chart={contingencyFlowChart} />
+    <MermaidDiagram chart={contingencyFlowChart} showZoomControls={true} />
 
     <MermaidDiagram chart={contingencyFlowChartBefore} />
 

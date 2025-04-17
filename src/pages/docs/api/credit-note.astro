@@ -1,0 +1,874 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ApiEndpoint from "../../../components/ApiEndpoint.astro";
+import Card from "../../../components/Card.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import FieldsTable from "../../../components/FieldsTable.astro";
+
+const title = "Nota de Crédito Electrónica";
+const description =
+    "Documentación para la emisión, consulta e invalidación de Notas de Crédito Electrónicas";
+
+// baseURL correcto para GitHub Pages
+const baseURL = "/doc-api-facturacion-sv/";
+---
+
+<DocsLayout
+        title={title}
+        description={description}
+        currentPage="/docs/api/credit-note"
+>
+    <div class="prose prose-indigo dark:prose-invert max-w-none">
+        <h1>{title}</h1>
+        <p class="lead text-xl">
+            Esta sección describe los endpoints necesarios para crear notas de crédito
+            electrónicas en el sistema de facturación electrónica de El Salvador.
+        </p>
+
+        <div class="not-prose my-8">
+            <Card
+                    title="Autenticación requerida"
+                    type="warning"
+                    description="Todos los endpoints requieren autenticación mediante token JWT. Consulta la sección de Autenticación para más detalles."
+                    href={`${baseURL}docs/api/authentication`}
+            />
+        </div>
+
+        <div class="not-prose my-8">
+            <Card
+                    title="Catálogos de referencia"
+                    type="info"
+                    description="Para la correcta emisión de notas de crédito, debes utilizar los códigos de los catálogos oficiales. Consulta la sección de Catálogos para todos los valores permitidos."
+                    href={`${baseURL}docs/catalog`}
+            />
+        </div>
+
+        <h2>Crear Nota de Crédito Electrónica</h2>
+
+        <ApiEndpoint
+                method="POST"
+                endpoint="/api/v1/creditnotes"
+                description="Crea y emite una nota de crédito electrónica"
+                requestExample={`{
+    "items": [
+        {
+            "type": 1,
+            "description": "Venta gravada",
+            "quantity": 1,
+            "unit_measure": 59,
+            "unit_price": 1000.00,
+            "taxed_sale": 1000.00,
+            "exempt_sale": 0,
+            "non_subject_sale": 0,
+            "taxes": [
+                "20"
+            ],
+            "related_doc" : "DE4BD411-DEBF-4EB8-B..."
+        }
+    ],
+    "receiver": {
+        "nrc": "0000",
+        "nit": "00000000000000",
+        "name": "CLIENTE DE PRUEBA",
+        "commercial_name": "EJEMPLO S.A de S.V",
+        "activity_code": "47190",
+        "activity_description": "ACTIVIDADES JURÍDICAS Y CONTABLES",
+        "address": {
+            "department": "06",
+            "municipality": "22",
+            "complement": "Dirección de Prueba 1, N° 1234"
+        },
+        "phone": "21212828",
+        "email": "cliente@gmail.com"
+    },
+    "summary": {
+        "operation_condition": 1,
+        "total_taxed": 1000.00,
+        "iva_retention": 10,
+        "sub_total_sales": 1000.00,
+        "sub_total": 1000.00,
+        "total_operation": 1120.00,
+        "taxes": [
+            {
+                "code": "20",
+                "description": "IVA 13%",
+                "value": 130.00
+            }
+        ]
+    },
+    "extension": {
+        "delivery_name": "Juan Pérez",
+        "delivery_document": "06141809931020",
+        "receiver_name": "María López",
+        "receiver_document": "06142509882011",
+        "observation": "Entrega en oficina central"
+    },
+    "related_docs": [
+        {
+            "document_type": "03",
+            "generation_type": 2,
+            "document_number": "DE4BD411-DEBF-4..."
+        }
+    ],
+
+    // Nota, estos campos si NO seran ocupados, no es necesario enviarlos, los muestra acá unicamente como referencia
+    "appendixes": null,
+    "third_party_sale": null,
+    "other_docs": null
+
+}
+                `}
+                responseExample={`{
+    "success": true,
+    "reception_stamp": "202534D1BECF3321453...",
+    "qr_link": "https://admin.factura.gob.sv/consultaPublica?ambiente=00&codGen=5367521F-DD80-4B6B-9...&fechaEmi=FECHA-DE-EMISION",
+    "data": {
+        "identificacion": {
+            "version": 3,
+            "ambiente": "00",
+            "tipoDte": "05",
+            "numeroControl": "DTE-05-C0020000-000000000000001",
+            "codigoGeneracion": "5367521F-DD80-4B6B-9...",
+            "tipoModelo": 1,
+            "tipoOperacion": 1,
+            "tipoContingencia": null,
+            "motivoContin": null,
+            "fecEmi": "2025-04-16",
+            "horEmi": "17:54:19",
+            "tipoMoneda": "USD"
+        },
+        "emisor": {
+            "nit": "00000000000000",
+            "nrc": "0000000",
+            "nombre": "EMPRESA DE PRUEBAS SA DE CV 2",
+            "codActividad": "00000",
+            "descActividad": "Venta al por mayor de otros productos",
+            "tipoEstablecimiento": "01",
+            "direccion": {
+                "departamento": "06",
+                "municipio": "20",
+                "complemento": "BOULEVARD SANTA ELENA SUR, SANTA TECLA"
+            },
+            "telefono": "21212828",
+            "correo": "facturacion@empresa.com.sv",
+            "nombreComercial": "EJEMPLO"
+        },
+        "receptor": {
+            "nombre": "CLIENTE DE PRUEBA",
+            "nrc": "0000",
+            "nit": "00000000000000",
+            "codActividad": "00000",
+            "descActividad": "ACTIVIDADES JURÍDICAS Y CONTABLES",
+            "direccion": {
+                "departamento": "06",
+                "municipio": "22",
+                "complemento": "Dirección de Prueba 1, N° 1234"
+            },
+            "telefono": "21212828",
+            "correo": "cliente@gmail.com",
+            "nombreComercial": "EJEMPLO S.A de S.V"
+        },
+        "cuerpoDocumento": [
+            {
+                "numItem": 1,
+                "tipoItem": 1,
+                "numeroDocumento": "DE4BD411-DEBF-4EB8-B...",
+                "codigo": null,
+                "codTributo": null,
+                "descripcion": "Venta gravada",
+                "cantidad": 1,
+                "uniMedida": 59,
+                "precioUni": 1000,
+                "montoDescu": 0,
+                "ventaNoSuj": 0,
+                "ventaExenta": 0,
+                "ventaGravada": 1000,
+                "tributos": [
+                    "20"
+                ]
+            }
+        ],
+        "resumen": {
+            "totalNoSuj": 0,
+            "totalExenta": 0,
+            "totalGravada": 1000,
+            "subTotalVentas": 1000,
+            "descuNoSuj": 0,
+            "descuExenta": 0,
+            "descuGravada": 0,
+            "totalDescu": 0,
+            "tributos": [
+                {
+                    "codigo": "20",
+                    "descripcion": "IVA 13%",
+                    "valor": 130
+                }
+            ],
+            "subTotal": 1000,
+            "ivaRete1": 10,
+            "ivaPerci1": 0,
+            "reteRenta": 0,
+            "montoTotalOperacion": 1120,
+            "totalLetras": "UN MIL CIENTO VEINTE 00/100",
+            "condicionOperacion": 1
+        },
+        "documentoRelacionado": [
+            {
+                "tipoDocumento": "03",
+                "tipoGeneracion": 2,
+                "numeroDocumento": "DE4BD411-DEBF-4EB8-B...",
+                "fechaEmision": "2025-04-16"
+            }
+        ],
+        "ventaTercero": null,
+        "extension": {
+            "nombEntrega": "Juan Pérez",
+            "docuEntrega": "06141809931020",
+            "nombRecibe": "María López",
+            "docuRecibe": "06142509882011",
+            "observaciones": "Entrega en oficina central"
+        },
+        "apendice": [
+            {
+                "campo": "Datos del documento",
+                "etiqueta": "Sello de recepción",
+                "valor": "202534D1BECF33214..."
+            }
+        ]
+    }
+}
+                `}
+        >
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                Este endpoint permite crear y emitir una nota de crédito electrónica que cumple
+                con los requisitos del Ministerio de Hacienda. Las notas de crédito siempre
+                deben hacer referencia a documentos fiscales existentes.
+            </p>
+        </ApiEndpoint>
+
+        <FieldsTable
+                title="Campos principales"
+                description="Los campos necesarios para crear una nota de crédito electrónica"
+                fields={[
+                    {
+                        name: "items",
+                        type: "array",
+                        description: "Lista de productos o servicios que componen la nota de crédito",
+                        required: true,
+                    },
+                    {
+                        name: "items[].type",
+                        type: "integer",
+                        description:
+                            "Tipo de ítem (1: Producto, 2: Servicio, 3: Ambos, 4: Impuesto)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].code",
+                        type: "string",
+                        description: "Código del producto o servicio (1-25 caracteres)",
+                        required: false,
+                    },
+                    {
+                        name: "items[].description",
+                        type: "string",
+                        description: "Descripción del ítem (1-1000 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].quantity",
+                        type: "number",
+                        description: "Cantidad del ítem (debe ser mayor que 0 y <= 99999999999.99)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].unit_measure",
+                        type: "integer",
+                        description: "Unidad de medida (1-99, debe ser 99 para tipo 4)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].unit_price",
+                        type: "number",
+                        description: "Precio unitario (debe ser mayor o igual a 0, mayor que 0 si hay venta gravada)",
+                        required: true,
+                    },
+                    {
+                        name: "items[].discount",
+                        type: "number",
+                        description: "Monto de descuento para el ítem (0-100)",
+                        required: true,
+                        defaultValue: "0",
+                    },
+                    {
+                        name: "items[].related_doc",
+                        type: "string",
+                        description: "Número del documento relacionado que se está rectificando",
+                        required: true,
+                    },
+                    {
+                        name: "items[].taxed_sale",
+                        type: "number",
+                        description: "Venta gravada (debe ser mayor o igual a 0, no puede mezclarse con otros tipos)",
+                        required: false,
+                        defaultValue: "0",
+                    },
+                    {
+                        name: "items[].exempt_sale",
+                        type: "number",
+                        description: "Venta exenta (debe ser mayor o igual a 0, no puede mezclarse con otros tipos)",
+                        required: false,
+                        defaultValue: "0",
+                    },
+                    {
+                        name: "items[].non_subject_sale",
+                        type: "number",
+                        description: "Venta no sujeta (debe ser mayor o igual a 0, no puede mezclarse con otros tipos)",
+                        required: false,
+                        defaultValue: "0",
+                    },
+                    {
+                        name: "items[].tax_code",
+                        type: "string",
+                        description: "Código de impuesto",
+                        required: false,
+                    },
+                    {
+                        name: "items[].taxes",
+                        type: "array",
+                        description: "Lista de impuestos aplicables al ítem (obligatorio con venta gravada)",
+                        required: false,
+                    },
+                    {
+                        name: "receiver",
+                        type: "object",
+                        description: "Información del receptor o cliente (debe coincidir con el documento original)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.name",
+                        type: "string",
+                        description: "Nombre del receptor",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.address",
+                        type: "object",
+                        description: "Dirección del receptor",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.address.department",
+                        type: "string",
+                        description: "Código de departamento del receptor",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.address.municipality",
+                        type: "string",
+                        description: "Código de municipio del receptor",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.address.complement",
+                        type: "string",
+                        description: "Complemento de la dirección del receptor",
+                        required: true,
+                    },
+                    {
+                        name: "receiver.nit",
+                        type: "string",
+                        description: "NIT del receptor (obligatorio si el documento relacionado es un CCF)",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.nrc",
+                        type: "string",
+                        description: "NRC del receptor (obligatorio si el documento relacionado es un CCF)",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.activity_code",
+                        type: "string",
+                        description: "Código de actividad económica (obligatorio si el documento relacionado es un CCF)",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.activity_description",
+                        type: "string",
+                        description: "Descripción de actividad económica (obligatorio si el documento relacionado es un CCF)",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.commercial_name",
+                        type: "string",
+                        description: "Nombre comercial (obligatorio si el documento relacionado es un CCF)",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.email",
+                        type: "string",
+                        description: "Correo electrónico del receptor",
+                        required: false,
+                    },
+                    {
+                        name: "receiver.phone",
+                        type: "string",
+                        description: "Teléfono del receptor (8-30 caracteres)",
+                        required: false,
+                    },
+                    {
+                        name: "related_docs",
+                        type: "object",
+                        description: "Documentos relacionados que se están rectificando",
+                        required: true,
+                    },
+                    {
+                        name: "related_docs.items",
+                        type: "array",
+                        description: "Lista de documentos relacionados",
+                        required: true,
+                    },
+                    {
+                        name: "related_docs.items[].document_type",
+                        type: "string",
+                        description: "Tipo de documento (03: CCF, 14: Factura Sujeto Excluido)",
+                        required: true,
+                    },
+                    {
+                        name: "related_docs.items[].generation_type",
+                        type: "integer",
+                        description: "Tipo de generación (1: Normal, 2: Contingencia)",
+                        required: true,
+                    },
+                    {
+                        name: "related_docs.items[].document_number",
+                        type: "string",
+                        description: "Número del documento relacionado",
+                        required: true,
+                    },
+                    {
+                        name: "related_docs.items[].emission_date",
+                        type: "string",
+                        description: "Fecha de emisión del documento relacionado (formato YYYY-MM-DD)",
+                        required: true,
+                    },
+                    {
+                        name: "summary",
+                        type: "object",
+                        description: "Resumen de totales de la nota de crédito",
+                        required: true,
+                    },
+                    {
+                        name: "summary.total_taxed",
+                        type: "number",
+                        description: "Total de ventas gravadas",
+                        required: true,
+                    },
+                    {
+                        name: "summary.total_exempt",
+                        type: "number",
+                        description: "Total de ventas exentas",
+                        required: true,
+                    },
+                    {
+                        name: "summary.total_non_subject",
+                        type: "number",
+                        description: "Total de ventas no sujetas",
+                        required: true,
+                    },
+                    {
+                        name: "summary.sub_total_sales",
+                        type: "number",
+                        description: "Subtotal de ventas (suma de total_taxed + total_exempt + total_non_subject)",
+                        required: true,
+                    },
+                    {
+                        name: "summary.taxed_discount",
+                        type: "number",
+                        description: "Descuento sobre ventas gravadas",
+                        required: true,
+                    },
+                    {
+                        name: "summary.exempt_discount",
+                        type: "number",
+                        description: "Descuento sobre ventas exentas",
+                        required: true,
+                    },
+                    {
+                        name: "summary.non_subject_discount",
+                        type: "number",
+                        description: "Descuento sobre ventas no sujetas",
+                        required: true,
+                    },
+                    {
+                        name: "summary.total_discount",
+                        type: "number",
+                        description: "Total de descuentos",
+                        required: true,
+                    },
+                    {
+                        name: "summary.sub_total",
+                        type: "number",
+                        description: "Subtotal (sub_total_sales - descuentos)",
+                        required: true,
+                    },
+                    {
+                        name: "summary.operation_condition",
+                        type: "integer",
+                        description: "Condición de operación (1: Contado, 2: Crédito, 3: Otro)",
+                        required: true,
+                    },
+                    {
+                        name: "summary.taxes",
+                        type: "array",
+                        description: "Impuestos aplicados a la nota de crédito",
+                        required: false,
+                    },
+                    {
+                        name: "summary.iva_retention",
+                        type: "number",
+                        description: "Retención de IVA",
+                        required: true,
+                        defaultValue: "0",
+                    },
+                    {
+                        name: "summary.income_retention",
+                        type: "number",
+                        description: "Retención de renta",
+                        required: true,
+                        defaultValue: "0",
+                    },
+                    {
+                        name: "summary.iva_perception",
+                        type: "number",
+                        description: "Percepción de IVA (si > 0, debe ser 1% del total_taxed)",
+                        required: true,
+                        defaultValue: "0",
+                    },
+                    {
+                        name: "summary.total_operation",
+                        type: "number",
+                        description: "Total de la operación (considerando impuestos, retenciones y percepciones)",
+                        required: true,
+                    },
+                ]}
+        />
+
+        <h3>Validaciones específicas para Nota de Crédito</h3>
+        <ul>
+            <li>
+                <strong>Documentos Relacionados Obligatorios</strong>: A diferencia de otros documentos fiscales, las notas de crédito <strong>siempre deben tener</strong> al menos un documento relacionado.
+            </li>
+            <li>
+                <strong>Referencia en Ítems</strong>: Todos los ítems deben tener un <code>related_doc</code> que referencie a un <code>document_number</code> en la sección <code>related_docs</code>.
+            </li>
+            <li>
+                Los ítems solo pueden tener un tipo de venta (gravada, exenta o no sujeta)
+            </li>
+            <li>
+                Si hay <code>taxed_sale > 0</code> (venta gravada):
+                <ul>
+                    <li><code>unit_price</code> debe ser mayor que 0</li>
+                    <li>Debe existir al menos un impuesto (IVA) en el array <code>taxes</code></li>
+                </ul>
+            </li>
+            <li>
+                Para ítems tipo 4 (Impuesto), <code>unit_measure</code> debe ser 99 y solo se permite el código de impuesto IVA (20)
+            </li>
+            <li>
+                El <code>receiver</code> debe coincidir con el receptor del documento original que se está rectificando
+            </li>
+            <li>
+                Si el documento relacionado es un Comprobante de Crédito Fiscal (CCF), los campos <code>nit</code>, <code>nrc</code>, <code>activity_code</code>, <code>activity_description</code> y <code>commercial_name</code> del receptor son obligatorios
+            </li>
+            <li>
+                El cálculo de impuestos debe considerar los descuentos aplicados
+            </li>
+        </ul>
+
+        <div class="not-prose my-8">
+            <Card
+                    title="Nota"
+                    type="info"
+                    description="Para consultar notas de crédito ya emitidas, utiliza los endpoints de Consulta de DTE en la sección correspondiente."
+                    href={`${baseURL}docs/api/consult-dte`}
+            />
+        </div>
+
+        <h1>Campos Opcionales</h1>
+        <p class="lead text-xl">
+            Estos campos complementan la información principal de la factura electrónica, permitiendo casos de uso más específicos.
+        </p>
+
+
+        <h2>1. Extension (Extensión)</h2>
+        <p>
+            La extensión contiene información sobre entrega y recepción de bienes o servicios.
+        </p>
+
+        <CodeBlock
+                code={`{
+  "extension": {
+    "delivery_name": "string",
+    "delivery_document": "string",
+    "receiver_name": "string",
+    "receiver_document": "string",
+    "observation": "string"
+  }
+}`}
+                lang="json"
+                title="Ejemplo de extensión requerida"
+        />
+
+        <FieldsTable
+                title="Campos del objeto extension"
+                description="La extensión es obligatoria cuando el monto total es mayor o igual a $1,095.00"
+                fields={[
+                    {
+                        name: "delivery_name",
+                        type: "string",
+                        description: "Nombre de quien entrega (1-100 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "delivery_document",
+                        type: "string",
+                        description: "Documento de quien entrega (1-25 caracteres, DUI o NIT por ejemplo)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver_name",
+                        type: "string",
+                        description: "Nombre de quien recibe (1-100 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "receiver_document",
+                        type: "string",
+                        description: "Documento de quien recibe (1-25 caracteres, DUI o NIT por ejemplo)",
+                        required: true,
+                    },
+                    {
+                        name: "observation",
+                        type: "string",
+                        description: "Observaciones adicionales (máx. 3000 caracteres)",
+                        required: false,
+                    },
+                ]}
+        />
+
+        <div class="not-prose my-8">
+            <Card
+                    title="Nota"
+                    type="info"
+                    description=" A diferencia de factura y CCF, la extensión de Nota de Crédito no posee el campo vehicule_plate"
+            />
+        </div>
+
+        <h2>2. Appendixes (Apéndices)</h2>
+        <p>
+            Los apéndices son campos adicionales que proporcionan información complementaria al documento principal.
+        </p>
+
+        <CodeBlock
+                code={`"appendixes": [
+    {
+      "field": "string",
+      "label": "string",
+      "value": "string"
+    },
+]`}
+                lang="json"
+                title="Estructura de Apéndices"
+        />
+
+        <FieldsTable
+                title="Campos de Apéndices"
+                description="Validaciones para el objeto appendixes"
+                fields={[
+                    {
+                        name: "field",
+                        type: "string",
+                        description: "Nombre del campo adicional (2-25 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "label",
+                        type: "string",
+                        description: "Etiqueta o título del campo (3-50 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "value",
+                        type: "string",
+                        description: "Valor del campo (1-150 caracteres)",
+                        required: true,
+                    },
+                ]}
+        />
+
+        <p>
+            <strong>Consideraciones importantes:</strong>
+        </p>
+        <ul>
+            <li>Los apéndices son <strong>opcionales</strong> en la factura electrónica.</li>
+            <li>Si se incluyen, todos los campos son obligatorios.</li>
+            <li>El sistema puede agregar automáticamente un apéndice conteniendo el "sello de recepción".</li>
+        </ul>
+
+        <h2>3. Other Documents (Otros Documentos)</h2>
+        <p>
+            Los otros documentos incluyen documentos asociados a la operación, como documentos de transporte o médicos.
+        </p>
+
+        <CodeBlock
+                code={`"other_docs": [
+        {
+            "document_code": 0,
+            "description": "string",
+            "detail": "string",
+            "doctor": {
+                "name": "string",
+                "nit": "string",
+                "identification": "string",
+                "service_type": 0
+            }
+        }
+    ]`}
+                lang="json"
+                title="Estructura de Otros Documentos"
+        />
+
+        <FieldsTable
+                title="Campos de Otros Documentos"
+                description="Validaciones para el objeto other_docs"
+                fields={[
+                    {
+                        name: "document_code",
+                        type: "integer",
+                        description: "Código del documento (1-4)",
+                        required: true,
+                    },
+                    {
+                        name: "description",
+                        type: "string",
+                        description: "Descripción del documento. Obligatorio si document_code ≠ 3",
+                        required: false,
+                    },
+                    {
+                        name: "detail",
+                        type: "string",
+                        description: "Detalle del documento. Obligatorio si document_code ≠ 3",
+                        required: false,
+                    },
+                    {
+                        name: "doctor",
+                        type: "object",
+                        description: "Información del médico. Obligatorio si document_code = 3",
+                        required: false,
+                    },
+                ]}
+        />
+
+        <FieldsTable
+                title="Campos del objeto doctor"
+                description="Validaciones para el objeto doctor dentro de other_docs"
+                fields={[
+                    {
+                        name: "name",
+                        type: "string",
+                        description: "Nombre del médico (1-100 caracteres)",
+                        required: true,
+                    },
+                    {
+                        name: "service_type",
+                        type: "integer",
+                        description: "Tipo de servicio médico (1-6)",
+                        required: true,
+                    },
+                    {
+                        name: "nit",
+                        type: "string",
+                        description: "NIT del médico. Requerido si identification no se proporciona",
+                        required: false,
+                    },
+                    {
+                        name: "identification",
+                        type: "string",
+                        description: "Identificación del médico. Requerido si nit no se proporciona",
+                        required: false,
+                    },
+                ]}
+        />
+
+        <p>
+            <strong>Códigos de Documentos:</strong>
+        </p>
+        <ol>
+            <li>Documento de Emisor</li>
+            <li>Documento de Receptor</li>
+            <li>Documento Médico</li>
+            <li>Documento de Transporte</li>
+        </ol>
+
+        <p>
+            <strong>Consideraciones importantes:</strong>
+        </p>
+        <ul>
+            <li>La sección es <strong>opcional</strong>, pero si se incluye, debe contener entre 1 y 10 documentos.</li>
+            <li>Validaciones específicas:
+                <ul>
+                    <li><code>description</code>: 1-100 caracteres</li>
+                    <li><code>detail</code>: 1-300 caracteres</li>
+                </ul>
+            </li>
+            <li>Cuando <code>document_code = 3</code> (Documento Médico), el objeto <code>doctor</code> es obligatorio y los campos <code>description</code> y <code>detail</code> deben estar ausentes.</li>
+            <li>Para los otros códigos, <code>description</code> y <code>detail</code> son obligatorios y <code>doctor</code> debe estar ausente.</li>
+            <li>En <code>doctor</code>, debe proporcionarse o bien <code>nit</code> o bien <code>identification</code>, pero no ambos.</li>
+        </ul>
+
+        <h2>4. Third Party Sale (Venta a Terceros)</h2>
+        <p>
+            Representa ventas realizadas por cuenta de un tercero.
+        </p>
+
+        <CodeBlock
+                code={`"third_party_sale": {
+  "name": "string",
+  "nit": "string"
+}`}
+                lang="json"
+                title="Estructura de Venta a Terceros"
+        />
+
+        <FieldsTable
+                title="Campos de Venta a Terceros"
+                description="Validaciones para el objeto third_party_sale"
+                fields={[
+                    {
+                        name: "nit",
+                        type: "string",
+                        description: "NIT del tercero (formato NIT válido)",
+                        required: true,
+                    },
+                    {
+                        name: "name",
+                        type: "string",
+                        description: "Nombre del tercero",
+                        required: true,
+                    },
+                ]}
+        />
+
+        <p>
+            <strong>Consideraciones importantes:</strong>
+        </p>
+        <ul>
+            <li>La sección es <strong>opcional</strong>.</li>
+            <li>Si se incluye, todos sus campos son obligatorios.</li>
+            <li>Cuando existe venta a terceros, todos los ítems deben tener su campo <code>related_doc</code> con referencia a un documento relacionado.</li>
+            <li>No se pueden mezclar ventas propias con ventas a terceros en el mismo documento.</li>
+        </ul>
+    </div>
+</DocsLayout>

@@ -18,6 +18,10 @@ const sidebarItems = [
         text: "Primeros pasos",
         href: `${baseURL}docs/first-steps`,
       },
+        {
+            text: "Endpoints",
+            href: `${baseURL}docs/api/endpoints`
+        },
     ],
   },
   {
@@ -31,13 +35,11 @@ const sidebarItems = [
   {
     title: "Referencia API",
     links: [
-      { text: "Endpoints", href: `${baseURL}docs/api/endpoints` },
       { text: "Autenticación", href: `${baseURL}docs/api/authentication` },
       { text: "Factura Electrónica", href: `${baseURL}docs/api/invoices` },
-      {
-        text: "Comprobante de Crédito Fiscal",
-        href: `${baseURL}docs/api/credit-notes`,
-      },
+      { text: "Nota de Crédito", href: `${baseURL}docs/api/credit-note` },
+      { text: "Comprobante de Crédito Fiscal", href: `${baseURL}docs/api/ccf`,},
+      { text: "Comprobante de Retención", href: `${baseURL}docs/api/retention` },
       { text: "Invalidación", href: `${baseURL}docs/api/invalidation` },
       { text: "Consulta de DTE", href: `${baseURL}docs/api/consult-dte` },
       { text: "Monitoreo", href: `${baseURL}docs/api/monitoring` },

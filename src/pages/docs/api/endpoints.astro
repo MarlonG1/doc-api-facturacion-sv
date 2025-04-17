@@ -83,44 +83,21 @@ const baseURL = "/doc-api-facturacion-sv/";
         <h3
           class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
         >
-          Facturas Electrónicas
+          Emisión de DTE
         </h3>
         <p class="text-gray-600 dark:text-gray-400 mb-4">
-          Endpoints para gestionar facturas electrónicas.
+          Endpoints para gestionar documentos tributarios electrónicos (DTE).
         </p>
         <ul
           class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
         >
           <li><code>POST /api/v1/dte/invoices</code> - Crear factura</li>
+          <li><code>POST /api/v1/dte/ccf</code> - Crear Comprobante de Crédito Fiscal</li>
+          <li><code>POST /api/v1/dte/creditnote</code> - Crear Nota de Crédito</li>
+          <li><code>POST /api/v1/dte/retention</code> - Crear Comprobante de Retención</li>
         </ul>
         <a
           href={`${baseURL}docs/api/invoices`}
-          class="text-indigo-600 dark:text-indigo-400 text-sm font-medium mt-4 inline-block"
-        >
-          Ver documentación →
-        </a>
-      </div>
-
-      <div
-        class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
-      >
-        <h3
-          class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
-        >
-          Comprobantes de Crédito Fiscal
-        </h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-4">
-          Endpoints para gestionar CCF.
-        </p>
-        <ul
-          class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
-        >
-          <li>
-            <code>POST /api/v1/dte/ccf</code> - Crear comprobante de crédito fiscal
-          </li>
-        </ul>
-        <a
-          href={`${baseURL}docs/api/credit-notes`}
           class="text-indigo-600 dark:text-indigo-400 text-sm font-medium mt-4 inline-block"
         >
           Ver documentación →
@@ -206,6 +183,24 @@ const baseURL = "/doc-api-facturacion-sv/";
           Ver documentación →
         </a>
       </div>
+
+      <div
+          class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+      >
+        <h3
+            class="text-lg font-medium text-indigo-600 dark:text-indigo-400 mb-2"
+        >
+          Eventos
+        </h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Endpoints para monitorear los eventos del sistema.
+        </p>
+        <ul
+            class="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400 space-y-1"
+        >
+          <li>Aún trabajando en ello...</li>
+        </ul>
+      </div>
     </div>
 
     <h2>Formatos de Respuesta</h2>
@@ -238,23 +233,6 @@ const baseURL = "/doc-api-facturacion-sv/";
         <code>500 Internal Server Error</code> - Error interno del servidor
       </li>
     </ul>
-
-    <h2>Sistema de Contingencia</h2>
-    <p>
-      La API incluye un mecanismo de contingencia que se activa automáticamente
-      cuando:
-    </p>
-    <ul>
-      <li>No hay respuesta del servidor de Hacienda</li>
-      <li>Se reciben errores 5XX del servidor</li>
-      <li>El tiempo de respuesta excede 30 segundos</li>
-      <li>El servicio de firmador no está funcionando</li>
-    </ul>
-    <p>
-      Una vez la API detecte que la contingencia termino, comenzara un proceso
-      en el cual se enviaran lotes de documentos a hacienda emitidos en el dia
-      de la contingencia.
-    </p>
 
     <div class="not-prose my-8">
       <Card

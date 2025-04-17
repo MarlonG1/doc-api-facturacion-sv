@@ -117,11 +117,9 @@ const baseURL = "/doc-api-facturacion-sv/";
 
         const newTheme = currentTheme === "dark" ? "light" : "dark";
 
-        // Usar la función global si está disponible
         if (typeof win.setTheme === "function") {
           win.setTheme(newTheme);
         } else {
-          // Implementación de respaldo
           if (newTheme === "dark") {
             document.documentElement.classList.add("dark");
             document.documentElement.classList.remove("light");
@@ -183,7 +181,6 @@ const baseURL = "/doc-api-facturacion-sv/";
         if (typeof win.setTheme === "function") {
           win.setTheme(newTheme);
         } else {
-          // Implementación de respaldo
           if (newTheme === "dark") {
             document.documentElement.classList.add("dark");
             document.documentElement.classList.remove("light");
@@ -196,7 +193,6 @@ const baseURL = "/doc-api-facturacion-sv/";
             localStorage.setItem("theme", newTheme);
           }
 
-          // Disparar evento manual
           document.dispatchEvent(
             new CustomEvent("themeChanged", { detail: { theme: newTheme } })
           );

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -27,6 +28,7 @@ const baseURL = "/doc-api-facturacion-sv";
     <link rel="icon" type="image/svg+xml" href={`${baseURL}/favicon.svg`} />
     <meta name="generator" content={Astro.generator} />
     <link rel="stylesheet" href="/doc-api-facturacion-sv/styles/global.css" />
+    <ViewTransitions />
     <title>{title}</title>
     <!-- Inicialización del tema -->
     <script is:inline>

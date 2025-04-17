@@ -177,8 +177,50 @@ const baseURL = "/doc-api-facturacion-sv/";
   }
 }`}
       responseExample={`{
-  "success": true,
-  "data": "DTE invalidated successfully"
+    "success": true,
+    "data": {
+        "identificacion": {
+            "version": 2,
+            "ambiente": "00",
+            "codigoGeneracion": "606C41CB-8711-458D-B...",
+            "fecAnula": "2025-04-16",
+            "horAnula": "15:08:32"
+        },
+        "emisor": {
+            "nit": "00000000000000",
+            "nombre": "EMPRESA DE PRUEBAS SA DE CV 2",
+            "tipoEstablecimiento": "01",
+            "telefono": "21212828",
+            "correo": "facturacion@empresa.com.sv",
+            "codEstable": "C002",
+            "codPuntoVenta": null,
+            "nomEstablecimiento": "EJEMPLO"
+        },
+        "documento": {
+            "tipoDte": "01",
+            "codigoGeneracion": "UUID-del-documento-original",
+            "selloRecibido": "2025F7712422E77541FE8...",
+            "numeroControl": "DTE-01-C0020000-000000000000001",
+            "fecEmi": "2025-04-16",
+            "montoIva": 11.51,
+            "codigoGeneracionR": null,
+            "nombre": "CLIENTE DE PRUEBA",
+            "tipoDocumento": "13",
+            "numDocumento": "00000000-0",
+            "telefono": "21212121",
+            "correo": "cliente@gmail.com"
+        },
+        "motivo": {
+            "tipoAnulacion": 2,
+            "motivoAnulacion": null,
+            "nombreResponsable": "Juan Perez",
+            "tipDocResponsable": "36",
+            "numDocResponsable": "06142510921231",
+            "nombreSolicita": "Maria Lopez",
+            "tipDocSolicita": "36",
+            "numDocSolicita": "06142510921232"
+        }
+    }
 }`}
     />
 
@@ -192,6 +234,21 @@ const baseURL = "/doc-api-facturacion-sv/";
       method="GET"
       endpoint="/api/v1/dte/UUID-del-documento-original"
       description="Verificar el estado de invalidación del documento"
+      responseExample={`
+    "success": true,
+    "data": {
+        "control_number": "DTE-01-C0020000-000000000000001",
+        "generation_code": "UUID-del-documento-original",
+        "reception_stamp": "2025F7712422E77541FE8...",
+        "transmission": "NORMAL",
+        "status": "INVALIDATED", // Una vez ejecutada la invalidación, el DTE pasará a cambiar su estado
+        "created_at": "2025-04-16 02:56:33",
+        "updated_at": "2025-04-16 02:56:49",
+        "json_data": {
+          // El DTE emitido
+        }
+    }`
+}
     />
 
     <h2>Consideraciones importantes</h2>

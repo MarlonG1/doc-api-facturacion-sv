@@ -1,15 +1,11 @@
-// theme-handler.js - Script único para manejar el tema en todo el sitio
 document.addEventListener("astro:page-load", () => {
-  // Función para obtener la preferencia de tema
   function getThemePreference() {
-    // Primero verificar localStorage
     const storedTheme =
       typeof localStorage !== "undefined" && localStorage.getItem("theme");
     if (storedTheme) {
       return storedTheme;
     }
 
-    // Luego verificar preferencia del sistema
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       return "dark";
     }
@@ -28,7 +24,6 @@ document.addEventListener("astro:page-load", () => {
       document.documentElement.classList.remove("dark");
     }
 
-    // Guardar en localStorage para persistencia
     if (typeof localStorage !== "undefined") {
       localStorage.setItem("theme", theme);
     }
@@ -47,7 +42,6 @@ document.addEventListener("astro:page-load", () => {
   const currentTheme = getThemePreference();
   setTheme(currentTheme);
 
-  // Manejar el botón de cambio de tema
   const themeToggle = document.getElementById("theme-toggle");
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
@@ -61,7 +55,6 @@ document.addEventListener("astro:page-load", () => {
 // También inicializar en la carga inicial (para la primera página)
 document.addEventListener("DOMContentLoaded", () => {
   if (typeof window.getThemePreference !== "function") {
-    // Función para obtener la preferencia de tema
     function getThemePreference() {
       const storedTheme =
         typeof localStorage !== "undefined" && localStorage.getItem("theme");
@@ -102,5 +95,21 @@ document.addEventListener("DOMContentLoaded", () => {
         setTheme(newTheme);
       });
     }
+  }
+});
+
+// Añadir un manejador para el evento astro:before-swap para conservar el tema durante las transiciones de página
+document.addEventListener("astro:before-swap", (event) => {
+  // Obtener el tema actual antes de la transición
+  const currentTheme = document.documentElement.classList.contains("dark")
+    ? "dark"
+    : "light";
+
+  if (currentTheme === "dark") {
+    event.newDocument.documentElement.classList.add("dark");
+    event.newDocument.documentElement.classList.remove("light");
+  } else {
+    event.newDocument.documentElement.classList.add("light");
+    event.newDocument.documentElement.classList.remove("dark");
   }
 });

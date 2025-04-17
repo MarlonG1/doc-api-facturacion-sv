@@ -105,10 +105,10 @@ const baseURL = "/doc-api-facturacion-sv/";
         <h3
           class="text-base font-medium text-indigo-600 dark:text-indigo-400 mb-1"
         >
-          Nota de Débito
+          Comprobante de Retención (CR)
         </h3>
         <p class="text-sm text-gray-600 dark:text-gray-400">
-          Para modificaciones al alza de documentos previos.
+            Documento para retenciones de impuestos a proveedores.
         </p>
       </div>
     </div>
@@ -122,14 +122,6 @@ const baseURL = "/doc-api-facturacion-sv/";
       <li>Incluir este token en todas tus peticiones a la API</li>
     </ol>
 
-    <div class="not-prose my-8">
-      <Card
-        title="Nota importante sobre entornos"
-        type="info"
-        description="La API proporciona dos entornos: Sandbox (para pruebas) y Producción. Te recomendamos comenzar con el entorno de Sandbox para familiarizarte con la API sin generar documentos fiscales reales."
-      />
-    </div>
-
     <h2>Estructura de la API</h2>
     <p>La API está organizada en diferentes grupos de endpoints:</p>
     <ul>
@@ -138,6 +130,8 @@ const baseURL = "/doc-api-facturacion-sv/";
         <strong>Facturas Electrónicas</strong>: Creación y gestión de facturas
       </li>
       <li><strong>Comprobantes de Crédito Fiscal</strong>: Emisión de CCF</li>
+      <li><strong>Nota de crédito</strong>: Modificación de documentos previos</li>
+      <li><strong>Comprobante de retención</strong>: Emisión de CR</li>
       <li>
         <strong>Consulta de DTE</strong>: Búsqueda y obtención de documentos
       </li>
@@ -146,7 +140,7 @@ const baseURL = "/doc-api-facturacion-sv/";
     </ul>
 
     <h2>Siguientes pasos</h2>
-    <p>Para empezar a utilizar la API, te recomendamos seguir estos pasos:</p>
+    <p>Para empezar a utilizar la API, te recomiendo seguir estos pasos:</p>
 
     <ol>
       <li>

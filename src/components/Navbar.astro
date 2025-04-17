@@ -30,10 +30,9 @@ const sidebarItems = [
       { text: "Endpoints", href: `${baseURL}docs/api/endpoints` },
       { text: "Autenticación", href: `${baseURL}docs/api/authentication` },
       { text: "Factura Electrónica", href: `${baseURL}docs/api/invoices` },
-      {
-        text: "Comprobante de Crédito Fiscal",
-        href: `${baseURL}docs/api/credit-notes`,
-      },
+      { text: "Nota de Crédito", href: `${baseURL}docs/api/credit-note` },
+      { text: "Comprobante de Crédito Fiscal", href: `${baseURL}docs/api/ccf` },
+      { text: "Comprobante de Retención", href: `${baseURL}docs/api/retention` },
       { text: "Invalidación", href: `${baseURL}docs/api/invalidation` },
       { text: "Consulta de DTE", href: `${baseURL}docs/api/consult-dte` },
       { text: "Monitoreo", href: `${baseURL}docs/api/monitoring` },
@@ -313,20 +312,15 @@ const sidebarItems = [
       mobileMenuButton?.setAttribute("aria-expanded", "false");
     }
 
-    // Abrir menú
     mobileMenuButton?.addEventListener("click", openMobileMenu);
-
-    // Cerrar menú
     closeMenuButton?.addEventListener("click", closeMobileMenu);
     overlay?.addEventListener("click", closeMobileMenu);
 
-    // Cerrar menú cuando se hace clic en un enlace
     const menuLinks = mobileMenu?.querySelectorAll("a");
     menuLinks?.forEach((link) => {
       link.addEventListener("click", closeMobileMenu);
     });
 
-    // Cerrar menú al redimensionar la ventana a un tamaño de escritorio
     window.addEventListener("resize", () => {
       if (window.innerWidth >= 768) {
         closeMobileMenu();
