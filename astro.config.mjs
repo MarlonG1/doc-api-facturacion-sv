@@ -5,7 +5,7 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://marlong1.github.io/doc-api-facturacion-sv",
+  site: "https://chainedpixel.github.io/doc-api-facturacion-sv",
   base: "/doc-api-facturacion-sv",
   integrations: [sitemap(), tailwind()],
   markdown: {

@@ -1,12 +1,12 @@
 # Documentación API de Facturación Electrónica
 
-> **¿Buscas el repositorio de la API?** Si estás buscando la implementación de la API de Facturación Electrónica (no su documentación), visita el repositorio principal: [marlong1/api-facturacion-sv](https://github.com/marlong1/api-facturacion-sv)
+> **¿Buscas el repositorio de la API?** Si estás buscando la implementación de la API de Facturación Electrónica (no su documentación), visita el repositorio principal: [chainedpixel/api-facturacion-sv](https://github.com/chainedpixel/api-facturacion-sv)
 
 Este repositorio contiene el sitio web de documentación para la API de Facturación Electrónica, diseñado para ayudar a los desarrolladores a integrar fácilmente la facturación electrónica en sus aplicaciones.
 
 ## Vista previa
 
-[Visita la documentación](https://marlong1.github.io/doc-api-facturacion-sv/)
+[Visita la documentación](https://chainedpixel.github.io/doc-api-facturacion-sv/)
 
 ## Características
 
@@ -29,7 +29,7 @@ Para ejecutar este proyecto localmente:
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/marlong1/doc-api-facturacion-sv.git
+git clone https://github.com/chainedpixel/doc-api-facturacion-sv.git
 cd doc-api-facturacion-sv
 
 # Instalar dependencias
@@ -70,7 +70,7 @@ Este sitio se despliega automáticamente en GitHub Pages cuando se hace push a l
 
 ## Repositorios relacionados
 
-- [marlong1/api-facturacion-sv](https://github.com/marlong1/api-facturacion-sv) - Implementación de la API de Facturación Electrónica
+- [chainedpixel/api-facturacion-sv](https://github.com/chainedpixel/api-facturacion-sv) - Implementación de la API de Facturación Electrónica
 
 ## Licencia
 
